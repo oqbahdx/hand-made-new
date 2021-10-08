@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hand_made_new/screens/home/map.dart';
 import 'package:hand_made_new/screens/home/start.dart';
 import 'package:hand_made_new/screens/intro/onBoarding.dart';
+import 'package:hand_made_new/state_management/cubit.dart';
 
 
 void main(){
@@ -12,17 +15,23 @@ void main(){
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      initialRoute: StartPage.id,
-      routes: {
-        OnBoarding.id:(context)=>OnBoarding(),
-        StartPage.id:(context)=>StartPage(),
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context)=>HandCubit())
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        initialRoute: StartPage.id,
+        routes: {
+          OnBoarding.id:(context)=>OnBoarding(),
+          StartPage.id:(context)=>StartPage(),
+          MapPage.id:(context)=>MapPage(),
+        },
+      ),
     );
   }
 }

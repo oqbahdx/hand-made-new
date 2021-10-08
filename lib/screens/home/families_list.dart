@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 class FamiliesList extends StatefulWidget {
-  const FamiliesList({Key? key}) : super(key: key);
+
 
   @override
   _FamiliesListState createState() => _FamiliesListState();

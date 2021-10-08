@@ -6,7 +6,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class OnBoarding extends StatefulWidget {
   static String id = "OnBoarding";
 
-  const OnBoarding({Key? key}) : super(key: key);
+
 
   @override
   _OnBoardingState createState() => _OnBoardingState();
@@ -30,7 +30,7 @@ class _OnBoardingState extends State<OnBoarding> {
   ];
 
    PageController pageController = PageController();
-  late bool isLast;
+   bool isLast;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,6 @@ class _OnBoardingState extends State<OnBoarding> {
       backgroundColor: Colors.white,
       appBar: appBarWidget(
         elevation: 0.0,
-        color: Colors.white,
         action: TextButton(onPressed: (){}, child:Text(
           'close',style: TextStyle(
           fontSize: 18,

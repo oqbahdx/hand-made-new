@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 
 class TimeLine extends StatefulWidget {
-  const TimeLine({Key? key}) : super(key: key);
+
 
   @override
   _TimeLineState createState() => _TimeLineState();
