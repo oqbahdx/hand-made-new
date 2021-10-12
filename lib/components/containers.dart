@@ -26,3 +26,28 @@ Widget containerBuildTap({String text,Function onTap}){
     ),
   );
 }
+
+Widget defaultButtonTap(String text,Function onTap){
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 10),
+    child: GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 50,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          gradient: LinearGradient(
+            colors: gradientColor,
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight
+          ),
+
+        ),
+        child: Center(
+          child: Text(text,style: containerStyle,),
+        ),
+      ),
+    ),
+  );
+}

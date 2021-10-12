@@ -69,7 +69,7 @@ class _StartPageState extends State<StartPage> {
                                    icon: Icons.ten_k_outlined, text: 'time line'),
                                gButtonNav(icon: Icons.person, text: 'profile'),
                              ])),
-                   )),drawer: drawerBuild(),),
+                   )),drawer: drawerBuild(context),),
          );
         },
 
