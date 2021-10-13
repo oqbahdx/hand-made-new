@@ -21,7 +21,12 @@ class StartPage extends StatefulWidget {
 
 class _StartPageState extends State<StartPage> {
   int currentIndex = 1;
-  List<Widget> homePages = [Profile(),MapPage(),TimeLine(), FamiliesList(), ];
+  List<Widget> homePages = [
+    Profile(),
+    MapPage(),
+    TimeLine(),
+    FamiliesList(),
+  ];
   List<String> titles = [
     'Profile',
     'Map',
@@ -36,28 +41,28 @@ class _StartPageState extends State<StartPage> {
       child: BlocConsumer<HandCubit, HandMadeState>(
         listener: (context, state) {},
         builder: (context, state) {
-          return Directionality(
-            textDirection: TextDirection.rtl,
-            child: Scaffold(
-              appBar: appBarWidget(
-                  title: Text(titles[HandCubit.get(context).pageIndex],
-                      style: normalText),
-                  elevation: 0.0,
-                  action: Container()),
-              body: Center(
-                child: homePages.elementAt(HandCubit.get(context).pageIndex),
-              ),
-              bottomNavigationBar: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        blurRadius: 20,
-                        color: Colors.black.withOpacity(.1),
-                      )
-                    ],
-                  ),
-                  child: SafeArea(
+          return SafeArea(
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: Scaffold(
+                appBar: appBarWidget(
+                    title: Text(titles[HandCubit.get(context).pageIndex],
+                        style: normalText),
+                    elevation: 0.0,
+                    action: Container()),
+                body: Center(
+                  child: homePages.elementAt(HandCubit.get(context).pageIndex),
+                ),
+                bottomNavigationBar: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 20,
+                          color: Colors.black.withOpacity(.1),
+                        )
+                      ],
+                    ),
                     child: Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15.0, vertical: 8),
@@ -72,10 +77,10 @@ class _StartPageState extends State<StartPage> {
                               gButtonNav(
                                   icon: Icons.ten_k_outlined,
                                   text: 'time line'),
-                              gButtonNav(icon: Icons.home, text: 'home'),
-                            ])),
-                  )),
-              drawer: drawerBuild(context),
+                              gButtonNav(icon: Icons.group, text: 'families'),
+                            ]))),
+                drawer: drawerBuild(context),
+              ),
             ),
           );
         },
