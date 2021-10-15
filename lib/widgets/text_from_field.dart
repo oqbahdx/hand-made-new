@@ -7,12 +7,16 @@ Widget defaultTextFormField(
       IconData icn,
       TextEditingController controller,
       TextInputType type,
-      function(String value),
+      Function(String value) function,
       Widget showPass,
       bool sec = false}) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 10),
     child: TextFormField(
+
+      style: TextStyle(
+        fontWeight: FontWeight.bold
+      ),
       keyboardType: type,
       controller: controller,
       obscureText: sec,

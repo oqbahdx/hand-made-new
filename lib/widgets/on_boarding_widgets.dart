@@ -11,17 +11,17 @@ Widget onBoardingWidget(String imageName, String title, String body) {
         width: 350,
         image: AssetImage(imageName),
       )),
-      SizedBox(
+      const SizedBox(
         height: 150,
       ),
-      Text(title,style: TextStyle(
+      Text(title,style: const TextStyle(
         fontSize: 25,
         fontWeight: FontWeight.bold
       ),),
-      SizedBox(
+      const SizedBox(
         height: 150,
       ),
-      Text(body,style: TextStyle(
+      Text(body,style: const TextStyle(
           fontSize: 25,
           fontWeight: FontWeight.bold
       ),),

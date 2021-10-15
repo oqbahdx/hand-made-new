@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 
 class TimeLine extends StatefulWidget {
+  const TimeLine({Key key}) : super(key: key);
+
 
 
   @override
@@ -11,7 +13,7 @@ class TimeLine extends StatefulWidget {
 class _TimeLineState extends State<TimeLine> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(child: Text('time line'),),
     );
   }

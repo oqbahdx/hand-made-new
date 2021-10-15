@@ -12,10 +12,10 @@ Widget containerBuildTap({String text,Function onTap}){
         child: Center(
           child: Text(text,style: containerStyle,),
         ),
-        height: 950,
+        height: 50,
         width: 600,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(10),
             gradient: LinearGradient(
               colors: gradientColor,
               begin: Alignment.topLeft,

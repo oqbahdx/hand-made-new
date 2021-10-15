@@ -15,6 +15,8 @@ import 'map.dart';
 class StartPage extends StatefulWidget {
   static String id = "StartPage";
 
+  const StartPage({Key key}) : super(key: key);
+
   @override
   _StartPageState createState() => _StartPageState();
 }
@@ -22,10 +24,10 @@ class StartPage extends StatefulWidget {
 class _StartPageState extends State<StartPage> {
   int currentIndex = 1;
   List<Widget> homePages = [
-    Profile(),
-    MapPage(),
+    const Profile(),
+    const MapPage(),
     TimeLine(),
-    FamiliesList(),
+    const FamiliesList(),
   ];
   List<String> titles = [
     'Profile',

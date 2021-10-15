@@ -11,7 +11,7 @@ Drawer drawerBuild(BuildContext context){
    child:Column(
 
      children: [
-       SizedBox(height: 50,),
+       const SizedBox(height: 50,),
        Row(
          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
          children: [
@@ -28,14 +28,14 @@ Drawer drawerBuild(BuildContext context){
                    onTap: (){
 
                    },
-                   child: Icon(Icons.edit,color: Colors.white,))
+                   child: const Icon(Icons.edit,color: Colors.white,))
 
            ),
          ],),
          Text('user name',style: normalText,),
 
        ],),
-       Divider(),
+       const Divider(),
        GridView(
 
          children: [
@@ -48,14 +48,14 @@ Drawer drawerBuild(BuildContext context){
            containerBuildTap(text: 'Favorite',onTap: (){}),
            containerBuildTap(text: 'Contact Us',onTap: (){}),
          ],
-         shrinkWrap: true, gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+         shrinkWrap: true, gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
          crossAxisCount: 2,
          childAspectRatio: 3/2,
          crossAxisSpacing: 5.0,
        ),
 
        ),
-       SizedBox(height: 240,),
+       const SizedBox(height: 240,),
        defaultButtonTap('LOGOUT', (){}),
      ],
    )

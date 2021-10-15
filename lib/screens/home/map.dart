@@ -6,6 +6,8 @@ class MapPage extends StatefulWidget {
 
   static String id = "MapPage";
 
+  const MapPage({Key key}) : super(key: key);
+
   @override
   _MapPageState createState() => _MapPageState();
 }
@@ -13,7 +15,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: GoogleMap(
         zoomGesturesEnabled: true,
         myLocationEnabled: true,

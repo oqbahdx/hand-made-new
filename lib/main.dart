@@ -11,11 +11,13 @@ void main(){
   WidgetsFlutterBinding.ensureInitialized();
   runApp(
 
-      MyApp(
+      const MyApp(
   ));
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key key}) : super(key: key);
+
 
 
   @override
@@ -32,9 +34,9 @@ class MyApp extends StatelessWidget {
         initialRoute: StartPage.id,
         routes: {
           OnBoarding.id:(context)=>OnBoarding(),
-          StartPage.id:(context)=>StartPage(),
-          MapPage.id:(context)=>MapPage(),
-          AddProduct.id:(context)=>AddProduct(),
+          StartPage.id:(context)=>const StartPage(),
+          MapPage.id:(context)=>const MapPage(),
+          AddProduct.id:(context)=>const AddProduct(),
         },
       ),
     );

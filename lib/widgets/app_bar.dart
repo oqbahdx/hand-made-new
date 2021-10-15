@@ -11,7 +11,7 @@ PreferredSizeWidget appBarWidget({Widget title,
     actions: [action],
 
     flexibleSpace: Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           colors: [
             Color(0xFFFF3E71),

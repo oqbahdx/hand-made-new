@@ -13,4 +13,15 @@ class HandCubit extends Cubit<HandMadeState> {
     pageIndex = index;
     emit(HandChangeButtonNavState());
   }
+
+  String dropdownValueTime = 'اختار اليوم';
+  String dropdownValueCategory = 'اختار الفئة';
+  String productCategory;
+
+  changeDropItem(String newValue,String value){
+    dropdownValueCategory = newValue;
+    productCategory = value;
+    emit(HandChangeDropMenuItemState());
+  }
+
 }
