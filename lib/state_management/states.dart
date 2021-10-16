@@ -10,3 +10,4 @@ class HandErrorState extends HandMadeState{
 
 class HandChangeButtonNavState extends HandMadeState {}
 class HandChangeDropMenuItemState extends HandMadeState {}
+class HandShowDialogState extends HandMadeState {}
