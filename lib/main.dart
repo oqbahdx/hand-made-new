@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hand_made_new/screens/account/login.dart';
 import 'package:hand_made_new/screens/home/map.dart';
 import 'package:hand_made_new/screens/home/start.dart';
 import 'package:hand_made_new/screens/intro/onBoarding.dart';
@@ -31,12 +32,13 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Amiri',
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: StartPage.id,
+        initialRoute: LoginPage.id,
         routes: {
           OnBoarding.id:(context)=>OnBoarding(),
           StartPage.id:(context)=>const StartPage(),
           MapPage.id:(context)=>const MapPage(),
           AddProduct.id:(context)=>const AddProduct(),
+          LoginPage.id:(context)=>const LoginPage(),
         },
       ),
     );

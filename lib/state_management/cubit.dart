@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/state_management/states.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,6 +38,14 @@ class HandCubit extends Cubit<HandMadeState> {
       }
       print(image.path.split('/').last);
       emit(HandShowDialogState());
+  }
+
+  bool isShow = true;
+  IconData icon = Icons.visibility_off_outlined;
+ void changePasswordVisibility(){
+    isShow = !isShow;
+    icon = isShow ? Icons.visibility_off_outlined : Icons.visibility;
+    emit(HandChangePasswordVisibility());
   }
 
 }

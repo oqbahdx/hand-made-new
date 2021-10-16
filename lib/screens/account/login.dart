@@ -1,0 +1,83 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hand_made_new/components/containers.dart';
+import 'package:hand_made_new/state_management/cubit.dart';
+import 'package:hand_made_new/state_management/states.dart';
+import 'package:hand_made_new/styles/fonts.dart';
+import 'package:hand_made_new/widgets/app_bar.dart';
+import 'package:hand_made_new/widgets/text_from_field.dart';
+
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key key}) : super(key: key);
+  static String id = "LoginPage";
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
+  Widget build(BuildContext context) {
+   return BlocProvider(create: (BuildContext context)=>HandCubit(),
+   child: BlocConsumer<HandCubit,HandMadeState>(
+     listener: (context,state){},
+     builder: (context,state){
+       return Scaffold(
+           appBar: appBarWidget(
+               title: Text(
+                 'Login',
+                 style: normalText,
+               ),
+               elevation: 0.0,
+               action: Container()),
+           body: ListView(
+             children: [
+               SizedBox(
+                 height: 50,
+               ),
+               Container(
+                 height: 250,
+                 width: 350,
+                 child: Image.asset('assets/applogo.png'),
+               ),
+               SizedBox(
+                 height: 50,
+               ),
+               defaultTextFormField(
+                   text: 'email',
+                   showPass: null,
+                   sec: false,
+                   function: null,
+                   controller: null,
+                   icn: Icons.email,
+                   type: TextInputType.emailAddress),
+               SizedBox(
+                 height: 20,
+               ),
+               defaultTextFormField(
+                   text: 'password',
+                   showPass: IconButton(
+                       onPressed: (){
+                         HandCubit.get(context).changePasswordVisibility();
+                       },
+                       icon: Icon(HandCubit.get(context).icon)
+                   ),
+                   sec: HandCubit.get(context).isShow,
+                   function: null,
+                   controller: null,
+                   icn: Icons.enhanced_encryption,
+                   type: TextInputType.text),
+               SizedBox(
+                 height: 50,
+               ),
+               containerBuildTap(
+                 text: 'Login',
+                 onTap: (){}
+               ),
+             ],
+           ));
+     },
+   ),
+   );
+  }
+}
