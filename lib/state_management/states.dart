@@ -12,3 +12,5 @@ class HandChangeButtonNavState extends HandMadeState {}
 class HandChangeDropMenuItemState extends HandMadeState {}
 class HandShowDialogState extends HandMadeState {}
 class HandChangePasswordVisibility extends HandMadeState {}
+class HandUpdateImageSuccessState extends HandMadeState {}
+class HandChangeTitleMainRegisterSuccessState extends HandMadeState {}

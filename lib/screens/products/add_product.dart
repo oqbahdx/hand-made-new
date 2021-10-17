@@ -145,7 +145,19 @@ class _AddProductState extends State<AddProduct> {
                             onTap: (){
                               showDialogBuild(context);
                             }
-                        ))],
+                        )),
+
+                    SizedBox(height: 20,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                      Text('Don\' have an account ? ',style: normalText,),
+                      gradientText(text: 'Register Now',onTap: (){
+                        print('you clicked here');
+                      })
+                    ],),
+
+                  ],
                 ),
               ),
             ),

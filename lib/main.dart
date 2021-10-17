@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/screens/account/login.dart';
+import 'package:hand_made_new/screens/account/main_register.dart';
 import 'package:hand_made_new/screens/home/map.dart';
 import 'package:hand_made_new/screens/home/start.dart';
 import 'package:hand_made_new/screens/intro/onBoarding.dart';
@@ -18,9 +19,6 @@ void main(){
 
 class MyApp extends StatelessWidget {
   const MyApp({Key key}) : super(key: key);
-
-
-
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -32,13 +30,14 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Amiri',
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: LoginPage.id,
+        initialRoute: RegisterMainPage.id,
         routes: {
           OnBoarding.id:(context)=>OnBoarding(),
           StartPage.id:(context)=>const StartPage(),
           MapPage.id:(context)=>const MapPage(),
           AddProduct.id:(context)=>const AddProduct(),
           LoginPage.id:(context)=>const LoginPage(),
+          RegisterMainPage.id:(context)=>const RegisterMainPage(),
         },
       ),
     );
