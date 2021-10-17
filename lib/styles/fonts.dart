@@ -10,10 +10,19 @@ TextStyle containerStyle = TextStyle(
   color: Colors.white
 );
 
+TextStyle bigText = TextStyle(
+  fontSize: 30,
+  fontWeight: FontWeight.bold,
+);
 
 TextStyle normalText = TextStyle(
-  fontSize: 22,
+  fontSize: 21,
   fontWeight: FontWeight.bold,
+);
+TextStyle smallText = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+
 );
 
 Widget gradientText({String text,Function onTap}){

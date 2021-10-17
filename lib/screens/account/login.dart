@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/screens/account/main_register.dart';
+import 'package:hand_made_new/screens/account/otp.dart';
 import 'package:hand_made_new/state_management/cubit.dart';
 import 'package:hand_made_new/state_management/states.dart';
 import 'package:hand_made_new/styles/fonts.dart';
@@ -37,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
               body: ListView(
                 children: [
                   SizedBox(
-                    height: 50,
+                    height: 40,
                   ),
                   Container(
                     height: 250,
@@ -45,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: Image.asset('assets/applogo.png'),
                   ),
                   SizedBox(
-                    height: 50,
+                    height: 40,
                   ),
                   defaultTextFormField(
                       text: 'email',
@@ -71,11 +72,29 @@ class _LoginPageState extends State<LoginPage> {
                       icn: Icons.enhanced_encryption,
                       type: TextInputType.text),
                   SizedBox(
-                    height: 50,
+                    height: 20,
+                  ),
+                  Row(mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Text('Forget password  ?',style:smallText,),
+
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 10.0),
+                      child: gradientText(text: 'Click Here',onTap: (){
+                         moveToPage(context, OTPPage.id);
+                      }),
+                    )
+                  ],
+                  ),
+                  SizedBox(
+                    height: 20,
                   ),
                   containerBuildTap(text: 'Login', onTap: () {}),
                   SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
