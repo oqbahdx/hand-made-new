@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Amiri',
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: OTPPage.id,
+        initialRoute: LoginPage.id,
         routes: {
           OnBoarding.id:(context)=>OnBoarding(),
           StartPage.id:(context)=>const StartPage(),

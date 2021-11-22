@@ -41,40 +41,44 @@ class _RegisterMainPageState extends State<RegisterMainPage> {
               title: Text(titles[ HandCubit.get(context).index],style: normalText,),
 
             ),
-            body: ListView(
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              children: [
-                Container(
-                  height: h*.70,
-                  child: PageView(
-                    onPageChanged:(int value){
-                      HandCubit.get(context).pageChanged(value);
-                    },
-                    physics: BouncingScrollPhysics(),
-                    children: [
-                      BuyerRegisterPage(),
-                      SellerRegisterPage(),
-
-                    ],),
-                ),
-                SizedBox(height: 5,),
-                Container(
-                  height: h*.18,
-                  child: Column(children: [
-                    containerBuildTap(text: 'Register',onTap: (){}),
-                    SizedBox(height: h*.035,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            body: SingleChildScrollView(
+              child: ListView(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                children: [
+                  Container(
+                    height: h*.70,
+                    child: PageView(
+                      onPageChanged:(int value){
+                        HandCubit.get(context).pageChanged(value);
+                      },
+                      physics: BouncingScrollPhysics(),
                       children: [
-                      Text('You have already account ? ',style: normalText,),
-                      gradientText(text: 'LOGIN',onTap: (){
-                        moveToPageAndFinish(context,LoginPage());
-                      })
-                    ],)
-                  ],),
-                ),
-              ],
+                        BuyerRegisterPage(),
+                        SellerRegisterPage(),
+
+                      ],),
+                  ),
+                  SizedBox(height: 5,),
+                  Container(
+                    height: h*.18,
+                    child: Column(children: [
+                      containerBuildTap(text: 'Register',onTap: (){
+                        HandCubit.get(context).formKey.currentState.validate();
+                      }),
+                      SizedBox(height: h*.035,),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                        Text('You have already account ? ',style: normalText,),
+                        gradientText(text: 'LOGIN',onTap: (){
+                          moveToPageAndFinish(context,LoginPage());
+                        })
+                      ],)
+                    ],),
+                  ),
+                ],
+              ),
             )
 
           );

@@ -38,7 +38,7 @@ class _LoginPageState extends State<LoginPage> {
               body: ListView(
                 children: [
                   SizedBox(
-                    height: 40,
+                    height: 30,
                   ),
                   Container(
                     height: 250,

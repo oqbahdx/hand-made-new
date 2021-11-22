@@ -21,7 +21,7 @@ class HandCubit extends Cubit<HandMadeState> {
   String dropdownValueCategory = 'اختار الفئة';
   String productCategory;
 
-  changeDropItem(String newValue,String value){
+  changeDropItem(String newValue, String value) {
     dropdownValueCategory = newValue;
     productCategory = value;
     emit(HandChangeDropMenuItemState());
@@ -29,28 +29,33 @@ class HandCubit extends Cubit<HandMadeState> {
 
   final picker = ImagePicker();
   File image;
+
   Future getImage(ImageSource src) async {
     final pickedFile = await picker.pickImage(
         source: src, imageQuality: 80, maxHeight: 300, maxWidth: 300);
 
-      if (pickedFile != null) {
-        image = File(pickedFile.path);
-        emit(HandUpdateImageSuccessState());
-      }
-      print(image.path.split('/').last);
-
+    if (pickedFile != null) {
+      image = File(pickedFile.path);
+      emit(HandUpdateImageSuccessState());
+    }
+    print(image.path.split('/').last);
   }
 
   bool isShow = true;
   IconData icon = Icons.visibility_off_outlined;
- void changePasswordVisibility(){
+
+  void changePasswordVisibility() {
     isShow = !isShow;
     icon = isShow ? Icons.visibility_off_outlined : Icons.visibility;
     emit(HandChangePasswordVisibility());
   }
+
   int index = 0;
-  pageChanged(int value){
-  index = value;
-  emit(HandChangeTitleMainRegisterSuccessState());
+
+  pageChanged(int value) {
+    index = value;
+    emit(HandChangeTitleMainRegisterSuccessState());
   }
+
+  GlobalKey<FormState> formKey = GlobalKey();
 }
