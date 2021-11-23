@@ -1,5 +1,8 @@
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/components/containers.dart';
+import 'package:hand_made_new/state_management/states.dart';
 
 import '/state_management/cubit.dart';
 import '/styles/fonts.dart';
@@ -16,86 +19,121 @@ class SellerRegisterPage extends StatefulWidget {
 }
 
 class _SellerRegisterPageState extends State<SellerRegisterPage> {
+  GlobalKey<FormState> formKey = GlobalKey();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBarWidget(
-          action: Container(),
-          elevation: 0.0,
-          title: Text(
-            'Seller Register',
-            style: normalText,
-          )),
-      body: ListView(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        children: [
-          SizedBox(
-            height: 90,
-          ),
-          defaultTextFormField(
-            text: 'Name',
-            type: TextInputType.name,
-            icn: Icons.person,
-            controller: null,
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          defaultTextFormField(
-            text: 'Email',
-            type: TextInputType.emailAddress,
-            icn: Icons.email,
-            controller: null,
-          ),
-          SizedBox(
-            height: 40,
-          ),
-          defaultTextFormField(
-            text: 'Phone',
-            type: TextInputType.number,
-            icn: Icons.phone,
-            controller: null,
-          ),
-          const SizedBox(
-            height: 40,
-          ),
-          defaultTextFormField(
-            text: 'Password',
-            type: TextInputType.text,
-            icn: Icons.enhanced_encryption,
-            controller: null,
-            sec: HandCubit.get(context).isShow,
-            showPass: IconButton(
-                onPressed: () {
-                  HandCubit.get(context).changePasswordVisibility();
-                },
-                icon: Icon(HandCubit.get(context).icon)),
-          ),
-          const SizedBox(
-            height: 80,
-          ),
-          defaultButtonTap('REGISTER', () {}),
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(
-                'You have already account ? ',
+    return BlocConsumer<HandCubit, HandMadeState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        return Scaffold(
+          appBar: appBarWidget(
+              action: Container(),
+              elevation: 0.0,
+              title: Text(
+                'Seller Register',
                 style: normalText,
-              ),
-              gradientText(
-                  text: 'LOGIN',
-                  onTap: () {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                        LoginPage.id, (route) => false);
-                  })
-            ],
-          )
-        ],
-      ),
+              )),
+          body: Form(
+            key: formKey,
+            child: ListView(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              children: [
+                SizedBox(
+                  height: 90,
+                ),
+                defaultTextFormField(
+                  text: 'Name',
+                  type: TextInputType.name,
+                  icn: Icons.person,
+                  controller: nameController,
+                  function: (value){
+                    if(value.isEmpty) return 'please enter your name';
+                  }
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                defaultTextFormField(
+                  text: 'Email',
+                  type: TextInputType.emailAddress,
+                  icn: Icons.email,
+                  controller: emailController,
+                    function: (value){
+                      if(value.isEmpty) return 'please enter your email';
+                    }
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                defaultTextFormField(
+                  text: 'Phone',
+                  type: TextInputType.number,
+                  icn: Icons.phone,
+                  controller: phoneController,
+                    function: (value){
+                      if(value.isEmpty) return 'please enter your phone';
+                    }
+                ),
+                const SizedBox(
+                  height: 40,
+                ),
+                defaultTextFormField(
+                  text: 'Password',
+                  type: TextInputType.text,
+                  icn: Icons.enhanced_encryption,
+                  controller: passwordController,
+                    function: (value){
+                      if(value.isEmpty) return 'please enter your password';
+                    },
+                  sec: HandCubit.get(context).isShow,
+                  showPass: IconButton(
+                      onPressed: () {
+                        HandCubit.get(context).changePasswordVisibility();
+                      },
+                      icon: Icon(HandCubit.get(context).icon)),
+                ),
+                const SizedBox(
+                  height: 80,
+                ),
+                ConditionalBuilder(
+                  condition: state is! HandSellerRegisterLoadingState,
+                  builder: (context) => defaultButtonTap('REGISTER', () {
+                    HandCubit.get(context).sellerRegister(
+                      email: emailController.text,
+                      password: emailController.text
+                    );
+                  }),
+                  fallback: (context) =>
+                      Center(child: CircularProgressIndicator()),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      'You have already account ? ',
+                      style: normalText,
+                    ),
+                    gradientText(
+                        text: 'LOGIN',
+                        onTap: () {
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              LoginPage.id, (route) => false);
+                        })
+                  ],
+                )
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

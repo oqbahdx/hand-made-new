@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/state_management/states.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -60,18 +61,43 @@ class HandCubit extends Cubit<HandMadeState> {
 
   GlobalKey<FormState> formKey = GlobalKey();
 
-
-
   void sellerRegister({String email, String password}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
-    emit(HandSellerRegisterLoadingState());
-    await auth.createUserWithEmailAndPassword(email: email, password: password).then((value){
-     print(value.user.uid);
-     emit(HandSellerRegisterSuccessState());
-    }).catchError((error){
-     print(error.toString());
-     emit(HandSellerRegisterErrorState(error.toString()));
-    });
-  }
 
+    try {
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: '+1 60505 556 789',
+        verificationCompleted: (PhoneAuthCredential credential) async{
+          emit(HandSellerRegisterLoadingState());
+          await auth
+              .createUserWithEmailAndPassword(email: email, password: password)
+              .then((value) {
+            print(value.user.uid);
+            showMessageSuccess(value.user.toString());
+            emit(HandSellerRegisterSuccessState());
+          });
+        },
+         verificationFailed: (FirebaseAuthException e) {},
+        codeSent: (String verificationId, int resendToken) async {
+          // emit(HandSellerRegisterLoadingState());
+          String smsCode = '1992';
+
+          // Create a PhoneAuthCredential with the code
+          PhoneAuthCredential credential = PhoneAuthProvider.credential(
+              verificationId: verificationId, smsCode: smsCode);
+
+          // Sign the user in (or link) with the credential
+          await auth.signInWithCredential(credential);
+        },
+
+        codeAutoRetrievalTimeout: (String verificationId) {},
+      );
+    } on FirebaseAuthException catch (e) {
+      print(e.toString());
+      showMessageError(e.message.toString());
+      emit(HandSellerRegisterErrorState(e.toString()));
+
+      ;
+    }
+  }
 }

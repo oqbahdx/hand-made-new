@@ -2,7 +2,7 @@
     package="com.handmadebadah.hand_made_new">
    <application
         android:label="hand_made_new"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyBJGNoL5ixxavlZvd7C9JLssxHuuTBBM8A"/>
         <activity
