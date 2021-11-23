@@ -21,6 +21,7 @@ dependencies:
   image_picker: ^0.8.4+2
   simple_gradient_text: ^1.2.2
   conditional_builder: ^1.0.2
+  fluttertoast: ^8.0.8
   flutter:
     sdk: flutter
 

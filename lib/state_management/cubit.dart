@@ -73,8 +73,5 @@ class HandCubit extends Cubit<HandMadeState> {
      emit(HandSellerRegisterErrorState(error.toString()));
     });
   }
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+
 }

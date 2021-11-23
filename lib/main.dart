@@ -1,16 +1,18 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hand_made_new/screens/account/login.dart';
-import 'package:hand_made_new/screens/account/main_register.dart';
-import 'package:hand_made_new/screens/account/otp.dart';
-import 'package:hand_made_new/screens/account/verify_otp.dart';
-import 'package:hand_made_new/screens/home/map.dart';
-import 'package:hand_made_new/screens/home/start.dart';
-import 'package:hand_made_new/screens/intro/onBoarding.dart';
-import 'package:hand_made_new/screens/products/add_product.dart';
+import '/screens/account/login.dart';
+import '/screens/account/buyer_register.dart';
+import '/screens/account/main_register.dart';
+import '/screens/account/otp.dart';
+import '/screens/account/seller_register.dart';
+import '/screens/account/verify_otp.dart';
+import '/screens/home/map.dart';
+import '/screens/home/start.dart';
+import '/screens/intro/onBoarding.dart';
+import '/screens/products/add_product.dart';
 
-import 'package:hand_made_new/state_management/cubit.dart';
+import '/state_management/cubit.dart';
 
 void main(){
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,7 +39,7 @@ class MyApp extends StatelessWidget {
             fontFamily: 'Amiri',
           ),
           debugShowCheckedModeBanner: false,
-          initialRoute: LoginPage.id,
+          initialRoute: RegisterMainPage.id,
           routes: {
             OnBoarding.id:(context)=>OnBoarding(),
             StartPage.id:(context)=>const StartPage(),
@@ -45,6 +47,8 @@ class MyApp extends StatelessWidget {
             AddProduct.id:(context)=>const AddProduct(),
             LoginPage.id:(context)=>const LoginPage(),
             RegisterMainPage.id:(context)=>const RegisterMainPage(),
+            SellerRegisterPage.id:(context)=>SellerRegisterPage(),
+            BuyerRegisterPage.id:(context)=>BuyerRegisterPage(),
             OTPPage.id:(context)=>const OTPPage(),
             VerifyOtp.id:(context)=>const VerifyOtp(),
           },

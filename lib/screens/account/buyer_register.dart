@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hand_made_new/state_management/cubit.dart';
-import 'package:hand_made_new/state_management/states.dart';
-import 'package:hand_made_new/widgets/text_from_field.dart';
+import 'package:hand_made_new/components/containers.dart';
+import 'package:hand_made_new/styles/fonts.dart';
+import 'package:hand_made_new/widgets/app_bar.dart';
+import '/state_management/cubit.dart';
+import '/state_management/states.dart';
+import '/widgets/text_from_field.dart';
+import 'login.dart';
 
 class BuyerRegisterPage extends StatefulWidget {
   const BuyerRegisterPage({Key key}) : super(key: key);
@@ -13,6 +17,10 @@ class BuyerRegisterPage extends StatefulWidget {
 }
 
 class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
 
@@ -22,6 +30,11 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
         listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
+            appBar: appBarWidget(
+              action: Container(),
+              elevation: 0.0,
+              title: Text('Buyer Register',style: normalText,)
+            ),
             body: SingleChildScrollView(
               child: Form(
                 key: HandCubit.get(context).formKey,
@@ -34,9 +47,9 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
                         text: 'Name',
                         type: TextInputType.name,
                         icn: Icons.person,
-                        controller: HandCubit.get(context).nameController,
+                        controller: nameController,
                         saveFunction: (value){
-                          value = HandCubit.get(context).nameController.text;
+                          value = nameController.text;
                         },
                         function: (data) {
                           if (data.isEmpty) {
@@ -50,9 +63,9 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
                         text: 'Email',
                         type: TextInputType.emailAddress,
                         icn: Icons.email,
-                        controller: HandCubit.get(context).emailController,
+                        controller: emailController,
                         saveFunction: (value){
-                          value = HandCubit.get(context).emailController.text;
+                          value = emailController.text;
                         },
                         function: (data) {
                           if (data.isEmpty) {
@@ -66,9 +79,9 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
                         text: 'Phone',
                         type: TextInputType.number,
                         icn: Icons.phone,
-                        controller: HandCubit.get(context).phoneController,
+                        controller: phoneController,
                         saveFunction: (value){
-                          value = HandCubit.get(context).phoneController.text;
+                          value = phoneController.text;
                         },
                         function: (data) {
                           if (data.isEmpty) {
@@ -82,9 +95,9 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
                         text: 'Password',
                         type: TextInputType.text,
                         icn: Icons.enhanced_encryption,
-                        controller: HandCubit.get(context).passwordController,
+                        controller: passwordController,
                         saveFunction: (value){
-                          value = HandCubit.get(context).passwordController.text;
+                          value = passwordController.text;
                         },
                         sec: HandCubit.get(context).isShow,
                         showPass: IconButton(
@@ -99,8 +112,27 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
                         }),
 
                     // containerBuildTap(text: 'Register',onTap: (){}),
+                    SizedBox(height: 80,),
+                    defaultButtonTap('REGISTER', (){}),
+                    SizedBox(height: 20,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          'You have already account ? ',
+                          style: normalText,
+                        ),
+                        gradientText(
+                            text: 'LOGIN',
+                            onTap: () {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  LoginPage.id, (route) => false);
+                            })
+                      ],
+                    )
                   ],
                 ),
+
               ),
             ),
           );
