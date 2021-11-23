@@ -12,28 +12,28 @@ showDialogBuild(BuildContext context) {
           textDirection: TextDirection.rtl,
           child: AlertDialog(
             title: Text('إختار صورة من :', style: normalText),
-            content: Container(
+            content: SizedBox(
               height: 150,
               child: Column(
                 children: [
-                  Divider(
+                  const Divider(
                     color: Colors.grey,
                   ),
                   Container(
                     width: 350,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      gradient: LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         Color(0xFFFF3E71),
                         Color(0xFFFEC317),
                       ], begin: Alignment.bottomLeft, end: Alignment.topRight),
                     ),
                     child: ListTile(
-                      leading: Icon(
+                      leading: const Icon(
                         Icons.image,
                         color: Colors.white,
                       ),
-                      title: Text(
+                      title: const Text(
                         'المعرض',
                         style: TextStyle(
                             fontFamily: 'messiri', color: Colors.white),
@@ -45,24 +45,24 @@ showDialogBuild(BuildContext context) {
                       },
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Container(
                     width: 350,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
-                      gradient: LinearGradient(colors: [
+                      gradient: const LinearGradient(colors: [
                         Color(0xFFFF3E71),
                         Color(0xFFFEC317),
                       ], begin: Alignment.bottomLeft, end: Alignment.topRight),
                     ),
                     child: ListTile(
-                      leading: Icon(
+                      leading: const Icon(
                         Icons.camera_alt,
                         color: Colors.white,
                       ),
-                      title: Text('الكاميرا',
+                      title: const Text('الكاميرا',
                           style: TextStyle(
                               fontFamily: 'messiri', color: Colors.white)),
                       onTap: () {
@@ -82,11 +82,11 @@ showDialogOTPBuildSimple(BuildContext context, String numberController) {
       context: context,
       builder: (BuildContext context) => AlertDialog(
             title: Center(child: Text('Warring :  is correct ?', style: normalText)),
-            content: Container(
+            content: SizedBox(
               height: 120,
               child: Column(
                 children: [
-                  Divider(
+                  const Divider(
                     color: Colors.grey,
                   ),
                   Container(
@@ -111,7 +111,7 @@ showDialogOTPBuildSimple(BuildContext context, String numberController) {
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              icon: Icon(Icons.clear,color: Colors.red,)),
+                              icon: const Icon(Icons.clear,color: Colors.red,)),
                         ),
                       ),
                       Expanded(

@@ -15,15 +15,21 @@ dependencies:
   introduction_screen: ^2.1.0
   smooth_page_indicator: ^1.0.0+2
   google_nav_bar: ^5.0.5
-  flutter_bloc: ^7.3.0
+  flutter_bloc: ^8.0.0
+  bloc: ^8.0.1
   google_maps_flutter: ^2.0.11
   image_picker: ^0.8.4+2
   simple_gradient_text: ^1.2.2
+  conditional_builder: ^1.0.2
   flutter:
     sdk: flutter
 
 
   cupertino_icons: ^1.0.2
+  #firebase
+  firebase_auth: ^3.2.0
+  firebase_core: ^1.10.0
+  cloud_firestore: ^3.1.0
 
 dev_dependencies:
   flutter_test:

@@ -33,13 +33,13 @@ class _VerifyOtpState extends State<VerifyOtp> {
           )),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 150,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
+              SizedBox(
                 height: 50,
                 width: 50,
                 child: defaultTextFormField(
@@ -50,7 +50,7 @@ class _VerifyOtpState extends State<VerifyOtp> {
                     controller: controller1,
                     next: TextInputAction.next),
               ),
-              Container(
+              SizedBox(
                 height: 50,
                 width: 50,
                 child: defaultTextFormField(
@@ -61,7 +61,7 @@ class _VerifyOtpState extends State<VerifyOtp> {
                     controller: controller2,
                     next: TextInputAction.next),
               ),
-              Container(
+              SizedBox(
                 height: 50,
                 width: 50,
                 child: defaultTextFormField(
@@ -72,7 +72,7 @@ class _VerifyOtpState extends State<VerifyOtp> {
                     controller: controller3,
                     next: TextInputAction.next),
               ),
-              Container(
+              SizedBox(
                 height: 50,
                 width: 50,
                 child: defaultTextFormField(

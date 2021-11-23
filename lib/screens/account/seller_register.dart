@@ -41,7 +41,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
             icn: Icons.phone,
             controller: null,
           ),
-          SizedBox(height: 40,),
+          const SizedBox(height: 40,),
           defaultTextFormField(
             text: 'Password',
             type: TextInputType.text,
@@ -52,7 +52,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
               HandCubit.get(context).changePasswordVisibility();
             }, icon: Icon(HandCubit.get(context).icon)),
           ),
-          SizedBox(height: 110,),
+          const SizedBox(height: 110,),
 
         ],
       ),

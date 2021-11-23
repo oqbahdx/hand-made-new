@@ -4,22 +4,22 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 import 'colors.dart';
 
 
-TextStyle containerStyle = TextStyle(
+TextStyle containerStyle = const TextStyle(
   fontWeight: FontWeight.bold,
   fontSize: 20,
   color: Colors.white
 );
 
-TextStyle bigText = TextStyle(
+TextStyle bigText = const TextStyle(
   fontSize: 30,
   fontWeight: FontWeight.bold,
 );
 
-TextStyle normalText = TextStyle(
+TextStyle normalText = const TextStyle(
   fontSize: 21,
   fontWeight: FontWeight.bold,
 );
-TextStyle smallText = TextStyle(
+TextStyle smallText = const TextStyle(
   fontSize: 16,
   fontWeight: FontWeight.bold,
 

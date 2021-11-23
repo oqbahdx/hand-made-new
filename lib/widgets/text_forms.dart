@@ -17,7 +17,7 @@ Widget defaultTextFormField({
     keyboardType: inputType,
     style: style,
     textInputAction: next,
-   decoration: InputDecoration(
+   decoration: const InputDecoration(
      counterText: ''
    ),
   );

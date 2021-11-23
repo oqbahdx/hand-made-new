@@ -47,6 +47,7 @@ android {
         applicationId "com.handmadebadah.hand_made_new"
         minSdkVersion 20
         targetSdkVersion 30
+        multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }

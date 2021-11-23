@@ -112,7 +112,7 @@ class _AddProductState extends State<AddProduct> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
                       height: _height * 0.15,
                       width: _width * 0.95,
                       child: ClipRRect(
@@ -121,7 +121,7 @@ class _AddProductState extends State<AddProduct> {
                               ? Container(
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black54)),
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 "الرجاء إضافه صورة",
                                 style: TextStyle(
@@ -147,7 +147,7 @@ class _AddProductState extends State<AddProduct> {
                             }
                         )),
 
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [

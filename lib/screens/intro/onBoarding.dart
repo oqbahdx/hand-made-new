@@ -6,6 +6,8 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class OnBoarding extends StatefulWidget {
   static String id = "OnBoarding";
 
+  const OnBoarding({Key key}) : super(key: key);
+
 
 
   @override
@@ -38,7 +40,7 @@ class _OnBoardingState extends State<OnBoarding> {
       backgroundColor: Colors.white,
       appBar: appBarWidget(
         elevation: 0.0,
-        action: TextButton(onPressed: (){}, child:Text(
+        action: TextButton(onPressed: (){}, child:const Text(
           'close',style: TextStyle(
           fontSize: 18,
           color: onBoardingColor
@@ -51,7 +53,7 @@ class _OnBoardingState extends State<OnBoarding> {
           children: [
             Expanded(
               child: PageView.builder(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) => onBoardingWidget(
                   images[index],
                   titles[index],
@@ -64,7 +66,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     setState(() {
                       isLast = true;
 
-                      print('last');
+                       print('last');
                     });
                   } else {
                     setState(() {
@@ -80,24 +82,24 @@ class _OnBoardingState extends State<OnBoarding> {
                 SmoothPageIndicator(
                   controller: pageController,
                   count: 3,
-                  effect: WormEffect(
+                  effect: const WormEffect(
                       spacing: 5,
                       dotHeight: 10,
                       dotWidth: 25,
                       activeDotColor: onBoardingColor),
                 ),
-                Spacer(),
+                const Spacer(),
                 FloatingActionButton(
                   backgroundColor: onBoardingColor,
                   onPressed: () {
                     if (isLast) {
                     } else {
                       pageController.nextPage(
-                          duration: Duration(milliseconds: 500),
+                          duration: const Duration(milliseconds: 500),
                           curve: Curves.easeInCubic);
                     }
                   },
-                  child: Icon(Icons.arrow_forward_ios),
+                  child: const Icon(Icons.arrow_forward_ios),
                 ),
               ],
             )

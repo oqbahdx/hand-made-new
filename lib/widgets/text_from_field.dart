@@ -8,19 +8,21 @@ Widget defaultTextFormField(
       TextEditingController controller,
       TextInputType type,
       Function(String value) function,
+      Function(String value) saveFunction,
       Widget showPass,
       bool sec = false}) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 10),
     child: TextFormField(
 
-      style: TextStyle(
+      style: const TextStyle(
         fontWeight: FontWeight.bold
       ),
       keyboardType: type,
       controller: controller,
       obscureText: sec,
       validator: function,
+      onSaved: saveFunction,
       decoration: InputDecoration(
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),

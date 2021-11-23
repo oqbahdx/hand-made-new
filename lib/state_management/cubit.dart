@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -58,4 +59,22 @@ class HandCubit extends Cubit<HandMadeState> {
   }
 
   GlobalKey<FormState> formKey = GlobalKey();
+
+
+
+  void sellerRegister({String email, String password}) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    emit(HandSellerRegisterLoadingState());
+    await auth.createUserWithEmailAndPassword(email: email, password: password).then((value){
+     print(value.user.uid);
+     emit(HandSellerRegisterSuccessState());
+    }).catchError((error){
+     print(error.toString());
+     emit(HandSellerRegisterErrorState(error.toString()));
+    });
+  }
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 }
