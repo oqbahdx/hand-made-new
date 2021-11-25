@@ -33,3 +33,13 @@ class HandSellerRegisterErrorState extends HandMadeState {
 
   HandSellerRegisterErrorState(this.error);
 }
+
+class HandBuyerRegisterSuccessState extends HandMadeState {}
+
+class HandBuyerRegisterLoadingState extends HandMadeState {}
+
+class HandBuyerRegisterErrorState extends HandMadeState {
+  final String error;
+
+  HandBuyerRegisterErrorState(this.error);
+}

@@ -40,7 +40,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
           body: Form(
             key: formKey,
             child: ListView(
-              physics: NeverScrollableScrollPhysics(),
+              physics: BouncingScrollPhysics(),
               shrinkWrap: true,
               children: [
                 SizedBox(
@@ -104,8 +104,12 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                   condition: state is! HandSellerRegisterLoadingState,
                   builder: (context) => defaultButtonTap('REGISTER', () {
                     HandCubit.get(context).sellerRegister(
+                      name: nameController.text,
                       email: emailController.text,
-                      password: emailController.text
+                      password: emailController.text,
+                      phone: phoneController.text,
+                      isAvailable: 'true',
+
                     );
                   }),
                   fallback: (context) =>
