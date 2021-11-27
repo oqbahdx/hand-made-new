@@ -1,14 +1,17 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hand_made_new/components/containers.dart';
-import 'package:hand_made_new/state_management/states.dart';
+import 'package:hand_made_new/screens/home/start.dart';
+import '/components/containers.dart';
+import '/state_management/states.dart';
+import '/widgets/navigators.dart';
 
 import '/state_management/cubit.dart';
 import '/styles/fonts.dart';
 import '/widgets/app_bar.dart';
 import '/widgets/text_from_field.dart';
 import 'login.dart';
+
 
 class SellerRegisterPage extends StatefulWidget {
   const SellerRegisterPage({Key key}) : super(key: key);
@@ -27,7 +30,11 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HandCubit, HandMadeState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if(state is HandSellerRegisterSuccessState){
+          moveToPageAndFinish(context, LoginPage());
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           appBar: appBarWidget(

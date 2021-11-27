@@ -2,8 +2,10 @@ import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/components/containers.dart';
+import 'package:hand_made_new/screens/account/verify_otp.dart';
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
+import 'package:hand_made_new/widgets/navigators.dart';
 import '/state_management/cubit.dart';
 import '/state_management/states.dart';
 import '/widgets/text_from_field.dart';
@@ -27,7 +29,12 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
     return BlocProvider(
       create: (context) => HandCubit(),
       child: BlocConsumer<HandCubit, HandMadeState>(
-        listener: (context, state) {},
+        listener: (context, state) {
+          if(state is HandSellerRegisterSuccessState)
+            {
+             moveToPageAndFinish(context, LoginPage());
+            }
+        },
         builder: (context, state) {
           return Scaffold(
             appBar: appBarWidget(

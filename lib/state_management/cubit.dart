@@ -102,7 +102,8 @@ class HandCubit extends Cubit<HandMadeState> {
       @required String email,
       @required String phone,
       String isAvailable,
-      String location}) async {
+      double longitude,
+      double latitude}) async {
     Position location = await Geolocator.getCurrentPosition();
     SellerModel sellerModel = SellerModel(
         uid: uid,
@@ -110,7 +111,8 @@ class HandCubit extends Cubit<HandMadeState> {
         email: email,
         phone: phone,
         isAvailable: isAvailable,
-        location: '${location.longitude}:${location.latitude}',
+        longitude: location.longitude,
+        latitude: location.latitude,
         profileImage: '');
     FirebaseFirestore.instance
         .collection('sellers')
@@ -119,14 +121,17 @@ class HandCubit extends Cubit<HandMadeState> {
   }
 
   void registerBuyer({String name, String email, String password}) async {
-
     FirebaseAuth auth = FirebaseAuth.instance;
     emit(HandBuyerRegisterLoadingState());
     try {
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
-        createBuyer(uid: value.user.uid, email: email, name: name,);
+        createBuyer(
+          uid: value.user.uid,
+          email: email,
+          name: name,
+        );
         showMessageSuccess('Seller Registered Successfully');
         emit(HandBuyerRegisterSuccessState());
       });
@@ -137,15 +142,27 @@ class HandCubit extends Cubit<HandMadeState> {
   }
 
   void createBuyer({String uid, String name, String email}) {
-    BuyerModel buyerModel = BuyerModel(
-      uid: uid,
-      name: name,
-      email: email,
-      profileImage: ''
-    );
+    BuyerModel buyerModel =
+        BuyerModel(uid: uid, name: name, email: email, profileImage: '');
     FirebaseFirestore.instance
         .collection('buyers')
         .doc(uid)
         .set(buyerModel.toJson());
+  }
+
+  void login({String email, String password}) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    try {
+      emit(HandBuyerLoginLoadingState());
+      await auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .then((value) {
+        showMessageSuccess('you logged in successfully');
+        emit(HandBuyerLoginSuccessState());
+      });
+    } on FirebaseAuthException catch (error) {
+      showMessageError(error.message);
+      emit(HandBuyerLoginErrorState(error.toString()));
+    }
   }
 }

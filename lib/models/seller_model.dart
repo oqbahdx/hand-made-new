@@ -4,7 +4,8 @@ class SellerModel {
   String email;
   String phone;
   String isAvailable;
-  String location;
+  double longitude;
+  double latitude;
   String profileImage;
 
 
@@ -14,14 +15,15 @@ class SellerModel {
       this.email,
       this.phone,
       this.isAvailable,
-      this.location,this.profileImage});
-  SellerModel.fromJson(Map<String,dynamic>json){
+      this.longitude,this.latitude,this.profileImage});
+  SellerModel.fromJson(Map<dynamic,dynamic>json){
     uid = json['uid'];
     name = json['name'];
     email = json['email'];
     phone = json['phone'];
     isAvailable = json['isAvailable'];
-    location = json['location'];
+    longitude = json['longitude'];
+    latitude = json['latitude'];
     profileImage = json['profileImage'];
   }
   Map<String,dynamic>toJson(){
@@ -31,7 +33,8 @@ class SellerModel {
       'email':email,
       'phone':phone,
       'isAvailable':isAvailable,
-      'location':location,
+      'longitude':longitude,
+      'latitude':latitude,
       'profileImage':profileImage
     };
   }
