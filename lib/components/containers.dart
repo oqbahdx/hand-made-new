@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hand_made_new/models/seller_model.dart';
 import '/styles/colors.dart';
 import '/styles/fonts.dart';
 
@@ -51,6 +52,31 @@ Widget defaultButtonTap(String text, Function onTap) {
           ),
         ),
       ),
+    ),
+  );
+}
+
+Widget familiesContainer(SellerModel model){
+  return Center(
+    child: ListView(
+      physics: BouncingScrollPhysics(),
+      shrinkWrap: true,
+      children: [
+        SizedBox(height: 20,),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Container(
+            alignment: Alignment.center,
+            height: 150,
+            width: 350,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Colors.grey[300]
+            ),
+            child: Text(model.name,style: bigText,),
+          ),
+        )
+      ],
     ),
   );
 }

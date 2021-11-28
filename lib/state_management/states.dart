@@ -43,6 +43,7 @@ class HandBuyerRegisterErrorState extends HandMadeState {
 
   HandBuyerRegisterErrorState(this.error);
 }
+
 class HandBuyerLoginSuccessState extends HandMadeState {}
 
 class HandBuyerLoginLoadingState extends HandMadeState {}
@@ -51,4 +52,14 @@ class HandBuyerLoginErrorState extends HandMadeState {
   final String error;
 
   HandBuyerLoginErrorState(this.error);
+}
+
+class HandGetSellersSuccessState extends HandMadeState {}
+
+class HandGetSellersLoadingState extends HandMadeState {}
+
+class HandGetSellersErrorState extends HandMadeState {
+  final String error;
+
+  HandGetSellersErrorState(this.error);
 }

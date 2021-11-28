@@ -7,6 +7,7 @@ import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/models/buyer_model.dart';
 import 'package:hand_made_new/models/seller_model.dart';
 import 'package:hand_made_new/state_management/states.dart';
+import 'package:hand_made_new/storage/shared.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:geolocator/geolocator.dart';
@@ -159,10 +160,24 @@ class HandCubit extends Cubit<HandMadeState> {
           .then((value) {
         showMessageSuccess('you logged in successfully');
         emit(HandBuyerLoginSuccessState());
+        SharedPref.saveData(key: 'token', value: '${value.user.uid}');
       });
     } on FirebaseAuthException catch (error) {
       showMessageError(error.message);
       emit(HandBuyerLoginErrorState(error.toString()));
     }
+  }
+  List<SellerModel> sellers = [];
+  void getSeller(){
+    emit(HandGetSellersLoadingState());
+    FirebaseFirestore.instance.collection('sellers').get().then((value){
+      value.docs.forEach((element) { 
+        sellers.add(SellerModel.fromJson(element.data()));
+      });
+      emit(HandGetSellersSuccessState());
+    }).catchError((error){
+      emit(HandGetSellersErrorState(error.toString()));
+    });
+
   }
 }

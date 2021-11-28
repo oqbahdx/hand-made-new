@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:hand_made_new/components/floating_buttons.dart';
+import 'package:hand_made_new/screens/account/login.dart';
+import 'package:hand_made_new/storage/shared.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
+import 'package:hand_made_new/widgets/navigators.dart';
 import 'package:hand_made_new/widgets/on_boarding_widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -8,13 +12,19 @@ class OnBoarding extends StatefulWidget {
 
   const OnBoarding({Key key}) : super(key: key);
 
-
-
   @override
   _OnBoardingState createState() => _OnBoardingState();
 }
 
 class _OnBoardingState extends State<OnBoarding> {
+  void submit() {
+    SharedPref.saveData(key: 'onBoarding', value: true).then((value) {
+      if (value) {
+        moveToPageAndFinish(context, LoginPage());
+      }
+    });
+  }
+
   List<String> images = [
     'assets/onboarding1.png',
     'assets/onboarding2.png',
@@ -31,8 +41,8 @@ class _OnBoardingState extends State<OnBoarding> {
     'body3',
   ];
 
-   PageController pageController = PageController();
-   bool isLast;
+  PageController pageController = PageController();
+  bool isLast = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +50,12 @@ class _OnBoardingState extends State<OnBoarding> {
       backgroundColor: Colors.white,
       appBar: appBarWidget(
         elevation: 0.0,
-        action: TextButton(onPressed: (){}, child:const Text(
-          'close',style: TextStyle(
-          fontSize: 18,
-          color: onBoardingColor
-        ),
-        )),
+        action: TextButton(
+            onPressed: () {},
+            child: const Text(
+              'close',
+              style: TextStyle(fontSize: 18, color: onBoardingColor),
+            )),
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -66,7 +76,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     setState(() {
                       isLast = true;
 
-                       print('last');
+                      print('last');
                     });
                   } else {
                     setState(() {
@@ -89,18 +99,20 @@ class _OnBoardingState extends State<OnBoarding> {
                       activeDotColor: onBoardingColor),
                 ),
                 const Spacer(),
-                FloatingActionButton(
-                  backgroundColor: onBoardingColor,
-                  onPressed: () {
-                    if (isLast) {
-                    } else {
-                      pageController.nextPage(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInCubic);
-                    }
-                  },
-                  child: const Icon(Icons.arrow_forward_ios),
-                ),
+                isLast == false
+                    ? floatingNextButton(
+                        function: () {
+                          pageController.nextPage(
+                              duration: const Duration(milliseconds: 500),
+                              curve: Curves.easeInCubic);
+                        },
+                        icn: Icons.arrow_forward_ios)
+                    : floatingNextButton(
+                        function: () {
+                          submit();
+                          moveToPageAndFinish(context, LoginPage());
+                        },
+                        icn: Icons.home),
               ],
             )
           ],

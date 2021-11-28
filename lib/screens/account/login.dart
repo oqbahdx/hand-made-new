@@ -1,16 +1,16 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hand_made_new/components/containers.dart';
-import 'package:hand_made_new/screens/account/main_register.dart';
-import 'package:hand_made_new/screens/account/otp.dart';
-import 'package:hand_made_new/screens/home/start.dart';
-import 'package:hand_made_new/state_management/cubit.dart';
-import 'package:hand_made_new/state_management/states.dart';
-import 'package:hand_made_new/styles/fonts.dart';
-import 'package:hand_made_new/widgets/app_bar.dart';
-import 'package:hand_made_new/widgets/navigators.dart';
-import 'package:hand_made_new/widgets/text_from_field.dart';
+import '/components/containers.dart';
+import '/screens/account/main_register.dart';
+import '/screens/account/otp.dart';
+import '/screens/home/start.dart';
+import '/state_management/cubit.dart';
+import '/state_management/states.dart';
+import '/styles/fonts.dart';
+import '/widgets/app_bar.dart';
+import '/widgets/navigators.dart';
+import '/widgets/text_from_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
