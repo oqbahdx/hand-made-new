@@ -113,10 +113,9 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                     HandCubit.get(context).sellerRegister(
                       name: nameController.text,
                       email: emailController.text,
-                      password: emailController.text,
+                      password: passwordController.text,
                       phone: phoneController.text,
                       isAvailable: 'true',
-
                     );
                   }),
                   fallback: (context) =>

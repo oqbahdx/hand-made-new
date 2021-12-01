@@ -5,7 +5,6 @@ import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/models/seller_model.dart';
 import 'package:hand_made_new/state_management/cubit.dart';
 import 'package:hand_made_new/state_management/states.dart';
-import 'package:hand_made_new/styles/fonts.dart';
 
 class FamiliesList extends StatefulWidget {
   const FamiliesList({Key key}) : super(key: key);
@@ -26,8 +25,8 @@ class _FamiliesListState extends State<FamiliesList> {
           builder: (context) => Scaffold(
             body: ListView.separated(
                 itemBuilder: (context, index) => familiesContainer(
-                      HandCubit.get(context).sellers[index],
-                    ),
+                  HandCubit.get(context).sellers[index],
+                ),
                 separatorBuilder: (context, index) => SizedBox(
                       height: 10,
                     ),

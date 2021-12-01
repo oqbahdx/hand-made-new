@@ -17,7 +17,7 @@ class HandCubit extends Cubit<HandMadeState> {
 
   static HandCubit get(context) => BlocProvider.of(context);
 
-  int pageIndex = 1;
+  int pageIndex = 3;
 
   changeIndex(int index) {
     pageIndex = index;
@@ -164,20 +164,25 @@ class HandCubit extends Cubit<HandMadeState> {
       });
     } on FirebaseAuthException catch (error) {
       showMessageError(error.message);
+      print(error.toString());
       emit(HandBuyerLoginErrorState(error.toString()));
     }
   }
+
   List<SellerModel> sellers = [];
-  void getSeller(){
+
+  void getSeller() {
     emit(HandGetSellersLoadingState());
-    FirebaseFirestore.instance.collection('sellers').get().then((value){
-      value.docs.forEach((element) { 
+
+    FirebaseFirestore.instance.collection('sellers').get().then((value) {
+      value.docs.forEach((element) {
         sellers.add(SellerModel.fromJson(element.data()));
       });
       emit(HandGetSellersSuccessState());
-    }).catchError((error){
+      // print(sellers[1]);
+    }).catchError((error) {
+      print(error.toString());
       emit(HandGetSellersErrorState(error.toString()));
     });
-
   }
 }

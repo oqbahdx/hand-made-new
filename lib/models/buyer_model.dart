@@ -6,7 +6,7 @@ class BuyerModel {
 
   BuyerModel({this.name, this.email, this.profileImage,this.uid});
 
-  BuyerModel.formJson(Map<String, dynamic> json) {
+  BuyerModel.fromJson(Map<dynamic, dynamic> json) {
     uid = json['uid'];
     name = json['name'];
     email = json['email'];
