@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/models/buyer_model.dart';
+import 'package:hand_made_new/models/products_model.dart';
 import 'package:hand_made_new/models/seller_model.dart';
-import 'package:hand_made_new/state_management/states.dart';
+import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/storage/shared.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -170,19 +171,33 @@ class HandCubit extends Cubit<HandMadeState> {
   }
 
   List<SellerModel> sellers = [];
-
+  List<BuyerModel> buyers = [];
+  // Future<QuerySnapshot<Map<String, dynamic>>> getBuyers(){
+  //  return FirebaseFirestore.instance.collection('/buyers').get();
+  // }
   void getSeller() {
     emit(HandGetSellersLoadingState());
-
-    FirebaseFirestore.instance.collection('sellers').get().then((value) {
+    // print(sellers[0]);
+    FirebaseFirestore.instance.collection('/sellers').get().then((value) {
       value.docs.forEach((element) {
         sellers.add(SellerModel.fromJson(element.data()));
       });
       emit(HandGetSellersSuccessState());
-      // print(sellers[1]);
+       // print(sellers[1]);
     }).catchError((error) {
       print(error.toString());
       emit(HandGetSellersErrorState(error.toString()));
     });
   }
+
+
+  ProductsModel productsModel;
+ Future<void> addProduct({String name,String des,String cal,String cate,String image,String price}){
+   CollectionReference products = FirebaseFirestore.instance.collection('products');
+    return products.add(productsModel.addProduct(
+
+    ));
+ }
+
+
 }

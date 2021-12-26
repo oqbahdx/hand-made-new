@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "421845373572",
-    "project_id": "hand-made-5a5bb",
-    "storage_bucket": "hand-made-5a5bb.appspot.com"
+    "project_number": "365450132529",
+    "project_id": "hand-made-adbb4",
+    "storage_bucket": "hand-made-adbb4.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:421845373572:android:00e11481590bde7aa1e8d1",
+        "mobilesdk_app_id": "1:365450132529:android:c17785fb5f1036d3f26910",
         "android_client_info": {
           "package_name": "com.handmadebadah.hand_made_new"
         }
       },
       "oauth_client": [
         {
-          "client_id": "421845373572-9bk8kfgpk6l4k2er0vfofsisn45g2rms.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.handmadebadah.hand_made_new",
-            "certificate_hash": "5d2e0241ac4660914a3c50e4ab1db336952c79fd"
-          }
-        },
-        {
-          "client_id": "421845373572-idmh0o6iunti70jt3vc4sclsfgcl22f3.apps.googleusercontent.com",
+          "client_id": "365450132529-uok0irn72atll36tr9m5hqfj38ascfmh.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCFCIym58sI4bz2IBeAN9VhcUgFKVgjPDk"
+          "current_key": "AIzaSyDEXLNBabnr1FxDeQpFZJO7JH8gvnrgW9w"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "421845373572-idmh0o6iunti70jt3vc4sclsfgcl22f3.apps.googleusercontent.com",
+              "client_id": "365450132529-uok0irn72atll36tr9m5hqfj38ascfmh.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hand_made_new/screens/account/verify_otp.dart';
-import 'package:hand_made_new/state_management/cubit.dart';
+import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/navigators.dart';
 import 'package:image_picker/image_picker.dart';

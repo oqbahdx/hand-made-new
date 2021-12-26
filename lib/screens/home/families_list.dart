@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/models/seller_model.dart';
-import 'package:hand_made_new/state_management/cubit.dart';
-import 'package:hand_made_new/state_management/states.dart';
+import 'package:hand_made_new/bloc/cubit.dart';
+import 'package:hand_made_new/bloc/states.dart';
 
 class FamiliesList extends StatefulWidget {
   const FamiliesList({Key key}) : super(key: key);
@@ -14,6 +14,11 @@ class FamiliesList extends StatefulWidget {
 }
 
 class _FamiliesListState extends State<FamiliesList> {
+  @override
+  void initState() {
+   HandCubit.get(context).getSeller();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     SellerModel model;

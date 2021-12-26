@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hand_made_new/screens/home/get_data_test.dart';
 
 import 'package:hand_made_new/storage/shared.dart';
 
@@ -14,11 +15,18 @@ import '/screens/home/map.dart';
 import '/screens/home/start.dart';
 import '/screens/intro/onBoarding.dart';
 import '/screens/products/add_product.dart';
-import '/state_management/cubit.dart';
+import '/bloc/cubit.dart';
+import 'bloc/bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+ await Firebase.initializeApp();
+  BlocOverrides.runZoned(
+    () {
+
+    },
+    blocObserver: MyBlocObserver(),
+  );
   Widget startPage;
   var onBoarding = await SharedPref.getData(key: 'onBoarding');
   var token = await SharedPref.getData(key: 'token');
@@ -45,7 +53,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => HandCubit()..getSeller()),
+        BlocProvider(create: (context) => HandCubit()),
       ],
       child: MaterialApp(
         theme: ThemeData(

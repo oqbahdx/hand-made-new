@@ -6,8 +6,8 @@ import 'package:hand_made_new/screens/account/verify_otp.dart';
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 import 'package:hand_made_new/widgets/navigators.dart';
-import '/state_management/cubit.dart';
-import '/state_management/states.dart';
+import '/bloc/cubit.dart';
+import '/bloc/states.dart';
 import '/widgets/text_from_field.dart';
 import 'login.dart';
 

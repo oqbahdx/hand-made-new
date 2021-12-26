@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hand_made_new/screens/home/get_data_test.dart';
 import 'package:hand_made_new/screens/home/profile.dart';
 import 'package:hand_made_new/screens/home/time_line.dart';
-import 'package:hand_made_new/state_management/cubit.dart';
-import 'package:hand_made_new/state_management/states.dart';
+import 'package:hand_made_new/bloc/cubit.dart';
+import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 import 'package:hand_made_new/widgets/drawer_widget.dart';
@@ -27,7 +28,7 @@ class _StartPageState extends State<StartPage> {
     const Profile(),
     const MapPage(),
     const TimeLine(),
-    const FamiliesList(),
+    const FamiliesList()
   ];
   List<String> titles = [
     'Profile',

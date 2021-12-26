@@ -63,3 +63,12 @@ class HandGetSellersErrorState extends HandMadeState {
 
   HandGetSellersErrorState(this.error);
 }
+
+class HandGetUserLoadingState extends HandMadeState {}
+class HandGetUserSuccessState extends HandMadeState {}
+
+class HandGetUserErrorState extends HandMadeState {
+  final String error;
+
+  HandGetUserErrorState(this.error);
+}

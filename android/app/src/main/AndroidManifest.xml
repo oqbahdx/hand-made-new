@@ -5,6 +5,7 @@
         android:label="hand_made_new"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/launcher_icon">
+
        <meta-data android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyBJGNoL5ixxavlZvd7C9JLssxHuuTBBM8A"/>
         <activity

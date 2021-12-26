@@ -13,6 +13,7 @@ Widget containerBuildTap(
         child: Center(
           child: Text(
             text,
+            textAlign: TextAlign.center,
             style: containerStyle,
           ),
         ),

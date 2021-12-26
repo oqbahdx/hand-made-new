@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/screens/home/start.dart';
 import '/components/containers.dart';
-import '/state_management/states.dart';
+import '/bloc/states.dart';
 import '/widgets/navigators.dart';
 
-import '/state_management/cubit.dart';
+import '/bloc/cubit.dart';
 import '/styles/fonts.dart';
 import '/widgets/app_bar.dart';
 import '/widgets/text_from_field.dart';
