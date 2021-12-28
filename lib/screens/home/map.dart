@@ -1,31 +1,57 @@
+import 'dart:collection';
+
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-
+import 'package:flutter/services.dart' show rootBundle;
 
 class MapPage extends StatefulWidget {
-
-  static String id = "MapPage";
-
   const MapPage({Key key}) : super(key: key);
+  static String id = "MapPage";
 
   @override
   _MapPageState createState() => _MapPageState();
 }
 
 class _MapPageState extends State<MapPage> {
+  String _mapStyle;
+  BitmapDescriptor myIcon;
+  var _markers = HashSet<Marker>();
+
+  @override
+  void initState() {
+    BitmapDescriptor.fromAssetImage(
+            ImageConfiguration(size: Size(48, 48)), 'assets/marker.png')
+        .then((onValue) {
+      myIcon = onValue;
+    });
+    rootBundle.loadString('assets/map_style.txt').then((string) {
+      _mapStyle = string;
+    });
+  }
+
+  _onMapCreated(GoogleMapController controller) {
+    if (mounted)
+      setState(() {
+        controller.setMapStyle(_mapStyle);
+      });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: GoogleMap(
-        zoomGesturesEnabled: true,
+        markers: _markers,
+        trafficEnabled: false,
+        compassEnabled: true,
         myLocationEnabled: true,
         myLocationButtonEnabled: true,
         initialCameraPosition: CameraPosition(
-          zoom: 16.4746,
-          target: LatLng(15.5007,
-              32.5599),
+          target: LatLng(15.713290, 32.559315),
+          zoom: 10.2,
         ),
-      )
+        onMapCreated: _onMapCreated,
+      ),
     );
   }
 }

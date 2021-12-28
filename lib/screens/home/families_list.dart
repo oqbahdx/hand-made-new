@@ -2,9 +2,11 @@ import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/components/containers.dart';
-import 'package:hand_made_new/models/seller_model.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
+import 'package:hand_made_new/components/navigator.dart';
+import 'package:hand_made_new/screens/account/sellers_details.dart';
+
 
 class FamiliesList extends StatefulWidget {
   const FamiliesList({Key key}) : super(key: key);
@@ -16,12 +18,13 @@ class FamiliesList extends StatefulWidget {
 class _FamiliesListState extends State<FamiliesList> {
   @override
   void initState() {
-   HandCubit.get(context).getSeller();
+    HandCubit.get(context).getSeller();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-    SellerModel model;
+
     return BlocConsumer<HandCubit, HandMadeState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -30,8 +33,13 @@ class _FamiliesListState extends State<FamiliesList> {
           builder: (context) => Scaffold(
             body: ListView.separated(
                 itemBuilder: (context, index) => familiesContainer(
-                  HandCubit.get(context).sellers[index],
-                ),
+                      model:HandCubit.get(context).sellers[index],
+                  onTap: (){
+                     moveToPageWithData(context,namePage:SellerDetails(
+                       model: HandCubit.get(context).sellers[index].name,
+                     ) );
+                  }
+                    ),
                 separatorBuilder: (context, index) => SizedBox(
                       height: 10,
                     ),
@@ -39,6 +47,7 @@ class _FamiliesListState extends State<FamiliesList> {
           ),
           fallback: (context) => Center(child: CircularProgressIndicator()),
         );
+
       },
     );
   }

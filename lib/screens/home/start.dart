@@ -57,6 +57,7 @@ class _StartPageState extends State<StartPage> {
                   child: homePages.elementAt(HandCubit.get(context).pageIndex),
                 ),
                 bottomNavigationBar: Container(
+                  height: 80,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
@@ -68,7 +69,7 @@ class _StartPageState extends State<StartPage> {
                     ),
                     child: Padding(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 8),
+                            horizontal: 15.0, vertical: 12),
                         child: startBottomNav(
                             index: HandCubit.get(context).pageIndex,
                             function: (index) {

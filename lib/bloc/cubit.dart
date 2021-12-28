@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/models/buyer_model.dart';
 import 'package:hand_made_new/models/products_model.dart';
@@ -172,32 +173,50 @@ class HandCubit extends Cubit<HandMadeState> {
 
   List<SellerModel> sellers = [];
   List<BuyerModel> buyers = [];
-  // Future<QuerySnapshot<Map<String, dynamic>>> getBuyers(){
-  //  return FirebaseFirestore.instance.collection('/buyers').get();
-  // }
-  void getSeller() {
+
+   getSeller() {
     emit(HandGetSellersLoadingState());
+    sellers = [];
     // print(sellers[0]);
     FirebaseFirestore.instance.collection('/sellers').get().then((value) {
       value.docs.forEach((element) {
         sellers.add(SellerModel.fromJson(element.data()));
       });
       emit(HandGetSellersSuccessState());
-       // print(sellers[1]);
+      // print(sellers[1]);
     }).catchError((error) {
       print(error.toString());
       emit(HandGetSellersErrorState(error.toString()));
     });
   }
-
-
+  SellerModel sellerModel;
+  Set<Marker> markers={
+    Marker(markerId: MarkerId('1'),icon: BitmapDescriptor.defaultMarker,
+    position: LatLng(15.5007, 32.5599),
+    ),
+    Marker(markerId: MarkerId('2'),icon: BitmapDescriptor.defaultMarkerWithHue( BitmapDescriptor.hueAzure),
+      position: LatLng(15.5007, 32.5799),
+    ),
+    Marker(markerId: MarkerId('3'),icon: BitmapDescriptor.defaultMarkerWithHue( BitmapDescriptor.hueCyan),
+      position: LatLng(15.5307, 32.5599),
+    ),
+    Marker(markerId: MarkerId('4'),icon: BitmapDescriptor.defaultMarkerWithHue( BitmapDescriptor.hueOrange),
+      position: LatLng(15.1007, 32.5599),
+    ),
+    Marker(markerId: MarkerId('5'),icon: BitmapDescriptor.defaultMarkerWithHue( BitmapDescriptor.hueMagenta),
+      position: LatLng(15.5037, 32.5399),
+    ),
+  };
   ProductsModel productsModel;
- Future<void> addProduct({String name,String des,String cal,String cate,String image,String price}){
-   CollectionReference products = FirebaseFirestore.instance.collection('products');
-    return products.add(productsModel.addProduct(
-
-    ));
- }
-
-
+  Future<void> addProduct(
+      {String name,
+      String des,
+      String cal,
+      String cate,
+      String image,
+      String price}) {
+    CollectionReference products =
+        FirebaseFirestore.instance.collection('products');
+    return products.add(productsModel.addProduct());
+  }
 }

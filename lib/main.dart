@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hand_made_new/screens/home/get_data_test.dart';
+import 'package:hand_made_new/screens/account/sellers_details.dart';
 
 import 'package:hand_made_new/storage/shared.dart';
 
@@ -20,13 +20,7 @@ import 'bloc/bloc_observer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
- await Firebase.initializeApp();
-  BlocOverrides.runZoned(
-    () {
-
-    },
-    blocObserver: MyBlocObserver(),
-  );
+  await Firebase.initializeApp();
   Widget startPage;
   var onBoarding = await SharedPref.getData(key: 'onBoarding');
   var token = await SharedPref.getData(key: 'token');
@@ -53,14 +47,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => HandCubit()),
+        BlocProvider(create: (context) => HandCubit()..getSeller()),
       ],
       child: MaterialApp(
         theme: ThemeData(
           fontFamily: 'Amiri',
         ),
         debugShowCheckedModeBanner: false,
-        // initialRoute: startPage,
+         // initialRoute: SellerDetails.id,
         home: startPage,
         routes: {
           OnBoarding.id: (context) => OnBoarding(),
@@ -73,6 +67,7 @@ class MyApp extends StatelessWidget {
           BuyerRegisterPage.id: (context) => BuyerRegisterPage(),
           OTPPage.id: (context) => const OTPPage(),
           VerifyOtp.id: (context) => const VerifyOtp(),
+          SellerDetails.id:(context)=> SellerDetails()
         },
       ),
     );

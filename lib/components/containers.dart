@@ -57,7 +57,7 @@ Widget defaultButtonTap(String text, Function onTap) {
   );
 }
 
-Widget familiesContainer(SellerModel model){
+Widget familiesContainer({SellerModel model,Function onTap}){
   return Center(
     child: ListView(
       physics: BouncingScrollPhysics(),
@@ -66,15 +66,18 @@ Widget familiesContainer(SellerModel model){
         SizedBox(height: 20,),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
-          child: Container(
-            alignment: Alignment.center,
-            height: 150,
-            width: 350,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                color: Colors.grey[300]
+          child: GestureDetector(
+            onTap: onTap,
+            child: Container(
+              alignment: Alignment.center,
+              height: 150,
+              width: 350,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Colors.grey[300]
+              ),
+              child: Text(model.name,style: bigText,),
             ),
-            child: Text(model.name,style: bigText,),
           ),
         )
       ],
