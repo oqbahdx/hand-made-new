@@ -9,6 +9,7 @@ import 'package:hand_made_new/models/buyer_model.dart';
 import 'package:hand_made_new/models/products_model.dart';
 import 'package:hand_made_new/models/seller_model.dart';
 import 'package:hand_made_new/bloc/states.dart';
+import 'package:hand_made_new/models/user_model.dart';
 import 'package:hand_made_new/storage/shared.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
@@ -47,7 +48,9 @@ class HandCubit extends Cubit<HandMadeState> {
       image = File(pickedFile.path);
       emit(HandUpdateImageSuccessState());
     }
-    print(image.path.split('/').last);
+    print(image.path
+        .split('/')
+        .last);
   }
 
   bool isShow = true;
@@ -68,12 +71,11 @@ class HandCubit extends Cubit<HandMadeState> {
 
   GlobalKey<FormState> formKey = GlobalKey();
 
-  void sellerRegister(
-      {String name,
-      String email,
-      String password,
-      String phone,
-      String isAvailable}) async {
+  void sellerRegister({String name,
+    String email,
+    String password,
+    String phone,
+    String isAvailable}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
 
     try {
@@ -99,14 +101,13 @@ class HandCubit extends Cubit<HandMadeState> {
     }
   }
 
-  void createSeller(
-      {String uid,
-      @required String name,
-      @required String email,
-      @required String phone,
-      String isAvailable,
-      double longitude,
-      double latitude}) async {
+  void createSeller({String uid,
+    @required String name,
+    @required String email,
+    @required String phone,
+    String isAvailable,
+    double longitude,
+    double latitude}) async {
     Position location = await Geolocator.getCurrentPosition();
     SellerModel sellerModel = SellerModel(
         uid: uid,
@@ -146,7 +147,7 @@ class HandCubit extends Cubit<HandMadeState> {
 
   void createBuyer({String uid, String name, String email}) {
     BuyerModel buyerModel =
-        BuyerModel(uid: uid, name: name, email: email, profileImage: '');
+    BuyerModel(uid: uid, name: name, email: email, profileImage: '');
     FirebaseFirestore.instance
         .collection('buyers')
         .doc(uid)
@@ -174,7 +175,7 @@ class HandCubit extends Cubit<HandMadeState> {
   List<SellerModel> sellers = [];
   List<BuyerModel> buyers = [];
 
-   getSeller() {
+  getSeller() {
     emit(HandGetSellersLoadingState());
     sellers = [];
     // print(sellers[0]);
@@ -189,34 +190,126 @@ class HandCubit extends Cubit<HandMadeState> {
       emit(HandGetSellersErrorState(error.toString()));
     });
   }
+
   SellerModel sellerModel;
-  Set<Marker> markers={
-    Marker(markerId: MarkerId('1'),icon: BitmapDescriptor.defaultMarker,
-    position: LatLng(15.5007, 32.5599),
+  Set<Marker> markers = {
+    Marker(markerId: MarkerId('1'), icon: BitmapDescriptor.defaultMarker,
+      position: LatLng(15.5007, 32.5599),
     ),
-    Marker(markerId: MarkerId('2'),icon: BitmapDescriptor.defaultMarkerWithHue( BitmapDescriptor.hueAzure),
+    Marker(markerId: MarkerId('2'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
       position: LatLng(15.5007, 32.5799),
     ),
-    Marker(markerId: MarkerId('3'),icon: BitmapDescriptor.defaultMarkerWithHue( BitmapDescriptor.hueCyan),
+    Marker(markerId: MarkerId('3'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
       position: LatLng(15.5307, 32.5599),
     ),
-    Marker(markerId: MarkerId('4'),icon: BitmapDescriptor.defaultMarkerWithHue( BitmapDescriptor.hueOrange),
+    Marker(markerId: MarkerId('4'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
       position: LatLng(15.1007, 32.5599),
     ),
-    Marker(markerId: MarkerId('5'),icon: BitmapDescriptor.defaultMarkerWithHue( BitmapDescriptor.hueMagenta),
+    Marker(markerId: MarkerId('5'),
+      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
       position: LatLng(15.5037, 32.5399),
     ),
   };
   ProductsModel productsModel;
-  Future<void> addProduct(
-      {String name,
-      String des,
-      String cal,
-      String cate,
-      String image,
-      String price}) {
+
+  Future<void> addProduct({String name,
+    String des,
+    String cal,
+    String cate,
+    String image,
+    String price}) {
+    emit(HandUserRegisterLoadingState());
     CollectionReference products =
-        FirebaseFirestore.instance.collection('products');
+    FirebaseFirestore.instance.collection('products');
     return products.add(productsModel.addProduct());
+  }
+
+  void userBuyerRegister({String email, String password,String name}) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    try {
+      emit(HandGetUserLoadingState());
+      await auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) {
+        print(value.user.uid);
+        createUser(
+          email: email,
+          role: 'buyer',
+          name: name,
+          uid: value.user.uid,
+          profileImage: ''
+        );
+        showMessageSuccess('Registered successfully');
+        emit(HandUserRegisterSuccessState());
+      });
+    } on FirebaseAuthException catch (e) {
+      print(e.toString());
+      showMessageError(e.message.toString());
+      emit(HandUserRegisterErrorState(e.toString()));
+    }
+    await auth.createUserWithEmailAndPassword(email: email, password: password).then((value){
+      emit(HandUserRegisterSuccessState());
+
+    }).catchError((error){
+      emit(HandUserRegisterErrorState(error.toString()));
+    });
+  }
+  void userSellerRegister({String email, String password,String phone ,String name}) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    Position location = await Geolocator.getCurrentPosition();
+    try {
+      emit(HandGetUserLoadingState());
+      await auth
+          .createUserWithEmailAndPassword(email: email, password: password)
+          .then((value) {
+
+        print(value.user.uid);
+        createUser(
+          email: email,
+          role: 'seller',
+          name: name,
+          latitude: location.latitude,
+          longitude: location.longitude,
+          phone: phone,
+          isAvailable: true,
+          uid: value.user.uid,
+          profileImage: '',
+        );
+        showMessageSuccess('Registered successfully');
+        emit(HandUserRegisterSuccessState());
+      });
+    } on FirebaseAuthException catch (e) {
+      print(e.toString());
+      showMessageError(e.message.toString());
+      emit(HandUserRegisterErrorState(e.toString()));
+    }
+    await auth.createUserWithEmailAndPassword(email: email, password: password).then((value){
+      emit(HandUserRegisterSuccessState());
+
+    }).catchError((error){
+      emit(HandUserRegisterErrorState(error.toString()));
+    });
+  }
+  void createUser({String uid, String name, String email,String phone,
+    double latitude,double longitude,String role,String profileImage,bool isAvailable}) {
+    UserModel model =
+    UserModel(
+      uid: uid,
+      name: name,
+      email: email,
+      profileImage: profileImage,
+      isAvailable: isAvailable,
+      phone: phone,
+      latitude: latitude,
+      longitude: longitude,
+      role: role,
+    );
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(uid)
+        .set(model.toJson());
   }
 }

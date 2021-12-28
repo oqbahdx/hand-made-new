@@ -44,7 +44,7 @@ flutter_icons:
   ios: true
   image_path: "assets/applogo.png"
 
-  #  flutter_lints: ^1.0.0
+  flutter_lints: ^1.0.0
   flutter_native_splash: ^1.2.4
 
 

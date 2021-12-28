@@ -57,30 +57,78 @@ Widget defaultButtonTap(String text, Function onTap) {
   );
 }
 
-Widget familiesContainer({SellerModel model,Function onTap}){
+Widget familiesContainer({SellerModel model, Function onTap}) {
   return Center(
     child: ListView(
       physics: BouncingScrollPhysics(),
       shrinkWrap: true,
       children: [
-        SizedBox(height: 20,),
+        SizedBox(
+          height: 20,
+        ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           child: GestureDetector(
             onTap: onTap,
-            child: Container(
-              alignment: Alignment.center,
-              height: 150,
-              width: 350,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.grey[300]
+            child: Card(
+              elevation: 20.0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
               ),
-              child: Text(model.name,style: bigText,),
+              color: Colors.transparent,
+              child: Container(
+                alignment: Alignment.center,
+                height: 150,
+                width: 350,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    color: Colors.black38),
+                child: Text(
+                  model.name,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30
+                  ),
+                ),
+              ),
             ),
           ),
         )
       ],
+    ),
+  );
+}
+
+Widget PositionedBuild({double h, double w, String txt}) {
+  return Positioned(
+    right: w,
+    top: h,
+    child: Card(
+      elevation: 10.0,
+      color: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          bottomRight: Radius.circular(100),
+          topLeft: Radius.circular(100),
+        ),
+      ),
+      child: Container(
+        height: 250,
+        width: 250,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              bottomRight: Radius.circular(100),
+              topLeft: Radius.circular(100),
+            ),
+            color: Colors.black38),
+        child: Center(
+            child: Text(
+          txt,
+          style: TextStyle(
+              fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+        )),
+      ),
     ),
   );
 }

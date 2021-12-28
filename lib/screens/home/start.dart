@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hand_made_new/screens/home/get_data_test.dart';
 import 'package:hand_made_new/screens/home/profile.dart';
 import 'package:hand_made_new/screens/home/time_line.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
@@ -51,7 +50,7 @@ class _StartPageState extends State<StartPage> {
                 appBar: appBarWidget(
                     title: Text(titles[HandCubit.get(context).pageIndex],
                         style: normalText),
-                    elevation: 0.0,
+                    elevation: 20.0,
                     action: Container()),
                 body: Center(
                   child: homePages.elementAt(HandCubit.get(context).pageIndex),

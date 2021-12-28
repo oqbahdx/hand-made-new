@@ -72,3 +72,9 @@ class HandGetUserErrorState extends HandMadeState {
 
   HandGetUserErrorState(this.error);
 }
+class HandUserRegisterLoadingState extends HandMadeState{}
+class HandUserRegisterSuccessState extends HandMadeState{}
+class HandUserRegisterErrorState extends HandMadeState{
+  final String error;
+  HandUserRegisterErrorState(this.error);
+}

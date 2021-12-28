@@ -16,7 +16,7 @@ import '/screens/home/start.dart';
 import '/screens/intro/onBoarding.dart';
 import '/screens/products/add_product.dart';
 import '/bloc/cubit.dart';
-import 'bloc/bloc_observer.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

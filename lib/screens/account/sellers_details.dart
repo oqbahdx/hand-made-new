@@ -1,15 +1,19 @@
-import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:hand_made_new/bloc/cubit.dart';
-import 'package:hand_made_new/bloc/states.dart';
-import 'package:hand_made_new/models/seller_model.dart';
+
+import 'package:hand_made_new/components/containers.dart';
+
+import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 
-
 class SellerDetails extends StatefulWidget {
-  final String model;
-  const SellerDetails({Key key,this.model,}) : super(key: key);
+  final String name;
+
+  const SellerDetails({
+    Key key,
+    this.name,
+  }) : super(key: key);
   static String id = "SellerDetails";
 
   @override
@@ -22,14 +26,39 @@ class _SellerDetailsState extends State<SellerDetails> {
     HandCubit.get(context).getSeller();
     super.initState();
   }
-  @override
 
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBarWidget(
-          title: Text(widget.model),
-          elevation: 0.0,
-          action: Container()
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
+    return SafeArea(
+      child: Scaffold(
+        appBar: appBarWidget(
+          title: Text(
+            widget.name,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          elevation: 10.0,
+          action: Container(),
+        ),
+        body: Container(
+          child: Stack(
+            children: [
+              PositionedBuild(
+                h: h * 0.080,
+                w: w * 0.090,
+                txt: "Products",
+              ),
+              PositionedBuild(
+                h: h * 0.48,
+                w: w * 0.25,
+                txt: "Time Line",
+              ),
+            ],
+          ),
+          decoration:
+              BoxDecoration(gradient: LinearGradient(colors: gradientColor)),
+        ),
       ),
     );
   }

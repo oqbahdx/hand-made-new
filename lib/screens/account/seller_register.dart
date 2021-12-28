@@ -108,14 +108,14 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                   height: 80,
                 ),
                 ConditionalBuilder(
-                  condition: state is! HandSellerRegisterLoadingState,
+                  condition: state is! HandGetUserLoadingState,
                   builder: (context) => defaultButtonTap('REGISTER', () {
-                    HandCubit.get(context).sellerRegister(
+
+                    HandCubit.get(context).userSellerRegister(
                       name: nameController.text,
                       email: emailController.text,
-                      password: passwordController.text,
                       phone: phoneController.text,
-                      isAvailable: 'true',
+                      password: passwordController.text,
                     );
                   }),
                   fallback: (context) =>

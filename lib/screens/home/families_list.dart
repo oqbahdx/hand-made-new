@@ -6,6 +6,7 @@ import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/navigator.dart';
 import 'package:hand_made_new/screens/account/sellers_details.dart';
+import 'package:hand_made_new/styles/colors.dart';
 
 
 class FamiliesList extends StatefulWidget {
@@ -31,19 +32,27 @@ class _FamiliesListState extends State<FamiliesList> {
         return ConditionalBuilder(
           condition: HandCubit.get(context).sellers.length > 0,
           builder: (context) => Scaffold(
-            body: ListView.separated(
-                itemBuilder: (context, index) => familiesContainer(
-                      model:HandCubit.get(context).sellers[index],
-                  onTap: (){
-                     moveToPageWithData(context,namePage:SellerDetails(
-                       model: HandCubit.get(context).sellers[index].name,
-                     ) );
-                  }
-                    ),
-                separatorBuilder: (context, index) => SizedBox(
-                      height: 10,
-                    ),
-                itemCount: HandCubit.get(context).sellers.length),
+
+            body: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: gradientColor
+                )
+              ),
+              child: ListView.separated(
+                  itemBuilder: (context, index) => familiesContainer(
+                        model:HandCubit.get(context).sellers[index],
+                    onTap: (){
+                       moveToPageWithData(context,namePage:SellerDetails(
+                         name: HandCubit.get(context).sellers[index].name,
+                       ) );
+                    }
+                      ),
+                  separatorBuilder: (context, index) => SizedBox(
+                        height: 10,
+                      ),
+                  itemCount: HandCubit.get(context).sellers.length),
+            ),
           ),
           fallback: (context) => Center(child: CircularProgressIndicator()),
         );
