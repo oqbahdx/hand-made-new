@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Amiri',
         ),
         debugShowCheckedModeBanner: false,
-         // initialRoute: SellerDetails.id,
+         // initialRoute: SellerRegisterPage.id,
         home: startPage,
         routes: {
           OnBoarding.id: (context) => OnBoarding(),

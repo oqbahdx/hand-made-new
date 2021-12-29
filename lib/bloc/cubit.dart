@@ -172,19 +172,17 @@ class HandCubit extends Cubit<HandMadeState> {
     }
   }
 
-  List<SellerModel> sellers = [];
+  List<UserModel> sellers = [];
   List<BuyerModel> buyers = [];
 
   getSeller() {
     emit(HandGetSellersLoadingState());
     sellers = [];
-    // print(sellers[0]);
-    FirebaseFirestore.instance.collection('/sellers').get().then((value) {
+    FirebaseFirestore.instance.collection('/users').get().then((value) {
       value.docs.forEach((element) {
-        sellers.add(SellerModel.fromJson(element.data()));
+        sellers.add(UserModel.fromJson(element.data()));
       });
       emit(HandGetSellersSuccessState());
-      // print(sellers[1]);
     }).catchError((error) {
       print(error.toString());
       emit(HandGetSellersErrorState(error.toString()));
@@ -293,15 +291,16 @@ class HandCubit extends Cubit<HandMadeState> {
       emit(HandUserRegisterErrorState(error.toString()));
     });
   }
+  UserModel userModel;
   void createUser({String uid, String name, String email,String phone,
     double latitude,double longitude,String role,String profileImage,bool isAvailable}) {
-    UserModel model =
+    userModel =
     UserModel(
       uid: uid,
       name: name,
       email: email,
       profileImage: profileImage,
-      isAvailable: isAvailable,
+      isAvailable: true,
       phone: phone,
       latitude: latitude,
       longitude: longitude,
@@ -310,6 +309,6 @@ class HandCubit extends Cubit<HandMadeState> {
     FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
-        .set(model.toJson());
+        .set(userModel.toJson());
   }
 }

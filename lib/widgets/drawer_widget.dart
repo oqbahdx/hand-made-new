@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/components/containers.dart';
-import 'package:hand_made_new/models/seller_model.dart';
 import 'package:hand_made_new/screens/products/add_product.dart';
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/navigators.dart';
 
-SellerModel model;
+
+
+
 Drawer drawerBuild(BuildContext context){
+
   return Drawer(
 
    child:Column(
@@ -33,7 +36,7 @@ Drawer drawerBuild(BuildContext context){
 
            ),
          ],),
-         Text('user name',style: normalText,),
+         Text('name',style: normalText,),
 
        ],),
        const Divider(),

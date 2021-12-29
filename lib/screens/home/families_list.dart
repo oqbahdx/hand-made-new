@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder/conditional_builder.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/components/containers.dart';
@@ -39,23 +41,62 @@ class _FamiliesListState extends State<FamiliesList> {
                   colors: gradientColor
                 )
               ),
-              child: ListView.separated(
-                  itemBuilder: (context, index) => familiesContainer(
-                        model:HandCubit.get(context).sellers[index],
-                    onTap: (){
-                       moveToPageWithData(context,namePage:SellerDetails(
-                         name: HandCubit.get(context).sellers[index].name,
-                       ) );
+              child: StreamBuilder(
+                  stream: FirebaseFirestore.instance.collection('/users').doc(FirebaseAuth.instance.currentUser.uid).snapshots(),
+                  builder: (context, snapshot){
+                    if (!snapshot.hasData){
+                      return Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: gradientColor
+                          )
+                        ),
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.white,
+                          ),
+                        ),
+                      );
                     }
-                      ),
-                  separatorBuilder: (context, index) => SizedBox(
-                        height: 10,
-                      ),
-                  itemCount: HandCubit.get(context).sellers.length),
+
+                    final userData = snapshot.data.data();
+
+                    if (userData['role'] == 'seller'){
+                      return  ListView.separated(
+                        shrinkWrap: true,
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, index) => familiesContainer(
+                              model:HandCubit.get(context).sellers[index],
+                              onTap: (){
+                                moveToPageWithData(context,namePage:SellerDetails(
+                                  name: HandCubit.get(context).sellers[index].name,
+                                ) );
+                              }
+                          ),
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 10,
+                          ),
+                          itemCount: HandCubit.get(context).sellers.length);
+                    }
+
+                     return Container();
+                  }
+              )
+
             ),
           ),
-          fallback: (context) => Center(child: CircularProgressIndicator()),
+          fallback: (context) => Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: gradientColor
+                )
+              ),
+              child: Center(child: CircularProgressIndicator(
+                color: Colors.white,
+              ))),
         );
+
+
 
       },
     );

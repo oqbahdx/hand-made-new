@@ -25,6 +25,8 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
+    double w = MediaQuery.of(context).size.width;
     return BlocProvider(
       create: (context) => HandCubit(),
       child: BlocConsumer<HandCubit, HandMadeState>(
@@ -48,8 +50,8 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
                 key: HandCubit.get(context).formKey,
                 child: Column(
                   children: [
-                    const SizedBox(
-                      height: 90,
+                     SizedBox(
+                      height: h * 0.05,
                     ),
                     defaultTextFormField(
                         text: 'Name',
@@ -64,8 +66,8 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
                             return 'please enter your name';
                           }
                         }),
-                    const SizedBox(
-                      height: 40,
+                    SizedBox(
+                      height: h * 0.05,
                     ),
                     defaultTextFormField(
                         text: 'Email',
@@ -80,8 +82,8 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
                             return 'please enter your email';
                           }
                         }),
-                    const SizedBox(
-                      height: 40,
+                    SizedBox(
+                      height: h * 0.05,
                     ),
                     defaultTextFormField(
                         text: 'Password',
@@ -103,11 +105,13 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
                           }
                         }),
                     SizedBox(
-                      height: 180,
+                      height: h * 0.20,
                     ),
                     ConditionalBuilder(
                       condition: state is! HandGetUserLoadingState,
-                      builder: (context) => defaultButtonTap('REGISTER', () {
+                      builder: (context) => containerBuildTap(
+                         h: h * 0.075,
+                          text: 'REGISTER',onTap:  () {
                         HandCubit.get(context).userBuyerRegister(
                           name: nameController.text,
                           email: emailController.text,
@@ -118,22 +122,25 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
                           Center(child: CircularProgressIndicator()),
                     ),
                     SizedBox(
-                      height: 20,
+                      height: h * 0.08,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text(
-                          'You have already account ? ',
-                          style: normalText,
-                        ),
-                        gradientText(
-                            text: 'LOGIN',
-                            onTap: () {
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                  LoginPage.id, (route) => false);
-                            })
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(
+                            'You have already account ? ',
+                            style: normalText,
+                          ),
+                          gradientText(
+                              text: 'LOG',
+                              onTap: () {
+                                Navigator.of(context).pushNamedAndRemoveUntil(
+                                    LoginPage.id, (route) => false);
+                              })
+                        ],
+                      ),
                     )
                   ],
                 ),
