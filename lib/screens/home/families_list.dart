@@ -21,7 +21,7 @@ class FamiliesList extends StatefulWidget {
 class _FamiliesListState extends State<FamiliesList> {
   @override
   void initState() {
-    HandCubit.get(context).getSeller();
+    HandCubit.get(context).getUsers();
     super.initState();
   }
 

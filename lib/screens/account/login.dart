@@ -1,6 +1,7 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hand_made_new/storage/shared.dart';
 import '/components/containers.dart';
 import '/screens/account/main_register.dart';
 import '/screens/account/otp.dart';
@@ -129,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                                   password: passwordController.text
                               );
                             }
-
+                               SharedPref.saveData(key: 'key', value: 'uId');
                           }),
                       fallback: (context)=>Center(child: CircularProgressIndicator()),
                       ),

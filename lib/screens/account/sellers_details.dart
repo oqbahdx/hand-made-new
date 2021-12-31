@@ -23,7 +23,7 @@ class SellerDetails extends StatefulWidget {
 class _SellerDetailsState extends State<SellerDetails> {
   @override
   void initState() {
-    HandCubit.get(context).getSeller();
+    HandCubit.get(context).getUsers();
     super.initState();
   }
 

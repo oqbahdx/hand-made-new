@@ -175,7 +175,7 @@ class HandCubit extends Cubit<HandMadeState> {
   List<UserModel> sellers = [];
   List<BuyerModel> buyers = [];
 
-  getSeller() {
+  getUsers() {
     emit(HandGetSellersLoadingState());
     sellers = [];
     FirebaseFirestore.instance.collection('/users').get().then((value) {
@@ -310,5 +310,20 @@ class HandCubit extends Cubit<HandMadeState> {
         .collection('users')
         .doc(uid)
         .set(userModel.toJson());
+  }
+
+  getCurrentUser(){
+    emit(HandGetCurrentUserLoadingState());
+   FirebaseFirestore.instance
+       .collection('users')
+       .doc(uId).get()
+       .then((value){
+         print(value.data());
+         emit(HandGetSellersSuccessState());
+   })
+       .catchError((error){
+        print(error.toString());
+        emit(HandGetCurrentUserErrorState(error.toString()));
+   });
   }
 }

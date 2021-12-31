@@ -65,6 +65,7 @@ class HandGetSellersErrorState extends HandMadeState {
 }
 
 class HandGetUserLoadingState extends HandMadeState {}
+
 class HandGetUserSuccessState extends HandMadeState {}
 
 class HandGetUserErrorState extends HandMadeState {
@@ -72,9 +73,23 @@ class HandGetUserErrorState extends HandMadeState {
 
   HandGetUserErrorState(this.error);
 }
-class HandUserRegisterLoadingState extends HandMadeState{}
-class HandUserRegisterSuccessState extends HandMadeState{}
-class HandUserRegisterErrorState extends HandMadeState{
+
+class HandUserRegisterLoadingState extends HandMadeState {}
+
+class HandUserRegisterSuccessState extends HandMadeState {}
+
+class HandUserRegisterErrorState extends HandMadeState {
   final String error;
+
   HandUserRegisterErrorState(this.error);
+}
+
+class HandGetCurrentUserLoadingState extends HandMadeState {}
+
+class HandGetCurrentUserSuccessState extends HandMadeState {}
+
+class HandGetCurrentUserErrorState extends HandMadeState {
+  final String error;
+
+  HandGetCurrentUserErrorState(this.error);
 }

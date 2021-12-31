@@ -35,7 +35,11 @@ class _StartPageState extends State<StartPage> {
     'TimeLine',
     'Families List',
   ];
-
+  @override
+  void initState() {
+    HandCubit.get(context).getUsers();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider(

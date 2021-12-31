@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/screens/account/sellers_details.dart';
+import 'package:hand_made_new/screens/home/profile.dart';
 
 import 'package:hand_made_new/storage/shared.dart';
 
@@ -23,7 +24,7 @@ void main() async {
   await Firebase.initializeApp();
   Widget startPage;
   var onBoarding = await SharedPref.getData(key: 'onBoarding');
-  var token = await SharedPref.getData(key: 'token');
+   uId = await SharedPref.getData(key: 'uId');
   if (onBoarding != null) {
     if (token != null)
       startPage = StartPage();
@@ -41,35 +42,34 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({this.startPage});
 
-  Widget startPage;
+  final Widget startPage;
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (context) => HandCubit()..getSeller()),
-      ],
-      child: MaterialApp(
-        theme: ThemeData(
-          fontFamily: 'Amiri',
-        ),
-        debugShowCheckedModeBanner: false,
-         // initialRoute: SellerRegisterPage.id,
-        home: startPage,
-        routes: {
-          OnBoarding.id: (context) => OnBoarding(),
-          StartPage.id: (context) => const StartPage(),
-          MapPage.id: (context) => const MapPage(),
-          AddProduct.id: (context) => const AddProduct(),
-          LoginPage.id: (context) => const LoginPage(),
-          RegisterMainPage.id: (context) => const RegisterMainPage(),
-          SellerRegisterPage.id: (context) => SellerRegisterPage(),
-          BuyerRegisterPage.id: (context) => BuyerRegisterPage(),
-          OTPPage.id: (context) => const OTPPage(),
-          VerifyOtp.id: (context) => const VerifyOtp(),
-          SellerDetails.id:(context)=> SellerDetails()
-        },
+    return MaterialApp(
+      theme: ThemeData(
+        fontFamily: 'Amiri',
       ),
+      debugShowCheckedModeBanner: false,
+       // initialRoute: SellerRegisterPage.id,
+      home: BlocProvider(
+        create: (_)=>HandCubit()..getUsers(),
+        child: startPage,
+      ),
+      routes: {
+        OnBoarding.id: (context) => OnBoarding(),
+        StartPage.id: (context) => const StartPage(),
+        MapPage.id: (context) => const MapPage(),
+        AddProduct.id: (context) => const AddProduct(),
+        LoginPage.id: (context) => const LoginPage(),
+        RegisterMainPage.id: (context) => const RegisterMainPage(),
+        SellerRegisterPage.id: (context) => SellerRegisterPage(),
+        BuyerRegisterPage.id: (context) => BuyerRegisterPage(),
+        OTPPage.id: (context) => const OTPPage(),
+        VerifyOtp.id: (context) => const VerifyOtp(),
+        SellerDetails.id:(context)=> SellerDetails(),
+        Profile.id:(context)=>Profile()
+      },
     );
   }
 }
