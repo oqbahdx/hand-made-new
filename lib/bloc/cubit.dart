@@ -319,7 +319,7 @@ class HandCubit extends Cubit<HandMadeState> {
        .doc(uId).get()
        .then((value){
          print(value.data());
-         emit(HandGetSellersSuccessState());
+         emit(HandGetCurrentUserSuccessState());
    })
        .catchError((error){
         print(error.toString());

@@ -17,6 +17,7 @@ import '/screens/home/start.dart';
 import '/screens/intro/onBoarding.dart';
 import '/screens/products/add_product.dart';
 import '/bloc/cubit.dart';
+import 'bloc/bloc_observer.dart';
 
 
 void main() async {
@@ -33,10 +34,12 @@ void main() async {
   } else {
     startPage = OnBoarding();
   }
-
-  runApp(MyApp(
-    startPage: startPage,
-  ));
+  BlocOverrides.runZoned(
+        () => runApp( MyApp(
+          startPage: startPage,
+        )),
+    blocObserver: MyBlocObserver(),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -46,30 +49,30 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        fontFamily: 'Amiri',
+    return BlocProvider(
+      create: (context)=>HandCubit(),
+      child: MaterialApp(
+        theme: ThemeData(
+          fontFamily: 'Amiri',
+        ),
+        debugShowCheckedModeBanner: false,
+         // initialRoute: SellerRegisterPage.id,
+        home: startPage,
+        routes: {
+          OnBoarding.id: (context) => OnBoarding(),
+          StartPage.id: (context) => const StartPage(),
+          MapPage.id: (context) => const MapPage(),
+          AddProduct.id: (context) => const AddProduct(),
+          LoginPage.id: (context) => const LoginPage(),
+          RegisterMainPage.id: (context) => const RegisterMainPage(),
+          SellerRegisterPage.id: (context) => SellerRegisterPage(),
+          BuyerRegisterPage.id: (context) => BuyerRegisterPage(),
+          OTPPage.id: (context) => const OTPPage(),
+          VerifyOtp.id: (context) => const VerifyOtp(),
+          SellerDetails.id:(context)=> SellerDetails(),
+          Profile.id:(context)=>Profile()
+        },
       ),
-      debugShowCheckedModeBanner: false,
-       // initialRoute: SellerRegisterPage.id,
-      home: BlocProvider(
-        create: (_)=>HandCubit()..getUsers(),
-        child: startPage,
-      ),
-      routes: {
-        OnBoarding.id: (context) => OnBoarding(),
-        StartPage.id: (context) => const StartPage(),
-        MapPage.id: (context) => const MapPage(),
-        AddProduct.id: (context) => const AddProduct(),
-        LoginPage.id: (context) => const LoginPage(),
-        RegisterMainPage.id: (context) => const RegisterMainPage(),
-        SellerRegisterPage.id: (context) => SellerRegisterPage(),
-        BuyerRegisterPage.id: (context) => BuyerRegisterPage(),
-        OTPPage.id: (context) => const OTPPage(),
-        VerifyOtp.id: (context) => const VerifyOtp(),
-        SellerDetails.id:(context)=> SellerDetails(),
-        Profile.id:(context)=>Profile()
-      },
     );
   }
 }
