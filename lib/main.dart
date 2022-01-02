@@ -43,6 +43,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final HandCubit _handCubit = HandCubit();
   MyApp({this.startPage});
 
   final Widget startPage;
@@ -59,18 +60,44 @@ class MyApp extends StatelessWidget {
          // initialRoute: SellerRegisterPage.id,
         home: startPage,
         routes: {
-          OnBoarding.id: (context) => OnBoarding(),
-          StartPage.id: (context) => const StartPage(),
-          MapPage.id: (context) => const MapPage(),
-          AddProduct.id: (context) => const AddProduct(),
-          LoginPage.id: (context) => const LoginPage(),
-          RegisterMainPage.id: (context) => const RegisterMainPage(),
-          SellerRegisterPage.id: (context) => SellerRegisterPage(),
-          BuyerRegisterPage.id: (context) => BuyerRegisterPage(),
-          OTPPage.id: (context) => const OTPPage(),
-          VerifyOtp.id: (context) => const VerifyOtp(),
-          SellerDetails.id:(context)=> SellerDetails(),
-          Profile.id:(context)=>Profile()
+          OnBoarding.id: (context) => BlocProvider.value(
+              value: _handCubit,
+              child: OnBoarding()),
+          StartPage.id: (context) => BlocProvider.value(
+              value: _handCubit,
+              child: const StartPage()),
+          MapPage.id: (context) => BlocProvider.value(
+              value: _handCubit,
+              child: const MapPage()),
+          AddProduct.id: (context) => BlocProvider.value(
+              value: _handCubit,
+              child: const AddProduct()),
+          LoginPage.id: (context) => BlocProvider.value(
+              value: _handCubit,
+              child: const LoginPage()),
+          RegisterMainPage.id: (context) => BlocProvider.value(
+              value: _handCubit,
+              child: const RegisterMainPage()),
+          SellerRegisterPage.id: (context) => BlocProvider.value(
+              value: _handCubit,
+              child: SellerRegisterPage()),
+          BuyerRegisterPage.id: (context) => BlocProvider.value(
+              value: _handCubit,
+              child: BuyerRegisterPage()),
+          OTPPage.id: (context) =>BlocProvider.value(
+              value: _handCubit,
+              child: BlocProvider.value(
+                  value: _handCubit,
+                  child: const OTPPage())),
+          VerifyOtp.id: (context) => BlocProvider.value(
+              value: _handCubit,
+              child: const VerifyOtp()),
+          SellerDetails.id:(context)=> BlocProvider.value(
+              value: _handCubit,
+              child: SellerDetails()),
+          Profile.id:(context)=>BlocProvider.value(
+              value: _handCubit,
+              child: Profile())
         },
       ),
     );
