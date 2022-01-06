@@ -1,4 +1,6 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/screens/account/sellers_details.dart';
@@ -35,8 +37,11 @@ void main() async {
     startPage = OnBoarding();
   }
   BlocOverrides.runZoned(
-        () => runApp( MyApp(
-          startPage: startPage,
+        () => runApp( DevicePreview(
+          enabled: !kReleaseMode,
+          builder: (context)=>MyApp(
+            startPage: startPage,
+          ),
         )),
     blocObserver: MyBlocObserver(),
   );
@@ -53,6 +58,9 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (context)=>HandCubit(),
       child: MaterialApp(
+        useInheritedMediaQuery: true,
+        locale: DevicePreview.locale(context),
+        builder: DevicePreview.appBuilder,
         theme: ThemeData(
           fontFamily: 'Amiri',
         ),

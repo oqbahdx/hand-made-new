@@ -19,6 +19,7 @@ class _MapPageState extends State<MapPage> {
 
   @override
   void initState() {
+    super.initState();
     BitmapDescriptor.fromAssetImage(
             ImageConfiguration(size: Size(48, 48)), 'assets/marker.png')
         .then((onValue) {

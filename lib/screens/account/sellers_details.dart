@@ -6,7 +6,7 @@ import 'package:hand_made_new/components/containers.dart';
 
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
-
+import 'package:device_preview/device_preview.dart';
 class SellerDetails extends StatefulWidget {
   final String name;
 
@@ -20,10 +20,19 @@ class SellerDetails extends StatefulWidget {
   _SellerDetailsState createState() => _SellerDetailsState();
 }
 
-class _SellerDetailsState extends State<SellerDetails> {
+class _SellerDetailsState extends State<SellerDetails>
+    with SingleTickerProviderStateMixin {
+  Animation animation;
+  AnimationController animationController;
+
   @override
   void initState() {
     HandCubit.get(context).getUsers();
+    animationController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 800));
+    animation = Tween(begin: -1.0, end: 0.0).animate(
+        CurvedAnimation(parent: animationController, curve: Curves.easeInOut));
+    animationController.forward();
     super.initState();
   }
 
@@ -32,33 +41,59 @@ class _SellerDetailsState extends State<SellerDetails> {
     double h = MediaQuery.of(context).size.height;
     double w = MediaQuery.of(context).size.width;
     return SafeArea(
-      child: Scaffold(
-        appBar: appBarWidget(
-          title: Text(
-            widget.name,
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          elevation: 10.0,
-          action: Container(),
-        ),
-        body: Container(
-          child: Stack(
-            children: [
-              PositionedBuild(
-                h: h * 0.080,
-                w: w * 0.090,
-                txt: "Products",
+      child: AnimatedBuilder(
+        animation: animationController,
+        builder: (BuildContext context, Widget child) {
+          return Scaffold(
+            appBar: appBarWidget(
+              title: Text(
+                widget.name,
+                style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              PositionedBuild(
-                h: h * 0.48,
-                w: w * 0.25,
-                txt: "Time Line",
+              elevation: 10.0,
+              action: Container(),
+            ),
+            body: Container(
+              width: double.infinity,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: h * 0.05,
+                  ),
+                  Transform(
+                    transform: Matrix4.translationValues(
+                        0.0, animation.value * w, 0.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:90),
+                      child: PositionedBuild(
+                        h: h * 0.080,
+                        w: h * 0.080,
+                        txt: "Products",
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: h * 0.10,
+                  ),
+                  Transform(
+                    transform: Matrix4.translationValues(
+                        animation.value * w, 0.0, 0.0),
+                    child: Padding(
+                      padding: const EdgeInsets.only(right:90),
+                      child: PositionedBuild(
+                        h: h * 0.080,
+                        w: h * 0.080,
+                        txt: "Time Line",
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-          decoration:
-              BoxDecoration(gradient: LinearGradient(colors: gradientColor)),
-        ),
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: gradientColor)),
+            ),
+          );
+        },
       ),
     );
   }
