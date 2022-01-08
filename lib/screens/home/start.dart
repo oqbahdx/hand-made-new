@@ -86,7 +86,7 @@ class _StartPageState extends State<StartPage> {
                                   text: 'time line'),
                               gButtonNav(icon: Icons.group, text: 'families'),
                             ]))),
-                drawer: drawerBuild(context),
+                drawer: DrawerBuild(),
               ),
             ),
           );

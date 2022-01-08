@@ -315,7 +315,7 @@ class HandCubit extends Cubit<HandMadeState> {
   getCurrentUser(){
     emit(HandGetCurrentUserLoadingState());
    FirebaseFirestore.instance
-       .collection('users')
+       .collection('/users')
        .doc(uId).get()
        .then((value){
          print(value.data());

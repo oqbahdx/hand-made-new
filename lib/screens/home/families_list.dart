@@ -10,7 +10,6 @@ import 'package:hand_made_new/components/navigator.dart';
 import 'package:hand_made_new/screens/account/sellers_details.dart';
 import 'package:hand_made_new/styles/colors.dart';
 
-
 class FamiliesList extends StatefulWidget {
   const FamiliesList({Key key}) : super(key: key);
 
@@ -22,82 +21,72 @@ class _FamiliesListState extends State<FamiliesList> {
   @override
   void initState() {
     HandCubit.get(context).getUsers();
+    HandCubit.get(context).getCurrentUser();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<HandCubit, HandMadeState>(
       listener: (context, state) {},
       builder: (context, state) {
         return ConditionalBuilder(
           condition: HandCubit.get(context).sellers.length > 0,
           builder: (context) => Scaffold(
-
             body: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: gradientColor
-                )
-              ),
-              child: StreamBuilder(
-                  stream: FirebaseFirestore.instance.collection('/users').doc(FirebaseAuth.instance.currentUser.uid).snapshots(),
-                  builder: (context, snapshot){
-                    if (!snapshot.hasData){
-                      return Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: gradientColor
-                          )
-                        ),
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(colors: gradientColor)),
+                child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('/users')
+                        .doc(FirebaseAuth.instance.currentUser.uid)
+                        .snapshots(),
+                    builder: (context, snapshot) {
+                      if (!snapshot.hasData) {
+                        return Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(colors: gradientColor)),
+                          child: Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
                           ),
-                        ),
-                      );
-                    }
+                        );
+                      }
 
-                    final userData = snapshot.data.data();
+                      final userData = snapshot.data.data();
 
-                    if (userData['role'] == 'seller'){
-                      return  ListView.separated(
-                        shrinkWrap: true,
-                          physics: BouncingScrollPhysics(),
-                          itemBuilder: (context, index) => familiesContainer(
-                              model:HandCubit.get(context).sellers[index],
-                              onTap: (){
-                                moveToPageWithData(context,namePage:SellerDetails(
-                                  name: HandCubit.get(context).sellers[index].name,
-                                ) );
-                              }
-                          ),
-                          separatorBuilder: (context, index) => SizedBox(
-                            height: 10,
-                          ),
-                          itemCount: HandCubit.get(context).sellers.length);
-                    }
+                      if (userData['role'] == 'seller') {
+                        return ListView.separated(
+                            shrinkWrap: true,
+                            physics: BouncingScrollPhysics(),
+                            itemBuilder: (context, index) => familiesContainer(
+                                model: HandCubit.get(context).sellers[index],
+                                onTap: () {
+                                  moveToPageWithData(context,
+                                      namePage: SellerDetails(
+                                        name: HandCubit.get(context)
+                                            .sellers[index]
+                                            .name,
+                                      ));
+                                }),
+                            separatorBuilder: (context, index) => SizedBox(
+                                  height: 10,
+                                ),
+                            itemCount: HandCubit.get(context).sellers.length);
+                      }
 
-                     return Container();
-                  }
-              )
-
-            ),
+                      return Container();
+                    })),
           ),
           fallback: (context) => Container(
               decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: gradientColor
-                )
-              ),
-              child: Center(child: CircularProgressIndicator(
+                  gradient: LinearGradient(colors: gradientColor)),
+              child: Center(
+                  child: CircularProgressIndicator(
                 color: Colors.white,
               ))),
         );
-
-
-
       },
     );
   }

@@ -1,69 +1,159 @@
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
+import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/screens/products/add_product.dart';
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/navigators.dart';
 
+class DrawerBuild extends StatefulWidget {
+  const DrawerBuild({Key key}) : super(key: key);
 
-
-
-Drawer drawerBuild(BuildContext context){
-
-  return Drawer(
-
-   child:Column(
-
-     children: [
-       const SizedBox(height: 50,),
-       Row(
-         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-         children: [
-         Stack(children: [
-           CircleAvatar(
-             backgroundColor: Colors.transparent,
-             maxRadius: 50,
-             child: Image.asset('assets/personicon.png'),
-           ),
-           Positioned(
-               bottom: 0,
-               right: 0,
-               child: GestureDetector(
-                   onTap: (){
-
-                   },
-                   child: const Icon(Icons.edit,color: Colors.white,))
-
-           ),
-         ],),
-         Text('name',style: normalText,),
-
-       ],),
-       const Divider(),
-       GridView(
-
-         children: [
-
-           containerBuildTap(text: 'Add Product',onTap:(){
-             moveToPage(context, AddProduct.id);
-           }),
-           containerBuildTap(text: 'My Products',onTap: (){}),
-           containerBuildTap(text: 'My TimeLine',onTap: (){}),
-           containerBuildTap(text: 'Favorite',onTap: (){}),
-           containerBuildTap(text: 'Contact Us',onTap: (){}),
-         ],
-         shrinkWrap: true, gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-         crossAxisCount: 2,
-         childAspectRatio: 3/2,
-         crossAxisSpacing: 5.0,
-       ),
-
-       ),
-       const SizedBox(height: 210,),
-       defaultButtonTap('LOGOUT', (){}),
-     ],
-   )
-
-  );
+  @override
+  _DrawerBuildState createState() => _DrawerBuildState();
 }
 
+class _DrawerBuildState extends State<DrawerBuild> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    HandCubit.get(context).getCurrentUser();
+    HandCubit.get(context).getUsers();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var model = HandCubit.get(context).sellers;
+    return BlocBuilder<HandCubit, HandMadeState>(
+      builder: (context, state) {
+        return ConditionalBuilder(
+          condition: state is! HandGetCurrentUserLoadingState,
+          builder: (context) => Drawer(
+              child: Column(
+            children: [
+              const SizedBox(
+                height: 50,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Stack(
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.transparent,
+                        maxRadius: 50,
+                        child: Image.network('${model[0].profileImage}'),
+                      ),
+                      Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: GestureDetector(
+                              onTap: () {},
+                              child: const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ))),
+                    ],
+                  ),
+                  Text(
+                    '${model[0].name}',
+                    style: normalText,
+                  ),
+                ],
+              ),
+              const Divider(),
+              GridView(
+                children: [
+                  containerBuildTap(
+                      text: 'Add Product',
+                      onTap: () {
+                        moveToPage(context, AddProduct.id);
+                      }),
+                  containerBuildTap(text: 'My Products', onTap: () {}),
+                  containerBuildTap(text: 'My TimeLine', onTap: () {}),
+                  containerBuildTap(text: 'Favorite', onTap: () {}),
+                  containerBuildTap(text: 'Contact Us', onTap: () {}),
+                ],
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 3 / 2,
+                  crossAxisSpacing: 5.0,
+                ),
+              ),
+              const SizedBox(
+                height: 210,
+              ),
+              defaultButtonTap('LOGOUT', () {}),
+            ],
+          )),
+          fallback: (context) => Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
+      },
+    );
+  }
+}
+
+// Drawer drawerBuild(BuildContext context){
+//
+//   return Drawer(
+//
+//    child:Column(
+//
+//      children: [
+//        const SizedBox(height: 50,),
+//        Row(
+//          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//          children: [
+//          Stack(children: [
+//            CircleAvatar(
+//              backgroundColor: Colors.transparent,
+//              maxRadius: 50,
+//              child: Image.asset('assets/personicon.png'),
+//            ),
+//            Positioned(
+//                bottom: 0,
+//                right: 0,
+//                child: GestureDetector(
+//                    onTap: (){
+//
+//                    },
+//                    child: const Icon(Icons.edit,color: Colors.white,))
+//
+//            ),
+//          ],),
+//          Text('name',style: normalText,),
+//
+//        ],),
+//        const Divider(),
+//        GridView(
+//
+//          children: [
+//
+//            containerBuildTap(text: 'Add Product',onTap:(){
+//              moveToPage(context, AddProduct.id);
+//            }),
+//            containerBuildTap(text: 'My Products',onTap: (){}),
+//            containerBuildTap(text: 'My TimeLine',onTap: (){}),
+//            containerBuildTap(text: 'Favorite',onTap: (){}),
+//            containerBuildTap(text: 'Contact Us',onTap: (){}),
+//          ],
+//          shrinkWrap: true, gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+//          crossAxisCount: 2,
+//          childAspectRatio: 3/2,
+//          crossAxisSpacing: 5.0,
+//        ),
+//
+//        ),
+//        const SizedBox(height: 210,),
+//        defaultButtonTap('LOGOUT', (){}),
+//      ],
+//    )
+//
+//   );
+// }

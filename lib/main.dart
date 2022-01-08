@@ -38,7 +38,7 @@ void main() async {
   }
   BlocOverrides.runZoned(
         () => runApp( DevicePreview(
-          enabled: !kReleaseMode,
+          enabled: false,
           builder: (context)=>MyApp(
             startPage: startPage,
           ),
