@@ -21,16 +21,18 @@ class _DrawerBuildState extends State<DrawerBuild> {
     // TODO: implement initState
     super.initState();
     HandCubit.get(context).getCurrentUser();
-    HandCubit.get(context).getUsers();
   }
 
   @override
   Widget build(BuildContext context) {
-    var model = HandCubit.get(context).sellers;
-    return BlocBuilder<HandCubit, HandMadeState>(
+    var model = HandCubit.get(context).userModel;
+    return BlocConsumer<HandCubit, HandMadeState>(
+      listener: (context,state){
+
+      },
       builder: (context, state) {
         return ConditionalBuilder(
-          condition: state is! HandGetCurrentUserLoadingState,
+          condition: state is !HandGetUserLoadingState,
           builder: (context) => Drawer(
               child: Column(
             children: [
@@ -42,10 +44,17 @@ class _DrawerBuildState extends State<DrawerBuild> {
                 children: [
                   Stack(
                     children: [
+                      // CircleAvatar(
+                      //   backgroundColor: Colors.transparent,
+                      //   maxRadius: 50,
+                      //   child:model.profileImage != ""?
+                      //   Image.network('${model.profileImage}'):
+                      //   Image.asset('assets/personicon.png'),
+                      // ),
                       CircleAvatar(
                         backgroundColor: Colors.transparent,
                         maxRadius: 50,
-                        child: Image.network('${model[0].profileImage}'),
+                        child: Image.asset('assets/personicon.png'),
                       ),
                       Positioned(
                           bottom: 0,
@@ -59,7 +68,7 @@ class _DrawerBuildState extends State<DrawerBuild> {
                     ],
                   ),
                   Text(
-                    '${model[0].name}',
+                    '${model.name}',
                     style: normalText,
                   ),
                 ],

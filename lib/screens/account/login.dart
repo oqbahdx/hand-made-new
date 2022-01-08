@@ -1,4 +1,5 @@
 import 'package:conditional_builder/conditional_builder.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/storage/shared.dart';
@@ -25,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   GlobalKey<FormState> formKey = GlobalKey();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -34,7 +36,11 @@ class _LoginPageState extends State<LoginPage> {
       child: BlocConsumer<HandCubit, HandMadeState>(
         listener: (context, state) {
           if(state is HandBuyerLoginSuccessState){
-            moveToPageAndFinish(context, StartPage());
+            SharedPref.saveData(
+                key: 'uId', value: state.uid.toString()).then((value){
+              moveToPageAndFinish(context, StartPage());
+            });
+
           }
         },
         builder: (context, state) {
@@ -69,17 +75,15 @@ class _LoginPageState extends State<LoginPage> {
                           text: 'email',
                           showPass: null,
                           sec: false,
-                          function: (value){
-                            if(value.isEmpty){
+                          function: (value) {
+                            if (value.isEmpty) {
                               return 'email must not be empty';
                             }
                           },
                           controller: emailController,
                           icn: Icons.email,
-
                           type: TextInputType.emailAddress,
-                        saveFunction: null
-                      ),
+                          saveFunction: null),
                       SizedBox(
                         height: h * 0.035,
                       ),
@@ -87,52 +91,61 @@ class _LoginPageState extends State<LoginPage> {
                           text: 'password',
                           showPass: IconButton(
                               onPressed: () {
-                                HandCubit.get(context).changePasswordVisibility();
+                                HandCubit.get(context)
+                                    .changePasswordVisibility();
                               },
                               icon: Icon(HandCubit.get(context).icon)),
                           sec: HandCubit.get(context).isShow,
-                          function: (value){
-                            if(value.isEmpty){
+                          function: (value) {
+                            if (value.isEmpty) {
                               return 'password is empty';
                             }
-                      },
+                          },
                           controller: passwordController,
                           icn: Icons.enhanced_encryption,
                           type: TextInputType.text),
                       SizedBox(
                         height: h * 0.025,
                       ),
-                      Row(mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Text('Forget password  ?',style:smallText,),
-
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: gradientText(text: 'Click Here',onTap: (){
-                             moveToPage(context, OTPPage.id);
-                          }),
-                        )
-                      ],
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Text(
+                              'Forget password  ?',
+                              style: smallText,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10.0),
+                            child: gradientText(
+                                text: 'Click Here',
+                                onTap: () {
+                                  moveToPage(context, OTPPage.id);
+                                }),
+                          )
+                        ],
                       ),
                       SizedBox(
                         height: h * 0.015,
                       ),
-                      ConditionalBuilder(condition: state is !HandBuyerLoginLoadingState,
-                          builder:(context)=> containerBuildTap(
-                              h: h * 0.075,
-                              text: 'Login', onTap: () {
-                            if(formKey.currentState.validate()){
-                              HandCubit.get(context).login(
-                                  email: emailController.text,
-                                  password: passwordController.text
-                              );
-                            }
-                               SharedPref.saveData(key: 'key', value: 'uId');
-                          }),
-                      fallback: (context)=>Center(child: CircularProgressIndicator()),
+                      ConditionalBuilder(
+                        condition: state is! HandBuyerLoginLoadingState,
+                        builder: (context) => containerBuildTap(
+                            h: h * 0.075,
+                            text: 'Login',
+                            onTap: () async {
+                              if (formKey.currentState.validate()) {
+                                HandCubit.get(context).login(
+                                    email: emailController.text,
+                                    password: passwordController.text);
+                              }
+
+
+                            }),
+                        fallback: (context) =>
+                            Center(child: CircularProgressIndicator()),
                       ),
                       SizedBox(
                         height: h * 0.025,
@@ -149,7 +162,8 @@ class _LoginPageState extends State<LoginPage> {
                             gradientText(
                                 text: 'REG',
                                 onTap: () {
-                                  moveToPageAndFinish(context, RegisterMainPage());
+                                  moveToPageAndFinish(
+                                      context, RegisterMainPage());
                                 })
                           ],
                         ),

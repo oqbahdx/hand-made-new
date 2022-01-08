@@ -162,7 +162,7 @@ class HandCubit extends Cubit<HandMadeState> {
           .signInWithEmailAndPassword(email: email, password: password)
           .then((value) {
         showMessageSuccess('you logged in successfully');
-        emit(HandBuyerLoginSuccessState());
+        emit(HandBuyerLoginSuccessState(value.user.uid.toString()));
         SharedPref.saveData(key: 'token', value: '${value.user.uid}');
       });
     } on FirebaseAuthException catch (error) {
@@ -184,7 +184,7 @@ class HandCubit extends Cubit<HandMadeState> {
       });
       emit(HandGetSellersSuccessState());
     }).catchError((error) {
-      print(error.toString());
+      print( error.toString());
       emit(HandGetSellersErrorState(error.toString()));
     });
   }
@@ -312,13 +312,16 @@ class HandCubit extends Cubit<HandMadeState> {
         .set(userModel.toJson());
   }
 
-  getCurrentUser(){
+  getCurrentUser()async{
     emit(HandGetCurrentUserLoadingState());
-   FirebaseFirestore.instance
+
+
+      FirebaseFirestore.instance
        .collection('/users')
        .doc(uId).get()
        .then((value){
-         print(value.data());
+         print("user: "+value.id.toString());
+          print("uid : "+uId.toString());
          emit(HandGetCurrentUserSuccessState());
    })
        .catchError((error){
