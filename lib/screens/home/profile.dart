@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/containers.dart';
-import 'package:hand_made_new/styles/colors.dart';
-import 'package:hand_made_new/widgets/text_forms.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key key}) : super(key: key);

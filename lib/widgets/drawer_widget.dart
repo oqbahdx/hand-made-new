@@ -25,87 +25,105 @@ class _DrawerBuildState extends State<DrawerBuild> {
 
   @override
   Widget build(BuildContext context) {
+    double h = MediaQuery.of(context).size.height;
     var model = HandCubit.get(context).userModel;
     return BlocConsumer<HandCubit, HandMadeState>(
-      listener: (context,state){
-
-      },
+      listener: (context, state) {},
       builder: (context, state) {
         return ConditionalBuilder(
-          condition: state is !HandGetUserLoadingState,
+          condition: state is! HandGetUserLoadingState,
           builder: (context) => Drawer(
-              child: Column(
-            children: [
-              const SizedBox(
-                height: 50,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Stack(
+              child: Container(
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 50,
+                ),
+                Container(
+                  height: h * 0.20,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        maxRadius: 50,
-                        child:model.profileImage != ""?
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-
-                          child: FadeInImage(placeholder: AssetImage(
-                            'assets/pleaceholder.png'
+                      Stack(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            maxRadius: 50,
+                            child: model.profileImage != ""
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: FadeInImage(
+                                      placeholder:
+                                          AssetImage('assets/pleaceholder.png'),
+                                      image: NetworkImage(
+                                        '${model.profileImage}',
+                                      ),
+                                      height: double.infinity,
+                                      width: double.infinity,
+                                    ))
+                                : Image.asset('assets/personicon.png'),
                           ),
-                            image: NetworkImage('${model.profileImage}',
-                            ),
-                            height: double.infinity,
-                            width: double.infinity,
-
-                          )
-                        ):
-                        Image.asset('assets/personicon.png'),
+                          Positioned(
+                              bottom: 0,
+                              right: 0,
+                              child: GestureDetector(
+                                  onTap: () {},
+                                  child: const Icon(
+                                    Icons.edit,
+                                    color: Colors.white,
+                                  ))),
+                        ],
                       ),
-
-                      Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: GestureDetector(
-                              onTap: () {},
-                              child: const Icon(
-                                Icons.edit,
-                                color: Colors.white,
-                              ))),
+                      Text(
+                        '${model.name}',
+                        style: normalText,
+                      ),
                     ],
                   ),
-                  Text(
-                    '${model.name}',
-                    style: normalText,
-                  ),
-                ],
-              ),
-              const Divider(),
-              GridView(
-                children: [
-                  containerBuildTap(
-                      text: 'Add Product',
-                      onTap: () {
-                        moveToPage(context, AddProduct.id);
-                      }),
-                  containerBuildTap(text: 'My Products', onTap: () {}),
-                  containerBuildTap(text: 'My TimeLine', onTap: () {}),
-                  containerBuildTap(text: 'Favorite', onTap: () {}),
-                  containerBuildTap(text: 'Contact Us', onTap: () {}),
-                ],
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 3 / 2,
-                  crossAxisSpacing: 5.0,
                 ),
-              ),
-              const SizedBox(
-                height: 210,
-              ),
-              defaultButtonTap('LOGOUT', () {}),
-            ],
+                const Divider(),
+                Container(
+                  height: h * 0.42,
+                  child: model.role == "seller"
+                    ? GridView(
+                  children: [
+                    containerBuildTap(
+                        text: 'Add Product',
+                        onTap: () {
+                          moveToPage(context, AddProduct.id);
+                        }),
+                    containerBuildTap(text: 'My Products', onTap: () {}),
+                    containerBuildTap(text: 'My TimeLine', onTap: () {}),
+                    containerBuildTap(text: 'Favorite', onTap: () {}),
+                    containerBuildTap(text: 'Contact Us', onTap: () {}),
+                  ],
+                  shrinkWrap: true,
+                  gridDelegate:
+                  const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 3 / 2,
+                    crossAxisSpacing: 5.0,
+                  ),
+                )
+                    : GridView(
+                  children: [
+                    containerBuildTap(text: 'Favorite', onTap: () {}),
+                    containerBuildTap(text: 'Contact Us', onTap: () {}),
+                  ],
+                  shrinkWrap: true,
+                  gridDelegate:
+                  const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 3 / 2,
+                    crossAxisSpacing: 5.0,
+                  ),
+                ),),
+                SizedBox(height: h * 0.15,),
+                Container(
+                    height: h * 0.08,
+                    child: defaultButtonTap('LOGOUT', () {}),),
+              ],
+            ),
           )),
           fallback: (context) => Center(
             child: CircularProgressIndicator(),
