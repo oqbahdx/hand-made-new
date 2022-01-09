@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:permission_handler/permission_handler.dart';
 
 class MapPage extends StatefulWidget {
   const MapPage({Key key}) : super(key: key);
@@ -36,12 +37,13 @@ class _MapPageState extends State<MapPage> {
         controller.setMapStyle(_mapStyle);
       });
     super.initState();
+
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
+      body:  GoogleMap(
         markers: _markers,
         trafficEnabled: false,
         compassEnabled: true,

@@ -1,3 +1,5 @@
+import 'package:hand_made_new/models/user_model.dart';
+
 abstract class HandMadeState {}
 
 class HandInitialState extends HandMadeState {}
@@ -90,7 +92,8 @@ class HandUserRegisterErrorState extends HandMadeState {
 
 class HandGetCurrentUserLoadingState extends HandMadeState {}
 
-class HandGetCurrentUserSuccessState extends HandMadeState {}
+class HandGetCurrentUserSuccessState extends HandMadeState {
+}
 
 class HandGetCurrentUserErrorState extends HandMadeState {
   final String error;

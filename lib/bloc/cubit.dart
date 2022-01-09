@@ -292,7 +292,7 @@ class HandCubit extends Cubit<HandMadeState> {
     });
   }
   UserModel userModel;
-  void createUser({String uid, String name, String email,String phone,
+  void createUser({String uid, String name, String email,String phone,String password,
     double latitude,double longitude,String role,String profileImage,bool isAvailable}) {
     userModel =
     UserModel(
@@ -305,6 +305,7 @@ class HandCubit extends Cubit<HandMadeState> {
       latitude: latitude,
       longitude: longitude,
       role: role,
+      password: password
     );
     FirebaseFirestore.instance
         .collection('users')
@@ -314,14 +315,12 @@ class HandCubit extends Cubit<HandMadeState> {
 
   getCurrentUser()async{
     emit(HandGetCurrentUserLoadingState());
-
-
       FirebaseFirestore.instance
        .collection('/users')
        .doc(uId).get()
        .then((value){
-         print("user: "+value.id.toString());
-          print("uid : "+uId.toString());
+         print(value.data());
+         userModel = UserModel.fromJson(value.data());
          emit(HandGetCurrentUserSuccessState());
    })
        .catchError((error){
