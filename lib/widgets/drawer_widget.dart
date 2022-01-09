@@ -44,18 +44,26 @@ class _DrawerBuildState extends State<DrawerBuild> {
                 children: [
                   Stack(
                     children: [
-                      // CircleAvatar(
-                      //   backgroundColor: Colors.transparent,
-                      //   maxRadius: 50,
-                      //   child:model.profileImage != ""?
-                      //   Image.network('${model.profileImage}'):
-                      //   Image.asset('assets/personicon.png'),
-                      // ),
                       CircleAvatar(
                         backgroundColor: Colors.transparent,
                         maxRadius: 50,
-                        child: Image.asset('assets/personicon.png'),
+                        child:model.profileImage != ""?
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+
+                          child: FadeInImage(placeholder: AssetImage(
+                            'assets/pleaceholder.png'
+                          ),
+                            image: NetworkImage('${model.profileImage}',
+                            ),
+                            height: double.infinity,
+                            width: double.infinity,
+
+                          )
+                        ):
+                        Image.asset('assets/personicon.png'),
                       ),
+
                       Positioned(
                           bottom: 0,
                           right: 0,

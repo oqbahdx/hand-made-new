@@ -8,7 +8,7 @@ Widget defaultTextFormField({
   TextAlign align,
   TextInputType inputType,
   TextStyle style,
-  TextInputAction next,
+  TextInputAction next, String text, TextInputType type, IconData icn, String Function(dynamic value) function,
 }){
   return TextFormField(
     controller: controller,
