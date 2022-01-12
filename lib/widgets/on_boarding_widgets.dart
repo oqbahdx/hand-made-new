@@ -15,7 +15,7 @@ Widget onBoardingWidget(String imageName, String title, String body) {
         height: 150,
       ),
       Text(title,style: const TextStyle(
-        fontSize: 25,
+        fontSize: 30,
         fontWeight: FontWeight.bold
       ),),
       const SizedBox(

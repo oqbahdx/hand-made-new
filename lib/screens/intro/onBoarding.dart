@@ -31,14 +31,14 @@ class _OnBoardingState extends State<OnBoarding> {
     'assets/onboarding3.png'
   ];
   List<String> titles = [
-    'title1',
-    'title2',
-    'title3',
+    'Hand Made App',
+    'Around You',
+    'Clean Food',
   ];
   List<String> bodies = [
-    'body1',
-    'body2',
-    'body3',
+    'application for families who is made their food in house ',
+    'you can fine a families are near by you and seen their location in the map',
+    'Your health is important and you will eat a clean food',
   ];
 
   PageController pageController = PageController();
@@ -50,12 +50,7 @@ class _OnBoardingState extends State<OnBoarding> {
       backgroundColor: Colors.white,
       appBar: appBarWidget(
         elevation: 0.0,
-        action: TextButton(
-            onPressed: () {},
-            child: const Text(
-              'close',
-              style: TextStyle(fontSize: 18, color: onBoardingColor),
-            )),
+        action: Container()
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
