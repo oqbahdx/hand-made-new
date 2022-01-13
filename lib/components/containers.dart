@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hand_made_new/models/seller_model.dart';
+
 import 'package:hand_made_new/models/user_model.dart';
 import '/styles/colors.dart';
 import '/styles/fonts.dart';

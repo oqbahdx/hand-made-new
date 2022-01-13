@@ -6,16 +6,14 @@ import 'package:hand_made_new/components/containers.dart';
 
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
-import 'package:device_preview/device_preview.dart';
+
 class SellerDetails extends StatefulWidget {
   final String name;
-
   const SellerDetails({
     Key key,
     this.name,
   }) : super(key: key);
   static String id = "SellerDetails";
-
   @override
   _SellerDetailsState createState() => _SellerDetailsState();
 }

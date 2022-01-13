@@ -1,5 +1,5 @@
 import 'package:conditional_builder/conditional_builder.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/storage/shared.dart';
@@ -30,7 +30,6 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
-    double w = MediaQuery.of(context).size.width;
     return BlocProvider(
       create: (BuildContext context) => HandCubit(),
       child: BlocConsumer<HandCubit, HandMadeState>(

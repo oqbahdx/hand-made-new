@@ -1,9 +1,13 @@
-import 'dart:collection';
-
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:hand_made_new/bloc/cubit.dart';
+import 'package:hand_made_new/bloc/states.dart';
+import 'package:hand_made_new/components/navigator.dart';
+import 'package:hand_made_new/screens/account/sellers_details.dart';
+import 'package:hand_made_new/widgets/navigators.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class MapPage extends StatefulWidget {
@@ -22,6 +26,7 @@ class _MapPageState extends State<MapPage> {
 
   @override
   void initState() {
+    HandCubit.get(context).getSellers();
     checkPermissions();
     rootBundle.loadString('assets/map_style.txt').then((value) {
       setState(() {
@@ -29,10 +34,11 @@ class _MapPageState extends State<MapPage> {
       });
     });
     BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(48, 48)), 'assets/marker.png').then((value){
-          setState(() {
-            myIcon = value;
-          });
+            ImageConfiguration(size: Size(48, 48)), 'assets/marker.png')
+        .then((value) {
+      setState(() {
+        myIcon = value;
+      });
     });
 
     super.initState();
@@ -55,40 +61,55 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: GoogleMap(
-      markers: sellerMarkers,
-      myLocationEnabled: true,
-      myLocationButtonEnabled: true,
-      initialCameraPosition: CameraPosition(
-        target: LatLng(
-          15.734730,
-          32.577591,
-        ),
-        zoom: 12,
-      ),
-      onMapCreated: (GoogleMapController controller) {
-        setState(() {
-          _onMapCreate(controller);
-          sellerMarkers.addAll({
-            Marker(
-                markerId: MarkerId('1'),
-                icon:
-                myIcon,
-                position: LatLng(
-                  15.734730,
-                  32.577591,
-                )),
-            Marker(
-                markerId: MarkerId('2'),
-                icon: myIcon,
-                position: LatLng(
-                  15.732730,
-                  32.523591,
-                )),
-          });
-        });
+    return BlocConsumer<HandCubit, HandMadeState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var seller = HandCubit.get(context).userModel;
+        return ConditionalBuilder(
+          condition: state is! HandGetSellersLoadingState,
+          builder: (context) => Scaffold(
+              body: GoogleMap(
+            markers: sellerMarkers,
+            myLocationEnabled: true,
+            myLocationButtonEnabled: true,
+            initialCameraPosition: CameraPosition(
+              target: LatLng(
+                15.734730,
+                32.577591,
+              ),
+              zoom: 12,
+            ),
+            onMapCreated: (GoogleMapController controller) {
+              setState(() {
+                sellerMarkers.clear();
+
+                _onMapCreate(controller);
+                sellerMarkers.addAll({
+                  Marker(
+                      infoWindow: InfoWindow(
+                          title: seller.name,
+                          snippet: seller.email,
+                          onTap: () {
+                            moveToPageWithData(context,
+                                namePage: SellerDetails(
+                                  name: seller.name,
+                                ));
+                          }),
+                      markerId: MarkerId(seller.uid),
+                      icon: myIcon,
+                      position: LatLng(
+                        seller.latitude,
+                        seller.longitude,
+                      )),
+                });
+              });
+            },
+          )),
+          fallback: (context) => Center(
+            child: CircularProgressIndicator(),
+          ),
+        );
       },
-    ));
+    );
   }
 }

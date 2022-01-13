@@ -1,10 +1,11 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/screens/account/sellers_details.dart';
 import 'package:hand_made_new/screens/home/profile.dart';
+import 'package:hand_made_new/screens/products/seller_products.dart';
 
 import 'package:hand_made_new/storage/shared.dart';
 
@@ -65,8 +66,8 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Amiri',
         ),
         debugShowCheckedModeBanner: false,
-         // initialRoute: SellerRegisterPage.id,
-        home: startPage,
+         // initialRoute: SellerDetails.id,
+        home: SellerProducts(),
         routes: {
           OnBoarding.id: (context) => BlocProvider.value(
               value: _handCubit,
