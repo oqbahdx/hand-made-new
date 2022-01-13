@@ -3,6 +3,7 @@ import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class MapPage extends StatefulWidget {
@@ -15,88 +16,79 @@ class MapPage extends StatefulWidget {
 
 class _MapPageState extends State<MapPage> {
   String _mapStyle;
+  GoogleMapController _mapController;
+  Set<Marker> sellerMarkers = Set<Marker>();
   BitmapDescriptor myIcon;
-  var _markers = HashSet<Marker>();
 
   @override
   void initState() {
-    super.initState();
+    checkPermissions();
+    rootBundle.loadString('assets/map_style.txt').then((value) {
+      setState(() {
+        _mapStyle = value;
+      });
+    });
     BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(size: Size(48, 48)), 'assets/marker.png')
-        .then((onValue) {
-      myIcon = onValue;
+        ImageConfiguration(size: Size(48, 48)), 'assets/marker.png').then((value){
+          setState(() {
+            myIcon = value;
+          });
     });
-    rootBundle.loadString('assets/map_style.txt').then((string) {
-      _mapStyle = string;
-    });
-    checkPermission();
+
+    super.initState();
   }
 
-  _onMapCreated(GoogleMapController controller) {
-    if (mounted)
+  _onMapCreate(GoogleMapController controller) {
+    if (mounted) {
       setState(() {
+        _mapController = controller;
         controller.setMapStyle(_mapStyle);
       });
-    super.initState();
-  }
-
-  checkPermission() async {
-    if (await Permission.location.request().isGranted &&
-        await Permission.locationWhenInUse.request().isGranted &&
-        await Permission.locationAlways.request().isGranted) {
-      return buildMap();
-    }
-    {
-      return askForLocation();
     }
   }
 
-  Widget buildMap() {
-    return GoogleMap(
-      markers: _markers,
-      trafficEnabled: false,
-      compassEnabled: true,
-      myLocationEnabled: true,
-      myLocationButtonEnabled: true,
-      initialCameraPosition: CameraPosition(
-        target: LatLng(15.713290, 32.559315),
-        zoom: 10.2,
-      ),
-      onMapCreated: _onMapCreated,
-    );
-  }
-
-  Widget askForLocation() {
-    return Scaffold(
-      body: Container(
-        child: Center(
-          child: Text(
-            'Please enable location permission ...',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 50,
-            ),
-          ),
-        ),
-      ),
-    );
+  checkPermissions() async {
+    await Permission.locationAlways.request().isGranted &&
+        await Permission.location.request().isGranted &&
+        await Permission.locationWhenInUse.request().isGranted;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GoogleMap(
-        markers: _markers,
-        trafficEnabled: false,
-        compassEnabled: true,
-        myLocationEnabled: true,
-        myLocationButtonEnabled: true,
-        initialCameraPosition: CameraPosition(
-          target: LatLng(15.713290, 32.559315),
-          zoom: 10.2,
+        body: GoogleMap(
+      markers: sellerMarkers,
+      myLocationEnabled: true,
+      myLocationButtonEnabled: true,
+      initialCameraPosition: CameraPosition(
+        target: LatLng(
+          15.734730,
+          32.577591,
         ),
-        onMapCreated: _onMapCreated,
+        zoom: 12,
       ),
-    );
+      onMapCreated: (GoogleMapController controller) {
+        setState(() {
+          _onMapCreate(controller);
+          sellerMarkers.addAll({
+            Marker(
+                markerId: MarkerId('1'),
+                icon:
+                myIcon,
+                position: LatLng(
+                  15.734730,
+                  32.577591,
+                )),
+            Marker(
+                markerId: MarkerId('2'),
+                icon: myIcon,
+                position: LatLng(
+                  15.732730,
+                  32.523591,
+                )),
+          });
+        });
+      },
+    ));
   }
 }

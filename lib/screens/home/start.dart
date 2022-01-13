@@ -25,7 +25,7 @@ class _StartPageState extends State<StartPage> {
   int currentIndex = 1;
   List<Widget> homePages = [
     const Profile(),
-    const MapPage(),
+          MapPage(),
     const TimeLine(),
     const FamiliesList()
   ];
