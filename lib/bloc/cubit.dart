@@ -48,9 +48,7 @@ class HandCubit extends Cubit<HandMadeState> {
       image = File(pickedFile.path);
       emit(HandUpdateImageSuccessState());
     }
-    print(image.path
-        .split('/')
-        .last);
+    print(image.path.split('/').last);
   }
 
   bool isShow = true;
@@ -71,11 +69,12 @@ class HandCubit extends Cubit<HandMadeState> {
 
   GlobalKey<FormState> formKey = GlobalKey();
 
-  void sellerRegister({String name,
-    String email,
-    String password,
-    String phone,
-    String isAvailable}) async {
+  void sellerRegister(
+      {String name,
+      String email,
+      String password,
+      String phone,
+      String isAvailable}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
 
     try {
@@ -101,13 +100,14 @@ class HandCubit extends Cubit<HandMadeState> {
     }
   }
 
-  void createSeller({String uid,
-    @required String name,
-    @required String email,
-    @required String phone,
-    String isAvailable,
-    double longitude,
-    double latitude}) async {
+  void createSeller(
+      {String uid,
+      @required String name,
+      @required String email,
+      @required String phone,
+      String isAvailable,
+      double longitude,
+      double latitude}) async {
     Position location = await Geolocator.getCurrentPosition();
     SellerModel sellerModel = SellerModel(
         uid: uid,
@@ -147,7 +147,7 @@ class HandCubit extends Cubit<HandMadeState> {
 
   void createBuyer({String uid, String name, String email}) {
     BuyerModel buyerModel =
-    BuyerModel(uid: uid, name: name, email: email, profileImage: '');
+        BuyerModel(uid: uid, name: name, email: email, profileImage: '');
     FirebaseFirestore.instance
         .collection('buyers')
         .doc(uid)
@@ -175,57 +175,68 @@ class HandCubit extends Cubit<HandMadeState> {
   List<UserModel> sellers = [];
   List<BuyerModel> buyers = [];
 
-  getUsers() {
+  getSellers() {
     emit(HandGetSellersLoadingState());
     sellers = [];
-    FirebaseFirestore.instance.collection('/users').get().then((value) {
+    FirebaseFirestore.instance
+        .collection('/users')
+        .where('role', isEqualTo: 'seller')
+        .get()
+        .then((value) {
       value.docs.forEach((element) {
         sellers.add(UserModel.fromJson(element.data()));
       });
       emit(HandGetSellersSuccessState());
     }).catchError((error) {
-      print( error.toString());
+      print(error.toString());
       emit(HandGetSellersErrorState(error.toString()));
     });
   }
 
   SellerModel sellerModel;
   Set<Marker> markers = {
-    Marker(markerId: MarkerId('1'), icon: BitmapDescriptor.defaultMarker,
+    Marker(
+      markerId: MarkerId('1'),
+      icon: BitmapDescriptor.defaultMarker,
       position: LatLng(15.5007, 32.5599),
     ),
-    Marker(markerId: MarkerId('2'),
+    Marker(
+      markerId: MarkerId('2'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
       position: LatLng(15.5007, 32.5799),
     ),
-    Marker(markerId: MarkerId('3'),
+    Marker(
+      markerId: MarkerId('3'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
       position: LatLng(15.5307, 32.5599),
     ),
-    Marker(markerId: MarkerId('4'),
+    Marker(
+      markerId: MarkerId('4'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
       position: LatLng(15.1007, 32.5599),
     ),
-    Marker(markerId: MarkerId('5'),
+    Marker(
+      markerId: MarkerId('5'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
       position: LatLng(15.5037, 32.5399),
     ),
   };
   ProductsModel productsModel;
 
-  Future<void> addProduct({String name,
-    String des,
-    String cal,
-    String cate,
-    String image,
-    String price}) {
+  Future<void> addProduct(
+      {String name,
+      String des,
+      String cal,
+      String cate,
+      String image,
+      String price}) {
     emit(HandUserRegisterLoadingState());
     CollectionReference products =
-    FirebaseFirestore.instance.collection('products');
+        FirebaseFirestore.instance.collection('products');
     return products.add(productsModel.addProduct());
   }
 
-  void userBuyerRegister({String email, String password,String name}) async {
+  void userBuyerRegister({String email, String password, String name}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     try {
       emit(HandGetUserLoadingState());
@@ -234,12 +245,11 @@ class HandCubit extends Cubit<HandMadeState> {
           .then((value) {
         print(value.user.uid);
         createUser(
-          email: email,
-          role: 'buyer',
-          name: name,
-          uid: value.user.uid,
-          profileImage: ''
-        );
+            email: email,
+            role: 'buyer',
+            name: name,
+            uid: value.user.uid,
+            profileImage: '');
         showMessageSuccess('Registered successfully');
         emit(HandUserRegisterSuccessState());
       });
@@ -248,14 +258,17 @@ class HandCubit extends Cubit<HandMadeState> {
       showMessageError(e.message.toString());
       emit(HandUserRegisterErrorState(e.toString()));
     }
-    await auth.createUserWithEmailAndPassword(email: email, password: password).then((value){
+    await auth
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((value) {
       emit(HandUserRegisterSuccessState());
-
-    }).catchError((error){
+    }).catchError((error) {
       emit(HandUserRegisterErrorState(error.toString()));
     });
   }
-  void userSellerRegister({String email, String password,String phone ,String name}) async {
+
+  void userSellerRegister(
+      {String email, String password, String phone, String name}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
     Position location = await Geolocator.getCurrentPosition();
     try {
@@ -263,7 +276,6 @@ class HandCubit extends Cubit<HandMadeState> {
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
-
         print(value.user.uid);
         createUser(
           email: email,
@@ -284,48 +296,58 @@ class HandCubit extends Cubit<HandMadeState> {
       showMessageError(e.message.toString());
       emit(HandUserRegisterErrorState(e.toString()));
     }
-    await auth.createUserWithEmailAndPassword(email: email, password: password).then((value){
+    await auth
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((value) {
       emit(HandUserRegisterSuccessState());
-
-    }).catchError((error){
+    }).catchError((error) {
       emit(HandUserRegisterErrorState(error.toString()));
     });
   }
+
   UserModel userModel;
-  void createUser({String uid, String name, String email,String phone,String password,
-    double latitude,double longitude,String role,String profileImage,bool isAvailable}) {
-    userModel =
-    UserModel(
-      uid: uid,
-      name: name,
-      email: email,
-      profileImage: profileImage,
-      isAvailable: true,
-      phone: phone,
-      latitude: latitude,
-      longitude: longitude,
-      role: role,
-      password: password
-    );
+
+  void createUser(
+      {String uid,
+      String name,
+      String email,
+      String phone,
+      String password,
+      double latitude,
+      double longitude,
+      String role,
+      String profileImage,
+      bool isAvailable}) {
+    userModel = UserModel(
+        uid: uid,
+        name: name,
+        email: email,
+        profileImage: profileImage,
+        isAvailable: true,
+        phone: phone,
+        latitude: latitude,
+        longitude: longitude,
+        role: role,
+        password: password);
     FirebaseFirestore.instance
         .collection('users')
         .doc(uid)
         .set(userModel.toJson());
   }
 
-  getCurrentUser()async{
+  getCurrentUser() async {
     emit(HandGetCurrentUserLoadingState());
-      FirebaseFirestore.instance
-       .collection('/users')
-       .doc(uId).get()
-       .then((value){
-         print(value.data());
-         userModel = UserModel.fromJson(value.data());
-         emit(HandGetCurrentUserSuccessState());
-   })
-       .catchError((error){
-        print(error.toString());
-        emit(HandGetCurrentUserErrorState(error.toString()));
-   });
+    FirebaseFirestore.instance
+        .collection('/users')
+        .doc(uId)
+        .get()
+        .then((value) {
+      print(value.data());
+      userModel = UserModel.fromJson(value.data());
+      emit(HandGetCurrentUserSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(HandGetCurrentUserErrorState(error.toString()));
+    });
   }
 }

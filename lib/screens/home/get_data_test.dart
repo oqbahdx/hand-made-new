@@ -14,7 +14,7 @@ class GetUserName extends StatefulWidget {
 class _GetUserNameState extends State<GetUserName> {
   @override
   void initState() {
-    HandCubit.get(context).getUsers();
+    HandCubit.get(context).getSellers();
     super.initState();
   }
   @override

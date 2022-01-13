@@ -27,7 +27,7 @@ class _SellerDetailsState extends State<SellerDetails>
 
   @override
   void initState() {
-    HandCubit.get(context).getUsers();
+    HandCubit.get(context).getSellers();
     animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 800));
     animation = Tween(begin: -1.0, end: 0.0).animate(

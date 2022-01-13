@@ -37,7 +37,7 @@ class _StartPageState extends State<StartPage> {
   ];
   @override
   void initState() {
-    HandCubit.get(context).getUsers();
+    HandCubit.get(context).getSellers();
     super.initState();
   }
   @override

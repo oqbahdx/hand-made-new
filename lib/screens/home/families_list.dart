@@ -20,7 +20,7 @@ class FamiliesList extends StatefulWidget {
 class _FamiliesListState extends State<FamiliesList> {
   @override
   void initState() {
-    HandCubit.get(context).getUsers();
+    HandCubit.get(context).getSellers();
     HandCubit.get(context).getCurrentUser();
     super.initState();
   }
@@ -34,6 +34,7 @@ class _FamiliesListState extends State<FamiliesList> {
           condition: HandCubit.get(context).sellers.length > 0,
           builder: (context) => Scaffold(
             body: Container(
+              height: double.infinity,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(colors: gradientColor)),
                 child: StreamBuilder(
