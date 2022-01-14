@@ -64,8 +64,8 @@ class _SellerDetailsState extends State<SellerDetails>
                     child: Padding(
                       padding: const EdgeInsets.only(left:90),
                       child: PositionedBuild(
-                        h: h * 0.080,
-                        w: h * 0.080,
+                        h: h * 0.350,
+                        w: h * 0.350,
                         txt: "Products",
                       ),
                     ),
@@ -79,8 +79,8 @@ class _SellerDetailsState extends State<SellerDetails>
                     child: Padding(
                       padding: const EdgeInsets.only(right:90),
                       child: PositionedBuild(
-                        h: h * 0.080,
-                        w: h * 0.080,
+                        h: h * 0.350,
+                        w: h * 0.350,
                         txt: "Time Line",
                       ),
                     ),

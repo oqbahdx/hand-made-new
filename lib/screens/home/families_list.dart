@@ -34,7 +34,7 @@ class _FamiliesListState extends State<FamiliesList> {
           condition: HandCubit.get(context).sellers.length > 0,
           builder: (context) => Scaffold(
             body: Container(
-              height: double.infinity,
+                height: double.infinity,
                 decoration: BoxDecoration(
                     gradient: LinearGradient(colors: gradientColor)),
                 child: StreamBuilder(

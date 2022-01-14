@@ -1,5 +1,3 @@
-
-
 abstract class HandMadeState {}
 
 class HandInitialState extends HandMadeState {}
@@ -92,11 +90,30 @@ class HandUserRegisterErrorState extends HandMadeState {
 
 class HandGetCurrentUserLoadingState extends HandMadeState {}
 
-class HandGetCurrentUserSuccessState extends HandMadeState {
-}
+class HandGetCurrentUserSuccessState extends HandMadeState {}
 
 class HandGetCurrentUserErrorState extends HandMadeState {
   final String error;
 
   HandGetCurrentUserErrorState(this.error);
+}
+
+class HandAddProductLoadingState extends HandMadeState {}
+
+class HandAddProductSuccessState extends HandMadeState {}
+
+class HandAddProductErrorState extends HandMadeState {
+  final String error;
+
+  HandAddProductErrorState(this.error);
+}
+
+class HandUploadImageLoadingState extends HandMadeState {}
+
+class HandUploadImageSuccessState extends HandMadeState {}
+
+class HandUploadImageErrorState extends HandMadeState {
+  final String error;
+
+  HandUploadImageErrorState(this.error);
 }

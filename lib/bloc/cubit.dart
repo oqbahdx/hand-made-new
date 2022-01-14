@@ -13,6 +13,7 @@ import 'package:hand_made_new/storage/shared.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:geolocator/geolocator.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class HandCubit extends Cubit<HandMadeState> {
   HandCubit() : super(HandInitialState());
@@ -50,6 +51,7 @@ class HandCubit extends Cubit<HandMadeState> {
     print(image.path.split('/').last);
     emit(HandUpdateImageSuccessState());
   }
+
   bool isShow = true;
   IconData icon = Icons.visibility_off_outlined;
 
@@ -221,19 +223,39 @@ class HandCubit extends Cubit<HandMadeState> {
       position: LatLng(15.5037, 32.5399),
     ),
   };
-  ProductsModel productsModel;
+  void uploadProductImage({String name, String des, String price}) {
+    emit(HandUploadImageLoadingState());
+    firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('products/${Uri.file(image.path).pathSegments.last}')
+        .putFile(image)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+        addProduct(name: name, des: des, image: value, price: price);
+        print(value);
+        emit(HandUpdateImageSuccessState());
+      }).catchError((error) {
+        emit(HandUploadImageErrorState(error.toString()));
+      });
+    });
+  }
 
-  Future<void> addProduct(
-      {String name,
-      String des,
-      String cal,
-      String cate,
-      String image,
-      String price}) {
+  void addProduct({String name, String des, String image, String price}) {
+    ProductsModel productsModel = ProductsModel(
+        uId: userModel.uid,
+        name: name,
+        description: des,
+        image: image,
+        price: price);
+    FirebaseFirestore.instance
+        .collection('products')
+        .add(productsModel.addProduct())
+        .then((value) {
+      emit(HandAddProductSuccessState());
+    }).catchError((error) {
+      emit(HandAddProductErrorState(error.toString()));
+    });
     emit(HandUserRegisterLoadingState());
-    CollectionReference products =
-        FirebaseFirestore.instance.collection('products');
-    return products.add(productsModel.addProduct());
   }
 
   void userBuyerRegister({String email, String password, String name}) async {

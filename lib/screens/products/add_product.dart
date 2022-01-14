@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/components/containers.dart';
-import 'package:hand_made_new/components/drop_menu.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
+import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 import 'package:hand_made_new/widgets/show_dialog.dart';
 import 'package:hand_made_new/widgets/text_from_field.dart';
+import 'package:conditional_builder/conditional_builder.dart';
 
 class AddProduct extends StatefulWidget {
   static String id = "AddProduct";
@@ -27,6 +28,18 @@ class _AddProductState extends State<AddProduct> {
     'فطور',
     'بوفيه مفتوح'
   ];
+  GlobalKey<FormState> formKey = GlobalKey();
+  TextEditingController _nameController = TextEditingController();
+  TextEditingController _descriptionController = TextEditingController();
+  TextEditingController _priceController = TextEditingController();
+
+  @override
+  void initState() {
+    setState(() {
+      HandCubit.get(context).image = null;
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,109 +58,110 @@ class _AddProductState extends State<AddProduct> {
                 elevation: 0.0),
             body: SingleChildScrollView(
               child: Form(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const SizedBox(
-                      height: 50,
-                    ),
-                    defaultTextFormField(
-                      text: 'name',
-                      controller: null,
-                      type: TextInputType.name,
-                      icn: Icons.person,
-                      function: (a) {},
-                      sec: false,
-                      showPass: null,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    defaultTextFormField(
-                      text: 'description',
-                      controller: null,
-                      type: TextInputType.text,
-                      icn: Icons.add_comment_sharp,
-                      function: (a) {},
-                      sec: false,
-                      showPass: null,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    defaultTextFormField(
-                      text: 'price',
-                      controller: null,
-                      type: TextInputType.number,
-                      icn: Icons.monetization_on,
-                      function: (a) {},
-                      sec: false,
-                      showPass: null,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    defaultTextFormField(
-                      text: 'calories',
-                      controller: null,
-                      type: TextInputType.number,
-                      icn: Icons.local_fire_department,
-                      function: (a) {},
-                      sec: false,
-                      showPass: null,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    dropMenuBuild(
-                      meals: meals,
-                      dropValue: HandCubit.get(context).dropdownValueCategory,
-                      fun: HandCubit.get(context).changeDropItem(
-                        HandCubit.get(context).dropdownValueCategory,
-                        HandCubit.get(context).productCategory,
+                key: formKey,
+                child: Container(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: _height * 0.03,
                       ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 10),
-                      height: _height * 0.15,
-                      width: _width * 0.95,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: HandCubit.get(context).image == null
-                              ? Container(
-                                  decoration: BoxDecoration(
-                                      border:
-                                          Border.all(color: Colors.black54)),
-                                  child: const Center(
-                                    child: Text(
-                                      "Please Select Image",
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: 'messiri'),
+                      defaultTextFormField(
+                        text: 'product name',
+                        controller: _nameController,
+                        type: TextInputType.name,
+                        function: (value) {
+                          if (value.isEmpty) {
+                            return 'this field can not be empty';
+                          }
+                        },
+                        sec: false,
+                        showPass: null,
+                      ),
+                      SizedBox(
+                        height: _height * 0.03,
+                      ),
+                      defaultTextFormField(
+                        text: 'description',
+                        controller: _descriptionController,
+                        type: TextInputType.text,
+                        function: (value) {
+                          if (value.isEmpty) {
+                            return 'this field can not be empty';
+                          }
+                        },
+                        sec: false,
+                        showPass: null,
+                      ),
+                      SizedBox(
+                        height: _height * 0.03,
+                      ),
+                      defaultTextFormField(
+                        text: 'price',
+                        controller: _priceController,
+                        type: TextInputType.number,
+                        function: (value) {
+                          if (value.isEmpty) {
+                            return 'this field can not be empty';
+                          }
+                        },
+                        sec: false,
+                        showPass: null,
+                      ),
+                      SizedBox(
+                        height: _height * 0.06,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 40, vertical: 10),
+                        height: _height * 0.20,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(5),
+                            child: HandCubit.get(context).image == null
+                                ? containerBuildTap(
+                                    text: 'Select image',
+                                    onTap: () {
+                                      showDialogBuild(context);
+                                    })
+                                : Container(
+                                    height: double.infinity,
+                                    width: double.infinity,
+                                    child: Image.file(
+                                      HandCubit.get(context).image,
+                                      fit: BoxFit.fill,
                                     ),
-                                  ),
-                                )
-                              : Container(
-                                  height: double.infinity,
-                                  width: double.infinity,
-                                  child: Image.file(
-                                    HandCubit.get(context).image,
-                                    fit: BoxFit.fill,
-                                  ),
-                                )),
-                    ),
-                    SizedBox(
-                      height: _height * 0.015,
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: containerBuildTap(
-                            text: 'Select image',
-                            onTap: () {
-                              showDialogBuild(context);
-                            })),
-                  ],
+                                  )),
+                      ),
+                      SizedBox(
+                        height: _height * 0.05,
+                      ),
+                      Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: ConditionalBuilder(
+                            condition: state is! HandUploadImageLoadingState,
+                            builder: (context) => containerBuildTap(
+                                text: 'Add Product',
+                                onTap: () {
+                                  // showDialogBuild(context);
+                                  if (formKey.currentState.validate() &&
+                                      HandCubit.get(context).image != null) {
+                                    HandCubit.get(context).uploadProductImage(
+                                        name: _nameController.text,
+                                        des: _descriptionController.text,
+                                        price: _priceController.text);
+                                  } else if (formKey.currentState.validate() &&
+                                      HandCubit.get(context).image == null) {
+                                    showMessageError('Please Add Image ');
+                                  }
+
+                                  // HandCubit.get(context).image = null;
+                                }),
+                            fallback: (context) => Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          )),
+                    ],
+                  ),
                 ),
               ),
             ),
