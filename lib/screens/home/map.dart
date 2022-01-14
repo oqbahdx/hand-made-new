@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,7 +8,6 @@ import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/navigator.dart';
 import 'package:hand_made_new/screens/account/sellers_details.dart';
-import 'package:hand_made_new/widgets/navigators.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class MapPage extends StatefulWidget {
@@ -23,7 +23,7 @@ class _MapPageState extends State<MapPage> {
   GoogleMapController _mapController;
   Set<Marker> sellerMarkers = Set<Marker>();
   BitmapDescriptor myIcon;
-
+  var seller = [];
   @override
   void initState() {
     HandCubit.get(context).getSellers();
@@ -41,6 +41,7 @@ class _MapPageState extends State<MapPage> {
       });
     });
 
+
     super.initState();
   }
 
@@ -52,6 +53,22 @@ class _MapPageState extends State<MapPage> {
       });
     }
   }
+
+  getSellersMarkers(){
+    seller = [];
+    FirebaseFirestore.instance.collection('users').get().then((duc){
+      if(duc.docs.isNotEmpty){
+        for(int i = 0;i<=duc.docs.length;i++){
+          seller.add(duc.docs[i].data());
+          // initMarker(duc.docs[i].data());
+        }
+      }
+    });
+
+  }
+  // initMarker(seller){
+  //   _mapController.
+  // }
 
   checkPermissions() async {
     await Permission.locationAlways.request().isGranted &&

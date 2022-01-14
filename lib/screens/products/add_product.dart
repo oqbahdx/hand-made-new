@@ -19,24 +19,21 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddProductState extends State<AddProduct> {
-  List <String> meals = [
-  'اختار الفئة',
-  'حلويات',
-  'غداء',
-  'عشاء',
-  'فطور',
-  'بوفيه مفتوح'
+  List<String> meals = [
+    'اختار الفئة',
+    'حلويات',
+    'غداء',
+    'عشاء',
+    'فطور',
+    'بوفيه مفتوح'
   ];
-  
 
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
     double _width = MediaQuery.of(context).size.width;
-    return BlocProvider(create: (BuildContext context)=>HandCubit(),
-    child: BlocConsumer<HandCubit,HandMadeState>(
-      listener: (context,state){},
-      builder: (context,state){
+    return BlocBuilder<HandCubit, HandMadeState>(
+      builder: (context, state) {
         return SafeArea(
           child: Scaffold(
             appBar: appBarWidget(
@@ -102,7 +99,6 @@ class _AddProductState extends State<AddProduct> {
                     const SizedBox(
                       height: 20,
                     ),
-
                     dropMenuBuild(
                       meals: meals,
                       dropValue: HandCubit.get(context).dropdownValueCategory,
@@ -112,28 +108,34 @@ class _AddProductState extends State<AddProduct> {
                       ),
                     ),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 10),
                       height: _height * 0.15,
                       width: _width * 0.95,
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(5),
                           child: HandCubit.get(context).image == null
                               ? Container(
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black54)),
-                            child: const Center(
-                              child: Text(
-                                "الرجاء إضافه صورة",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'messiri'),
-                              ),
-                            ),
-                          )
-                              : Image.file(
-                            HandCubit.get(context).image,
-                            fit: BoxFit.fill,
-                          )),
+                                  decoration: BoxDecoration(
+                                      border:
+                                          Border.all(color: Colors.black54)),
+                                  child: const Center(
+                                    child: Text(
+                                      "Please Select Image",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'messiri'),
+                                    ),
+                                  ),
+                                )
+                              : Container(
+                                  height: double.infinity,
+                                  width: double.infinity,
+                                  child: Image.file(
+                                    HandCubit.get(context).image,
+                                    fit: BoxFit.fill,
+                                  ),
+                                )),
                     ),
                     SizedBox(
                       height: _height * 0.015,
@@ -142,10 +144,9 @@ class _AddProductState extends State<AddProduct> {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: containerBuildTap(
                             text: 'Select image',
-                            onTap: (){
+                            onTap: () {
                               showDialogBuild(context);
-                            }
-                        )),
+                            })),
                   ],
                 ),
               ),
@@ -153,7 +154,6 @@ class _AddProductState extends State<AddProduct> {
           ),
         );
       },
-    ),
     );
   }
 }

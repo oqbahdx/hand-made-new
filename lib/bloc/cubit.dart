@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -42,15 +41,15 @@ class HandCubit extends Cubit<HandMadeState> {
 
   Future getImage(ImageSource src) async {
     final pickedFile = await picker.pickImage(
-        source: src, imageQuality: 80, maxHeight: 300, maxWidth: 300);
+        source: src, imageQuality: 80, maxHeight: 400, maxWidth: 400);
 
     if (pickedFile != null) {
       image = File(pickedFile.path);
       emit(HandUpdateImageSuccessState());
     }
     print(image.path.split('/').last);
+    emit(HandUpdateImageSuccessState());
   }
-
   bool isShow = true;
   IconData icon = Icons.visibility_off_outlined;
 

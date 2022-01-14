@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/screens/account/sellers_details.dart';
 import 'package:hand_made_new/screens/home/profile.dart';
-import 'package:hand_made_new/screens/products/seller_products.dart';
 
 import 'package:hand_made_new/storage/shared.dart';
 
@@ -67,7 +66,7 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
          // initialRoute: SellerDetails.id,
-        home: SellerProducts(),
+        home: startPage,
         routes: {
           OnBoarding.id: (context) => BlocProvider.value(
               value: _handCubit,
@@ -78,9 +77,7 @@ class MyApp extends StatelessWidget {
           MapPage.id: (context) => BlocProvider.value(
               value: _handCubit,
               child: const MapPage()),
-          AddProduct.id: (context) => BlocProvider.value(
-              value: _handCubit,
-              child: const AddProduct()),
+          AddProduct.id: (context) =>  const AddProduct(),
           LoginPage.id: (context) => BlocProvider.value(
               value: _handCubit,
               child: const LoginPage()),

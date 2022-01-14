@@ -37,7 +37,7 @@ class _DrawerBuildState extends State<DrawerBuild> {
             child: Column(
               children: [
                 const SizedBox(
-                  height: 50,
+                  height: 30,
                 ),
                 Container(
                   height: h * 0.20,
