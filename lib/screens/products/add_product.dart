@@ -1,9 +1,12 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/show_message.dart';
+import 'package:hand_made_new/models/products_model.dart';
+import 'package:hand_made_new/models/user_model.dart';
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 import 'package:hand_made_new/widgets/show_dialog.dart';
@@ -142,10 +145,9 @@ class _AddProductState extends State<AddProduct> {
                             builder: (context) => containerBuildTap(
                                 text: 'Add Product',
                                 onTap: () {
-                                  // showDialogBuild(context);
                                   if (formKey.currentState.validate() &&
                                       HandCubit.get(context).image != null) {
-                                    HandCubit.get(context).uploadProductImage(
+                                    HandCubit.get(context).addProductWithImage(
                                         name: _nameController.text,
                                         des: _descriptionController.text,
                                         price: _priceController.text);
@@ -153,7 +155,6 @@ class _AddProductState extends State<AddProduct> {
                                       HandCubit.get(context).image == null) {
                                     showMessageError('Please Add Image ');
                                   }
-
                                   // HandCubit.get(context).image = null;
                                 }),
                             fallback: (context) => Center(

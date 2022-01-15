@@ -42,8 +42,7 @@ class HandCubit extends Cubit<HandMadeState> {
 
   Future getImage(ImageSource src) async {
     final pickedFile = await picker.pickImage(
-        source: src, imageQuality: 80, maxHeight: 400, maxWidth: 400);
-
+        source: src, imageQuality: 80, maxHeight: 800, maxWidth: 800);
     if (pickedFile != null) {
       image = File(pickedFile.path);
       emit(HandUpdateImageSuccessState());
@@ -223,16 +222,16 @@ class HandCubit extends Cubit<HandMadeState> {
       position: LatLng(15.5037, 32.5399),
     ),
   };
-  void uploadProductImage({String name, String des, String price}) {
+  void addProductWithImage({String name, String des, String price}) {
     emit(HandUploadImageLoadingState());
     firebase_storage.FirebaseStorage.instance
         .ref()
         .child('products/${Uri.file(image.path).pathSegments.last}')
         .putFile(image)
         .then((value) {
-      value.ref.getDownloadURL().then((value) {
+         value.ref.getDownloadURL().then((value) {
         addProduct(name: name, des: des, image: value, price: price);
-        print(value);
+        // print("${}");
         emit(HandUpdateImageSuccessState());
       }).catchError((error) {
         emit(HandUploadImageErrorState(error.toString()));
@@ -240,9 +239,11 @@ class HandCubit extends Cubit<HandMadeState> {
     });
   }
 
-  void addProduct({String name, String des, String image, String price}) {
+   addProduct({String name, String des, String image, String price}) {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    var userId = auth.currentUser.uid;
     ProductsModel productsModel = ProductsModel(
-        uId: userModel.uid,
+        uId: userId,
         name: name,
         description: des,
         image: image,
