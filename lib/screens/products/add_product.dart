@@ -1,14 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/show_message.dart';
-import 'package:hand_made_new/models/products_model.dart';
-import 'package:hand_made_new/models/user_model.dart';
+import 'package:hand_made_new/screens/products/my_products.dart';
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
+import 'package:hand_made_new/widgets/navigators.dart';
 import 'package:hand_made_new/widgets/show_dialog.dart';
 import 'package:hand_made_new/widgets/text_from_field.dart';
 import 'package:conditional_builder/conditional_builder.dart';
@@ -23,14 +22,7 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddProductState extends State<AddProduct> {
-  List<String> meals = [
-    'اختار الفئة',
-    'حلويات',
-    'غداء',
-    'عشاء',
-    'فطور',
-    'بوفيه مفتوح'
-  ];
+
   GlobalKey<FormState> formKey = GlobalKey();
   TextEditingController _nameController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
@@ -47,8 +39,20 @@ class _AddProductState extends State<AddProduct> {
   @override
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
-    double _width = MediaQuery.of(context).size.width;
-    return BlocBuilder<HandCubit, HandMadeState>(
+    return BlocConsumer<HandCubit, HandMadeState>(
+      listener: (context,state){
+        if(state is HandUpdateImageSuccessState){
+          showMessageSuccess('Product Add Successfully');
+          moveToPage(context, MyProducts.id);
+        }
+
+         else if(state is HandAddProductErrorState){
+            showMessageError('Field Add Product');
+          }else{
+
+        }
+
+      },
       builder: (context, state) {
         return SafeArea(
           child: Scaffold(
@@ -60,6 +64,7 @@ class _AddProductState extends State<AddProduct> {
                 action: Container(),
                 elevation: 0.0),
             body: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Form(
                 key: formKey,
                 child: Container(
@@ -136,13 +141,14 @@ class _AddProductState extends State<AddProduct> {
                                   )),
                       ),
                       SizedBox(
-                        height: _height * 0.05,
+                        height: _height * 0.04,
                       ),
                       Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: ConditionalBuilder(
                             condition: state is! HandUploadImageLoadingState,
                             builder: (context) => containerBuildTap(
+                              h: _height * 0.08,
                                 text: 'Add Product',
                                 onTap: () {
                                   if (formKey.currentState.validate() &&

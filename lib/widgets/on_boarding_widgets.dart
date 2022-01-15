@@ -7,7 +7,7 @@ Widget onBoardingWidget(String imageName, String title, String body) {
       Expanded(
           child: Image(
             fit: BoxFit.contain,
-            height: 350,
+            height: 550,
         width: 350,
         image: AssetImage(imageName),
       )),

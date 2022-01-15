@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/screens/account/sellers_details.dart';
 import 'package:hand_made_new/screens/home/profile.dart';
+import 'package:hand_made_new/screens/products/my_products.dart';
 
 import 'package:hand_made_new/storage/shared.dart';
 
@@ -91,7 +92,8 @@ class MyApp extends StatelessWidget {
           SellerDetails.id: (context) =>
               BlocProvider.value(value: _handCubit, child: SellerDetails()),
           Profile.id: (context) =>
-              BlocProvider.value(value: _handCubit, child: Profile())
+              BlocProvider.value(value: _handCubit, child: Profile()),
+          MyProducts.id:(context)=> MyProducts()
         },
       ),
     );

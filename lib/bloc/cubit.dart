@@ -231,7 +231,6 @@ class HandCubit extends Cubit<HandMadeState> {
         .then((value) {
          value.ref.getDownloadURL().then((value) {
         addProduct(name: name, des: des, image: value, price: price);
-        // print("${}");
         emit(HandUpdateImageSuccessState());
       }).catchError((error) {
         emit(HandUploadImageErrorState(error.toString()));
@@ -240,6 +239,7 @@ class HandCubit extends Cubit<HandMadeState> {
   }
 
    addProduct({String name, String des, String image, String price}) {
+    emit(HandAddProductLoadingState());
     FirebaseAuth auth = FirebaseAuth.instance;
     var userId = auth.currentUser.uid;
     ProductsModel productsModel = ProductsModel(
@@ -256,7 +256,6 @@ class HandCubit extends Cubit<HandMadeState> {
     }).catchError((error) {
       emit(HandAddProductErrorState(error.toString()));
     });
-    emit(HandUserRegisterLoadingState());
   }
 
   void userBuyerRegister({String email, String password, String name}) async {
