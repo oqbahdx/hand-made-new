@@ -117,3 +117,13 @@ class HandUploadImageErrorState extends HandMadeState {
 
   HandUploadImageErrorState(this.error);
 }
+
+class HandGetCurrentUserProductsLoadingState extends HandMadeState {}
+
+class HandGetCurrentUserProductsSuccessState extends HandMadeState {}
+
+class HandGetCurrentUserProductsErrorState extends HandMadeState {
+  final String error;
+
+  HandGetCurrentUserProductsErrorState(this.error);
+}

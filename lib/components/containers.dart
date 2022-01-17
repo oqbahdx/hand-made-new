@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hand_made_new/models/products_model.dart';
 
 import 'package:hand_made_new/models/user_model.dart';
 import '/styles/colors.dart';
@@ -124,4 +125,39 @@ Widget PositionedBuild({double h, double w, String txt}) {
     ),
   );
 
+
+}
+
+Widget buildProductsItem(ProductsModel model){
+  return Container(
+    alignment: Alignment.center,
+    child: Column(
+      children: [
+        Container(
+          child: FadeInImage(
+            width: double.infinity,
+            fit: BoxFit.fill,
+            image: NetworkImage('${model.image}'),
+            placeholder: AssetImage('assets/pleaceholder.png'),
+          ),
+          height: 70,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15),
+            color: Colors.black87,
+          ),
+        ),
+        SizedBox(height: 10,),
+        Text('${model.name}',style: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold
+        ),)
+      ],
+    ),
+    height: 250,
+    width: 250,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(15),
+      color: Colors.grey,
+    ),
+  );
 }

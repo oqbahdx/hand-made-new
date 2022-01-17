@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 
 import 'package:hand_made_new/components/containers.dart';
+import 'package:hand_made_new/components/navigator.dart';
+import 'package:hand_made_new/screens/products/seller_products.dart';
 
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
@@ -25,6 +27,7 @@ class _SellerDetailsState extends State<SellerDetails>
 
   @override
   void initState() {
+
     HandCubit.get(context).getSellers();
     animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 800));
@@ -63,10 +66,21 @@ class _SellerDetailsState extends State<SellerDetails>
                         0.0, animation.value * w, 0.0),
                     child: Padding(
                       padding: const EdgeInsets.only(left:90),
-                      child: PositionedBuild(
-                        h: h * 0.350,
-                        w: h * 0.350,
-                        txt: "Products",
+                      child: GestureDetector(
+                        onTap: (){
+                          moveToPageWithData(context,namePage: SellerProducts(
+                            // sellerName: ,
+                            // productImage: ,
+                            // productName: ,
+                            // productPrice: ,
+                            // productsCategory: ,
+                          ));
+                        },
+                        child: PositionedBuild(
+                          h: h * 0.350,
+                          w: h * 0.350,
+                          txt: "Products",
+                        ),
                       ),
                     ),
                   ),

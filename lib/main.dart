@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/screens/account/sellers_details.dart';
 import 'package:hand_made_new/screens/home/profile.dart';
 import 'package:hand_made_new/screens/products/my_products.dart';
+import 'package:hand_made_new/screens/products/products%20test.dart';
+import 'package:hand_made_new/screens/products/seller_products.dart';
 
 import 'package:hand_made_new/storage/shared.dart';
 
@@ -65,7 +67,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Amiri',
         ),
         debugShowCheckedModeBanner: false,
-        // initialRoute: SellerDetails.id,
+        // initialRoute: ProductText.id,
         home: startPage,
         routes: {
           OnBoarding.id: (context) =>
@@ -93,7 +95,8 @@ class MyApp extends StatelessWidget {
               BlocProvider.value(value: _handCubit, child: SellerDetails()),
           Profile.id: (context) =>
               BlocProvider.value(value: _handCubit, child: Profile()),
-          MyProducts.id:(context)=> MyProducts()
+          MyProducts.id:(context)=> MyProducts(),
+          ProductText.id:(context)=>ProductText()
         },
       ),
     );

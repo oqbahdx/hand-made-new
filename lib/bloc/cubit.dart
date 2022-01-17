@@ -372,4 +372,22 @@ class HandCubit extends Cubit<HandMadeState> {
       emit(HandGetCurrentUserErrorState(error.toString()));
     });
   }
+    ProductsModel productsModel;
+    List<ProductsModel> products= [];
+    getCurrentUserProducts(){
+    products=[];
+    emit(HandGetCurrentUserProductsLoadingState());
+    FirebaseFirestore.instance.collection('/products').get().then((value){
+    value.docs.forEach((element) { 
+      products.add(ProductsModel.fromJson(element.data()));
+      emit(HandGetCurrentUserProductsSuccessState());
+      print(value.toString());
+    });
+    })
+   .catchError((err){
+      print(err.toString());
+      emit(HandGetCurrentUserProductsErrorState(err.toString()));
+    });
+  }
+
 }

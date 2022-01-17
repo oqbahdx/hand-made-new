@@ -5,6 +5,7 @@ import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/screens/products/my_products.dart';
+import 'package:hand_made_new/screens/products/products%20test.dart';
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 import 'package:hand_made_new/widgets/navigators.dart';
@@ -41,9 +42,9 @@ class _AddProductState extends State<AddProduct> {
     double _height = MediaQuery.of(context).size.height;
     return BlocConsumer<HandCubit, HandMadeState>(
       listener: (context,state){
-        if(state is HandUpdateImageSuccessState){
+        if(state is HandAddProductSuccessState){
           showMessageSuccess('Product Add Successfully');
-          moveToPage(context, MyProducts.id);
+          moveToPage(context, ProductText.id);
         }
 
          else if(state is HandAddProductErrorState){

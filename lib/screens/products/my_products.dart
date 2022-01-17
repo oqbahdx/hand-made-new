@@ -1,3 +1,4 @@
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
@@ -47,21 +48,32 @@ class _MyProductsState extends State<MyProducts> {
                 colors: gradientColor,
               ),
             ),
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 3 / 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10),
-              itemBuilder: (context, index) => Container(
-                height: 300,
-                width: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Colors.white,
+            child: ConditionalBuilder(
+              condition: HandCubit.get(context).products.length>0,
+              builder: (context)=>FutureBuilder(
+                future: HandCubit.get(context).getCurrentUserProducts(),
+                builder: (context,index)=>GridView.builder
+                  (
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: 3 / 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10),
+                  itemBuilder: (context, index) => Container(
+                    height: 300,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Colors.white,
+                    ),
+                  ),
+                  itemCount: HandCubit.get(context).products.length,
                 ),
               ),
-              itemCount: 5,
+              fallback: (context)=>Center(child: Text('No Products',style: TextStyle(
+                fontSize: 50,
+                fontWeight: FontWeight.bold
+              ),),),
             ),
           ),
         );
