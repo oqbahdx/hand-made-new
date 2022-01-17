@@ -54,7 +54,8 @@ class _ProductTextState extends State<ProductText> {
                         crossAxisSpacing: 10,
                         mainAxisSpacing: 45),
                         itemBuilder: (context,index)=> buildProductsItem(
-                          products[index]
+                          products[index],
+                          products[index],
                         ),
                         itemCount: products.length,);
                   }

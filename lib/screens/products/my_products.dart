@@ -6,6 +6,7 @@ import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/models/products_model.dart';
+import 'package:hand_made_new/screens/products/products_detalis.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 
@@ -71,8 +72,34 @@ class _MyProductsState extends State<MyProducts> {
                     childAspectRatio: 3 / 2.9,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 45),
-                    itemBuilder: (context,index)=>buildProductsItem(
-                      HandCubit.get(context).myProducts[index]
+                    itemBuilder: (context,index)=>GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
+                          return Scaffold(
+                            appBar: appBarWidget(
+                              title: Text("${HandCubit.get(context).myProducts[index].name}",style: TextStyle(
+                                fontWeight: FontWeight.bold
+                              ),),
+                              action: Container(),
+                              elevation: 20.0
+                            ),
+                            body: Hero(
+                              tag: 'key',
+                              child: FadeInImage(
+                                height: 350,
+                                width: double.infinity,
+                                fit: BoxFit.fitWidth,
+                                image: NetworkImage('${HandCubit.get(context).myProducts[index].image}'),
+                                placeholder: AssetImage('assets/pleaceholder.png'),
+                              ),
+                            ),
+                          );
+                        }));
+                      },
+                      child: buildProductsItem(
+                        HandCubit.get(context).myProducts[index],
+                        'key',
+                      ),
                     ),itemCount: HandCubit.get(context).myProducts.length,)
               ),
               fallback: (context)=>Center(child: Text('No Products',style: TextStyle(

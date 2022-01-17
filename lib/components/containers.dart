@@ -128,7 +128,7 @@ Widget PositionedBuild({double h, double w, String txt}) {
 
 }
 
-Widget buildProductsItem(ProductsModel model){
+Widget buildProductsItem(ProductsModel model,Object tag){
   return Container(
 
     // alignment: Alignment.center,
@@ -136,11 +136,14 @@ Widget buildProductsItem(ProductsModel model){
       children: [
         Container(
           clipBehavior: Clip.hardEdge,
-          child: FadeInImage(
-            width: double.infinity,
-            fit: BoxFit.fitWidth,
-            image: NetworkImage('${model.image}'),
-            placeholder: AssetImage('assets/pleaceholder.png'),
+          child: Hero(
+            tag: tag,
+            child: FadeInImage(
+              width: double.infinity,
+              fit: BoxFit.fitWidth,
+              image: NetworkImage('${model.image}'),
+              placeholder: AssetImage('assets/pleaceholder.png'),
+            ),
           ),
           height: 120,
           decoration: BoxDecoration(

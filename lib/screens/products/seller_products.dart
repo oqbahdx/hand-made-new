@@ -62,7 +62,9 @@ class _SellerProductsState extends State<SellerProducts> {
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10),
                       itemBuilder: (context, index) => buildProductsItem(
-                      HandCubit.get(context).products[index]
+                      HandCubit.get(context).products[index],
+                      'key',
+
                   ),
                   itemCount: HandCubit.get(context).products.length,
                 ),
