@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
+import 'package:hand_made_new/components/containers.dart';
+import 'package:hand_made_new/models/products_model.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 
@@ -28,10 +31,20 @@ class MyProducts extends StatefulWidget {
 }
 
 class _MyProductsState extends State<MyProducts> {
+  ProductsModel productsModel;
+  List<ProductsModel> products= [];
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    HandCubit.get(context).getMyProducts();
+  }
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HandCubit, HandMadeState>(
-      listener: (context, state) {},
+      listener: (context, state) {
+
+      },
       builder: (context, state) {
         return Scaffold(
           appBar: appBarWidget(
@@ -49,26 +62,18 @@ class _MyProductsState extends State<MyProducts> {
               ),
             ),
             child: ConditionalBuilder(
-              condition: HandCubit.get(context).products.length>0,
+              condition: HandCubit.get(context).myProducts.length>0,
               builder: (context)=>FutureBuilder(
-                future: HandCubit.get(context).getCurrentUserProducts(),
-                builder: (context,index)=>GridView.builder
-                  (
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 3 / 2,
-                      crossAxisSpacing: 10,
-                      mainAxisSpacing: 10),
-                  itemBuilder: (context, index) => Container(
-                    height: 300,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
-                    ),
-                  ),
-                  itemCount: HandCubit.get(context).products.length,
-                ),
+                future: HandCubit.get(context).getMyProducts(),
+                builder: (context,index)=>GridView.builder(gridDelegate:
+                SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 3 / 2.9,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 45),
+                    itemBuilder: (context,index)=>buildProductsItem(
+                      HandCubit.get(context).myProducts[index]
+                    ),itemCount: HandCubit.get(context).myProducts.length,)
               ),
               fallback: (context)=>Center(child: Text('No Products',style: TextStyle(
                 fontSize: 50,

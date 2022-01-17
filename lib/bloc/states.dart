@@ -127,3 +127,10 @@ class HandGetCurrentUserProductsErrorState extends HandMadeState {
 
   HandGetCurrentUserProductsErrorState(this.error);
 }
+class HandGetMyProductsLoading extends HandMadeState{}
+class HandGetMyProductsSuccess extends HandMadeState{}
+class HandGetMyProductsError extends HandMadeState{
+  final String error;
+
+  HandGetMyProductsError(this.error);
+}

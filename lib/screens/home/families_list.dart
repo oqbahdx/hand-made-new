@@ -69,6 +69,9 @@ class _FamiliesListState extends State<FamiliesList> {
                                         name: HandCubit.get(context)
                                             .sellers[index]
                                             .name,
+                                        uId: HandCubit.get(context)
+                                            .sellers[index]
+                                            .uid,
                                       ));
                                 }),
                             separatorBuilder: (context, index) => SizedBox(

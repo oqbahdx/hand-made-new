@@ -9,12 +9,14 @@ import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 
 class SellerProducts extends StatefulWidget {
-  const SellerProducts({Key key, this.sellerName, this.productName, this.productImage, this.productPrice, this.productsCategory}) : super(key: key);
+  const SellerProducts({Key key, this.uId,this.sellerName, this.productName, this.productImage, this.productPrice, this.productsCategory}) : super(key: key);
  final String sellerName;
  final String productName;
  final String productImage;
  final String productPrice;
  final String productsCategory;
+ final String uId;
+
   @override
   _SellerProductsState createState() => _SellerProductsState();
 }
@@ -34,7 +36,7 @@ class _SellerProductsState extends State<SellerProducts> {
       builder: (context,state){
         return  Scaffold(
           appBar: appBarWidget(
-              title: Text('seller products',style: TextStyle(
+              title: Text('${widget.sellerName} products',style: TextStyle(
                 fontWeight: FontWeight.bold
               ),),
               action: Container(),
@@ -50,13 +52,13 @@ class _SellerProductsState extends State<SellerProducts> {
             child: ConditionalBuilder(
               condition: HandCubit.get(context).products.length>0,
               builder: (context)=>FutureBuilder(
-                future: FirebaseFirestore.instance.collection('users').where('uId',
-                    isEqualTo: "FlVIm2c0GQMQrH5bEPIxCuLxA342").get(),
+                future: FirebaseFirestore.instance.collection('products').where('uId',
+                    isEqualTo: widget.uId).get(),
                 builder: (context,index)=>GridView.builder
                   (
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      childAspectRatio: 3 / 2,
+                      childAspectRatio: 3 / 2.9,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10),
                       itemBuilder: (context, index) => buildProductsItem(

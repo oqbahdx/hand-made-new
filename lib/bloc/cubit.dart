@@ -222,6 +222,7 @@ class HandCubit extends Cubit<HandMadeState> {
       position: LatLng(15.5037, 32.5399),
     ),
   };
+
   void addProductWithImage({String name, String des, String price}) {
     emit(HandUploadImageLoadingState());
     firebase_storage.FirebaseStorage.instance
@@ -229,7 +230,7 @@ class HandCubit extends Cubit<HandMadeState> {
         .child('products/${Uri.file(image.path).pathSegments.last}')
         .putFile(image)
         .then((value) {
-         value.ref.getDownloadURL().then((value) {
+      value.ref.getDownloadURL().then((value) {
         addProduct(name: name, des: des, image: value, price: price);
         emit(HandUpdateImageSuccessState());
       }).catchError((error) {
@@ -238,16 +239,12 @@ class HandCubit extends Cubit<HandMadeState> {
     });
   }
 
-   addProduct({String name, String des, String image, String price}) {
+  addProduct({String name, String des, String image, String price}) {
     emit(HandAddProductLoadingState());
     FirebaseAuth auth = FirebaseAuth.instance;
     var userId = auth.currentUser.uid;
     ProductsModel productsModel = ProductsModel(
-        uId: userId,
-        name: name,
-        description: des,
-        image: image,
-        price: price);
+        uId: userId, name: name, description: des, image: image, price: price);
     FirebaseFirestore.instance
         .collection('products')
         .add(productsModel.addProduct())
@@ -372,22 +369,45 @@ class HandCubit extends Cubit<HandMadeState> {
       emit(HandGetCurrentUserErrorState(error.toString()));
     });
   }
-    ProductsModel productsModel;
-    List<ProductsModel> products= [];
-    getCurrentUserProducts(){
-    products=[];
+
+  ProductsModel productsModel;
+  List<ProductsModel> products = [];
+
+  getCurrentUserProducts() {
+    products = [];
     emit(HandGetCurrentUserProductsLoadingState());
-    FirebaseFirestore.instance.collection('/products').get().then((value){
-    value.docs.forEach((element) { 
-      products.add(ProductsModel.fromJson(element.data()));
-      emit(HandGetCurrentUserProductsSuccessState());
-      print(value.toString());
-    });
-    })
-   .catchError((err){
+    FirebaseFirestore.instance.collection('/products').get().then((value) {
+      value.docs.forEach((element) {
+        products.add(ProductsModel.fromJson(element.data()));
+        emit(HandGetCurrentUserProductsSuccessState());
+        print(value.toString());
+      });
+    }).catchError((err) {
       print(err.toString());
       emit(HandGetCurrentUserProductsErrorState(err.toString()));
     });
   }
 
+  List<ProductsModel> myProducts = [];
+
+  getMyProducts() {
+    emit(HandGetMyProductsLoading());
+    FirebaseAuth auth = FirebaseAuth.instance;
+    var userId = auth.currentUser.uid;
+
+    FirebaseFirestore.instance
+        .collection('products')
+        .where('uId', isEqualTo: userId)
+        .get()
+        .then((value) {
+      myProducts = [];
+      value.docs.forEach((element) {
+        myProducts.add(ProductsModel.fromJson(element.data()));
+      });
+      print(myProducts.length);
+      emit(HandGetMyProductsSuccess());
+    }).catchError((error) {
+      emit(HandGetMyProductsError(error.toString()));
+    });
+  }
 }

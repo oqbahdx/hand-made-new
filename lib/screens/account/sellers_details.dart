@@ -11,11 +11,11 @@ import 'package:hand_made_new/widgets/app_bar.dart';
 
 class SellerDetails extends StatefulWidget {
   final String name;
-  const SellerDetails({
-    Key key,
-    this.name,
-  }) : super(key: key);
+  final String uId;
+
+  const SellerDetails({Key key, this.name, this.uId}) : super(key: key);
   static String id = "SellerDetails";
+
   @override
   _SellerDetailsState createState() => _SellerDetailsState();
 }
@@ -27,7 +27,6 @@ class _SellerDetailsState extends State<SellerDetails>
 
   @override
   void initState() {
-
     HandCubit.get(context).getSellers();
     animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 800));
@@ -65,16 +64,18 @@ class _SellerDetailsState extends State<SellerDetails>
                     transform: Matrix4.translationValues(
                         0.0, animation.value * w, 0.0),
                     child: Padding(
-                      padding: const EdgeInsets.only(left:90),
+                      padding: const EdgeInsets.only(left: 90),
                       child: GestureDetector(
-                        onTap: (){
-                          moveToPageWithData(context,namePage: SellerProducts(
-                            // sellerName: ,
-                            // productImage: ,
-                            // productName: ,
-                            // productPrice: ,
-                            // productsCategory: ,
-                          ));
+                        onTap: () {
+                          moveToPageWithData(context,
+                              namePage: SellerProducts(
+                                sellerName: widget.name,
+                                uId: widget.uId,
+                                // productImage: ,
+                                // productName: ,
+                                // productPrice: ,
+                                // productsCategory: ,
+                              ));
                         },
                         child: PositionedBuild(
                           h: h * 0.350,
@@ -91,7 +92,7 @@ class _SellerDetailsState extends State<SellerDetails>
                     transform: Matrix4.translationValues(
                         animation.value * w, 0.0, 0.0),
                     child: Padding(
-                      padding: const EdgeInsets.only(right:90),
+                      padding: const EdgeInsets.only(right: 90),
                       child: PositionedBuild(
                         h: h * 0.350,
                         w: h * 0.350,

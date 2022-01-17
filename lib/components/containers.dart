@@ -130,34 +130,36 @@ Widget PositionedBuild({double h, double w, String txt}) {
 
 Widget buildProductsItem(ProductsModel model){
   return Container(
-    alignment: Alignment.center,
+
+    // alignment: Alignment.center,
     child: Column(
       children: [
         Container(
+          clipBehavior: Clip.hardEdge,
           child: FadeInImage(
             width: double.infinity,
-            fit: BoxFit.fill,
+            fit: BoxFit.fitWidth,
             image: NetworkImage('${model.image}'),
             placeholder: AssetImage('assets/pleaceholder.png'),
           ),
-          height: 70,
+          height: 120,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Colors.black87,
           ),
         ),
-        SizedBox(height: 10,),
-        Text('${model.name}',style: TextStyle(
+         SizedBox(height: 10,),
+         Text('${model.name}',style: TextStyle(
             fontSize: 30,
-            fontWeight: FontWeight.bold
-        ),)
+            fontWeight: FontWeight.bold,
+          color: Colors.white
+        ),),
       ],
     ),
-    height: 250,
-    width: 250,
+   height: 160,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(15),
-      color: Colors.grey,
+      color: Colors.black54,
     ),
   );
 }
