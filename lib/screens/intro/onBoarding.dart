@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_made_new/components/floating_buttons.dart';
 import 'package:hand_made_new/screens/account/login.dart';
@@ -20,7 +21,7 @@ class _OnBoardingState extends State<OnBoarding> {
   void submit() {
     SharedPref.saveData(key: 'onBoarding', value: true).then((value) {
       if (value) {
-        moveToPageAndFinish(context, LoginPage());
+        moveToPageAndFinish(context, const LoginPage());
       }
     });
   }
@@ -71,7 +72,9 @@ class _OnBoardingState extends State<OnBoarding> {
                     setState(() {
                       isLast = true;
 
-                      print('last');
+                      if (kDebugMode) {
+                        print('last');
+                      }
                     });
                   } else {
                     setState(() {
@@ -105,7 +108,7 @@ class _OnBoardingState extends State<OnBoarding> {
                     : floatingNextButton(
                         function: () {
                           submit();
-                          moveToPageAndFinish(context, LoginPage());
+                          moveToPageAndFinish(context, const LoginPage());
                         },
                         icn: Icons.home),
               ],

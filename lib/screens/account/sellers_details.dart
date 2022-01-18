@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:hand_made_new/bloc/cubit.dart';
+
 
 import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/components/navigator.dart';
@@ -27,9 +27,9 @@ class _SellerDetailsState extends State<SellerDetails>
 
   @override
   void initState() {
-    HandCubit.get(context).getSellers();
+
     animationController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 800));
+        AnimationController(vsync: this, duration: const Duration(milliseconds: 800));
     animation = Tween(begin: -1.0, end: 0.0).animate(
         CurvedAnimation(parent: animationController, curve: Curves.easeInOut));
     animationController.forward();
@@ -48,7 +48,7 @@ class _SellerDetailsState extends State<SellerDetails>
             appBar: appBarWidget(
               title: Text(
                 widget.name,
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
               elevation: 10.0,
               action: Container(),

@@ -27,7 +27,6 @@ class _SellerProductsState extends State<SellerProducts> {
     // TODO: implement initState
     super.initState();
     HandCubit.get(context).getCurrentUserProducts();
-    HandCubit.get(context).getSellers();
   }
   @override
   Widget build(BuildContext context) {
@@ -36,27 +35,26 @@ class _SellerProductsState extends State<SellerProducts> {
       builder: (context,state){
         return  Scaffold(
           appBar: appBarWidget(
-              title: Text('${widget.sellerName} products',style: TextStyle(
+              title: Text('${widget.sellerName} products',style: const TextStyle(
                 fontWeight: FontWeight.bold
               ),),
               action: Container(),
               elevation: 20.0
           ),
           body: Container(
-            padding: EdgeInsets.only(top: 15,right: 5,left: 5),
+            padding: const EdgeInsets.only(top: 15,right: 5,left: 5),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: gradientColor,
               ),
             ),
             child: ConditionalBuilder(
-              condition: HandCubit.get(context).products.length>0,
+              condition: HandCubit.get(context).products.isNotEmpty,
               builder: (context)=>FutureBuilder(
-                future: FirebaseFirestore.instance.collection('products').where('uId',
-                    isEqualTo: widget.uId).get(),
+                future:FirebaseFirestore.instance.collection('products').where('uId',isEqualTo: widget.uId).get(),
                 builder: (context,index)=>GridView.builder
                   (
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: 3 / 2.9,
                       crossAxisSpacing: 10,
@@ -69,7 +67,7 @@ class _SellerProductsState extends State<SellerProducts> {
                   itemCount: HandCubit.get(context).products.length,
                 ),
               ),
-              fallback: (context)=>Center(child: Text('No Products',style: TextStyle(
+              fallback: (context)=>const Center(child: Text('No Products',style: TextStyle(
                   fontSize: 50,
                   fontWeight: FontWeight.bold
               ),),),

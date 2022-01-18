@@ -25,7 +25,7 @@ class _StartPageState extends State<StartPage> {
   int currentIndex = 1;
   List<Widget> homePages = [
     const Profile(),
-          MapPage(),
+          const MapPage(),
     const TimeLine(),
     const FamiliesList()
   ];
@@ -81,7 +81,7 @@ class _StartPageState extends State<StartPage> {
                                   text: 'time line'),
                               gButtonNav(icon: Icons.group, text: 'families'),
                             ]))),
-                drawer: DrawerBuild(),
+                drawer: const DrawerBuild(),
               ),
             ),
           );

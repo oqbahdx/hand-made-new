@@ -15,7 +15,7 @@ Widget dropMenuBuild(
         value: dropValue,
         iconSize: 24,
         elevation: 16,
-        style: TextStyle(color: Colors.black),
+        style: const TextStyle(color: Colors.black),
         onChanged: fun,
         items: meals.map<DropdownMenuItem<String>>((String value) {
           return DropdownMenuItem<String>(
@@ -24,7 +24,7 @@ Widget dropMenuBuild(
           );
         }).toList(),
       ),
-      Text("إختار الفئة"),
+      const Text("إختار الفئة"),
     ],
   );
 }

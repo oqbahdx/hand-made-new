@@ -32,7 +32,7 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
         listener: (context, state) {
           if(state is HandSellerRegisterSuccessState)
             {
-             moveToPageAndFinish(context, LoginPage());
+             moveToPageAndFinish(context, const LoginPage());
             }
         },
         builder: (context, state) {
@@ -118,7 +118,7 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
                         );
                       }),
                       fallback: (context) =>
-                          Center(child: CircularProgressIndicator()),
+                          const Center(child: CircularProgressIndicator()),
                     ),
                     SizedBox(
                       height: h * 0.08,

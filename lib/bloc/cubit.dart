@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -49,7 +50,9 @@ class HandCubit extends Cubit<HandMadeState> {
       image = File(pickedFile.path);
       emit(HandUpdateImageSuccessState());
     }
-    print(image.path.split('/').last);
+    if (kDebugMode) {
+      print(image.path.split('/').last);
+    }
     emit(HandUpdateImageSuccessState());
   }
 
@@ -84,7 +87,9 @@ class HandCubit extends Cubit<HandMadeState> {
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
-        print(value.user.uid);
+        if (kDebugMode) {
+          print(value.user.uid);
+        }
         createSeller(
           name: name,
           email: email,
@@ -96,7 +101,9 @@ class HandCubit extends Cubit<HandMadeState> {
         emit(HandSellerRegisterSuccessState());
       });
     } on FirebaseAuthException catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
       showMessageError(e.message.toString());
       emit(HandSellerRegisterErrorState(e.toString()));
     }
@@ -165,11 +172,13 @@ class HandCubit extends Cubit<HandMadeState> {
           .then((value) {
         showMessageSuccess('you logged in successfully');
         emit(HandBuyerLoginSuccessState(value.user.uid.toString()));
-        SharedPref.saveData(key: 'token', value: '${value.user.uid}');
+        SharedPref.saveData(key: 'token', value: value.user.uid);
       });
     } on FirebaseAuthException catch (error) {
       showMessageError(error.message);
-      print(error.toString());
+      if (kDebugMode) {
+        print(error.toString());
+      }
       emit(HandBuyerLoginErrorState(error.toString()));
     }
   }
@@ -186,42 +195,44 @@ class HandCubit extends Cubit<HandMadeState> {
         .where('isAvailable', isEqualTo: true)
         .get()
         .then((value) {
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         sellers.add(UserModel.fromJson(element.data()));
-      });
+      }
       emit(HandGetSellersSuccessState());
     }).catchError((error) {
-      print(error.toString());
+      if (kDebugMode) {
+        print(error.toString());
+      }
       emit(HandGetSellersErrorState(error.toString()));
     });
   }
 
   SellerModel sellerModel;
   Set<Marker> markers = {
-    Marker(
+    const Marker(
       markerId: MarkerId('1'),
       icon: BitmapDescriptor.defaultMarker,
       position: LatLng(15.5007, 32.5599),
     ),
     Marker(
-      markerId: MarkerId('2'),
+      markerId: const MarkerId('2'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-      position: LatLng(15.5007, 32.5799),
+      position: const LatLng(15.5007, 32.5799),
     ),
     Marker(
-      markerId: MarkerId('3'),
+      markerId: const MarkerId('3'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
-      position: LatLng(15.5307, 32.5599),
+      position: const LatLng(15.5307, 32.5599),
     ),
     Marker(
-      markerId: MarkerId('4'),
+      markerId: const MarkerId('4'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-      position: LatLng(15.1007, 32.5599),
+      position: const LatLng(15.1007, 32.5599),
     ),
     Marker(
-      markerId: MarkerId('5'),
+      markerId: const MarkerId('5'),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
-      position: LatLng(15.5037, 32.5399),
+      position: const LatLng(15.5037, 32.5399),
     ),
   };
 
@@ -264,7 +275,9 @@ class HandCubit extends Cubit<HandMadeState> {
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
-        print(value.user.uid);
+        if (kDebugMode) {
+          print(value.user.uid);
+        }
         createUser(
             email: email,
             role: 'buyer',
@@ -275,7 +288,9 @@ class HandCubit extends Cubit<HandMadeState> {
         emit(HandUserRegisterSuccessState());
       });
     } on FirebaseAuthException catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
       showMessageError(e.message.toString());
       emit(HandUserRegisterErrorState(e.toString()));
     }
@@ -297,7 +312,9 @@ class HandCubit extends Cubit<HandMadeState> {
       await auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) {
-        print(value.user.uid);
+        if (kDebugMode) {
+          print(value.user.uid);
+        }
         createUser(
           email: email,
           role: 'seller',
@@ -313,7 +330,9 @@ class HandCubit extends Cubit<HandMadeState> {
         emit(HandUserRegisterSuccessState());
       });
     } on FirebaseAuthException catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
       showMessageError(e.message.toString());
       emit(HandUserRegisterErrorState(e.toString()));
     }
@@ -363,11 +382,15 @@ class HandCubit extends Cubit<HandMadeState> {
         .doc(uId)
         .get()
         .then((value) {
-      print(value.data());
+      if (kDebugMode) {
+        print(value.data());
+      }
       userModel = UserModel.fromJson(value.data());
       emit(HandGetCurrentUserSuccessState());
     }).catchError((error) {
-      print(error.toString());
+      if (kDebugMode) {
+        print(error.toString());
+      }
       emit(HandGetCurrentUserErrorState(error.toString()));
     });
   }
@@ -379,13 +402,17 @@ class HandCubit extends Cubit<HandMadeState> {
     products = [];
     emit(HandGetCurrentUserProductsLoadingState());
     FirebaseFirestore.instance.collection('/products').get().then((value) {
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         products.add(ProductsModel.fromJson(element.data()));
         emit(HandGetCurrentUserProductsSuccessState());
-        print(value.toString());
-      });
+        if (kDebugMode) {
+          print(value.toString());
+        }
+      }
     }).catchError((err) {
-      print(err.toString());
+      if (kDebugMode) {
+        print(err.toString());
+      }
       emit(HandGetCurrentUserProductsErrorState(err.toString()));
     });
   }
@@ -403,10 +430,12 @@ class HandCubit extends Cubit<HandMadeState> {
         .get()
         .then((value) {
       myProducts = [];
-      value.docs.forEach((element) {
+      for (var element in value.docs) {
         myProducts.add(ProductsModel.fromJson(element.data()));
-      });
-      print(myProducts.length);
+      }
+      if (kDebugMode) {
+        print(myProducts.length);
+      }
       emit(HandGetMyProductsSuccess());
     }).catchError((error) {
       emit(HandGetMyProductsError(error.toString()));

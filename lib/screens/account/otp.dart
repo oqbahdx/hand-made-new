@@ -30,14 +30,14 @@ class _OTPPageState extends State<OTPPage> {
         alignment: Alignment.center,
         child: Column(
           children: [
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Text(
               'Please Enter Your Number',
               style: bigText,
             ),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             Padding(
@@ -48,7 +48,7 @@ class _OTPPageState extends State<OTPPage> {
                     align: TextAlign.center,
                     maxLine: 10,
                     inputType: TextInputType.number)),
-            SizedBox(
+            const SizedBox(
               height: 100,
             ),
             containerBuildTap(

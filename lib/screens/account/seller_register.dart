@@ -36,7 +36,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
     return BlocConsumer<HandCubit, HandMadeState>(
       listener: (context, state) {
         if (state is HandSellerRegisterSuccessState) {
-          moveToPageAndFinish(context, LoginPage());
+          moveToPageAndFinish(context, const LoginPage());
         }
       },
       builder: (context, state) {
@@ -51,7 +51,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
           body: Form(
             key: formKey,
             child: ListView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
               children: [
                 SizedBox(
@@ -116,10 +116,10 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                       onTap: () async {
                         var status = await Permission.location.status;
                         if (status.isDenied) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                               content: Text(
                                   "Please give app location permission to register as seller")));
-                         Timer(Duration(seconds: 3),(){
+                         Timer(const Duration(seconds: 3),(){
                            openAppSettings();
                          });
                         } else {
@@ -129,11 +129,11 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                             phone: phoneController.text,
                             password: passwordController.text,
                           );
-                          moveToPageAndFinish(context, StartPage());
+                          moveToPageAndFinish(context, const StartPage());
                         }
                       }),
                   fallback: (context) =>
-                      Center(child: CircularProgressIndicator()),
+                      const Center(child: CircularProgressIndicator()),
                 ),
                 SizedBox(
                   height: h * 0.08,

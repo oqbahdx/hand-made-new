@@ -19,14 +19,14 @@ class RegisterMainPage extends StatelessWidget {
         title: Text('Register',style: normalText,),
         elevation: 0.0,
         action: IconButton(onPressed: (){
-          moveToPageAndFinish(context, StartPage());
-        }, icon: Icon(Icons.close))
+          moveToPageAndFinish(context, const StartPage());
+        }, icon: const Icon(Icons.close))
       ),
       body: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(height: 150,),
+            const SizedBox(height: 150,),
             Container(
               height: 150,
               alignment: Alignment.center,

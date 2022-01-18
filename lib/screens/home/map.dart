@@ -21,7 +21,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   String _mapStyle;
   GoogleMapController _mapController;
-  Set<Marker> sellerMarkers = Set<Marker>();
+  Set<Marker> sellerMarkers = <Marker>{};
   BitmapDescriptor myIcon;
   var seller = [];
   @override
@@ -34,7 +34,7 @@ class _MapPageState extends State<MapPage> {
       });
     });
     BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(size: Size(48, 48)), 'assets/marker.png')
+            const ImageConfiguration(size: Size(48, 48)), 'assets/marker.png')
         .then((value) {
       setState(() {
         myIcon = value;
@@ -89,7 +89,7 @@ class _MapPageState extends State<MapPage> {
             markers: sellerMarkers,
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
-            initialCameraPosition: CameraPosition(
+            initialCameraPosition: const CameraPosition(
               target: LatLng(
                 15.734730,
                 32.577591,
@@ -122,7 +122,7 @@ class _MapPageState extends State<MapPage> {
               });
             },
           )),
-          fallback: (context) => Center(
+          fallback: (context) => const Center(
             child: CircularProgressIndicator(),
           ),
         );

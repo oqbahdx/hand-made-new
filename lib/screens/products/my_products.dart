@@ -47,25 +47,25 @@ class _MyProductsState extends State<MyProducts> {
       builder: (context, state) {
         return Scaffold(
           appBar: appBarWidget(
-              title: Text(
+              title: const Text(
                 'My Products',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
               action: Container(),
               elevation: 20.0),
           body: Container(
-            padding: EdgeInsets.only(top: 15, right: 5, left: 5),
+            padding: const EdgeInsets.only(top: 15, right: 5, left: 5),
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: gradientColor,
               ),
             ),
             child: ConditionalBuilder(
-              condition: HandCubit.get(context).myProducts.length>0,
+              condition: HandCubit.get(context).myProducts.isNotEmpty,
               builder: (context)=>FutureBuilder(
                 future: HandCubit.get(context).getMyProducts(),
                 builder: (context,index)=>GridView.builder(gridDelegate:
-                SliverGridDelegateWithFixedCrossAxisCount(
+                const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 3 / 2.9,
                     crossAxisSpacing: 10,
@@ -75,7 +75,7 @@ class _MyProductsState extends State<MyProducts> {
                         Navigator.of(context).push(MaterialPageRoute(builder: (BuildContext context){
                           return Scaffold(
                             appBar: appBarWidget(
-                              title: Text("${HandCubit.get(context).myProducts[index].name}",style: TextStyle(
+                              title: Text(HandCubit.get(context).myProducts[index].name,style: const TextStyle(
                                 fontWeight: FontWeight.bold
                               ),),
                               action: Container(),
@@ -89,13 +89,13 @@ class _MyProductsState extends State<MyProducts> {
                                     height: 350,
                                     width: double.infinity,
                                     fit: BoxFit.fitWidth,
-                                    image: NetworkImage('${HandCubit.get(context).myProducts[index].image}'),
-                                    placeholder: AssetImage('assets/pleaceholder.png'),
+                                    image: NetworkImage(HandCubit.get(context).myProducts[index].image),
+                                    placeholder: const AssetImage('assets/pleaceholder.png'),
                                   ),
 
                                 ),
-                                SizedBox(height: 30,),
-                                Text('${HandCubit.get(context).myProducts[index].description}')
+                                const SizedBox(height: 30,),
+                                Text(HandCubit.get(context).myProducts[index].description)
                               ],
                             )
                           );
@@ -107,7 +107,7 @@ class _MyProductsState extends State<MyProducts> {
                       ),
                     ),itemCount: HandCubit.get(context).myProducts.length,)
               ),
-              fallback: (context)=>Center(child: Text('No Products',style: TextStyle(
+              fallback: (context)=>const Center(child: Text('No Products',style: TextStyle(
                 fontSize: 50,
                 fontWeight: FontWeight.bold
               ),),),

@@ -42,7 +42,7 @@ class _ProfileState extends State<Profile> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
                         child: Image.network(
-                          '${model.profileImage}',
+                          model.profileImage,
                           height: double.infinity,
                           width: double.infinity,
                           fit: BoxFit.cover,
@@ -57,7 +57,7 @@ class _ProfileState extends State<Profile> {
                         child: TextFormField(
                           textAlign: TextAlign.center,
                           controller: nameController,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
@@ -73,7 +73,7 @@ class _ProfileState extends State<Profile> {
                         child: TextFormField(
                           textAlign: TextAlign.center,
                           controller: emailController,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.black, fontWeight: FontWeight.bold),
                           decoration: InputDecoration(
                             enabledBorder: OutlineInputBorder(
@@ -100,7 +100,7 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           ),
-          fallback: (context) => Center(
+          fallback: (context) => const Center(
             child: CircularProgressIndicator(),
           ),
         );

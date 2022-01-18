@@ -5,7 +5,7 @@ import 'package:hand_made_new/bloc/cubit.dart';
 class GetUserName extends StatefulWidget {
   final String documentId;
 
-  GetUserName({this.documentId});
+  const GetUserName({this.documentId});
 
   @override
   State<GetUserName> createState() => _GetUserNameState();
@@ -27,11 +27,11 @@ class _GetUserNameState extends State<GetUserName> {
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
 
         if (snapshot.hasError) {
-          return Text("Something went wrong");
+          return const Text("Something went wrong");
         }
 
         if (snapshot.hasData && !snapshot.data.exists) {
-          return Text("Document does not exist");
+          return const Text("Document does not exist");
         }
 
         if (snapshot.connectionState == ConnectionState.done) {
@@ -39,7 +39,7 @@ class _GetUserNameState extends State<GetUserName> {
           return Text("Full Name: ${data['name']} ${data['email']}");
         }
 
-        return Text("loading");
+        return const Text("loading");
       },
     );
   }

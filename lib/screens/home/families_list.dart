@@ -25,7 +25,7 @@ class _FamiliesListState extends State<FamiliesList> {
       listener: (context, state) {},
       builder: (context, state) {
         return ConditionalBuilder(
-          condition: HandCubit.get(context).sellers.length > 0,
+          condition: HandCubit.get(context).sellers.isNotEmpty,
           builder: (context) => Scaffold(
             body: Container(
                 height: double.infinity,
@@ -41,7 +41,7 @@ class _FamiliesListState extends State<FamiliesList> {
                         return Container(
                           decoration: BoxDecoration(
                               gradient: LinearGradient(colors: gradientColor)),
-                          child: Center(
+                          child: const Center(
                             child: CircularProgressIndicator.adaptive(
                              backgroundColor: Colors.white,
                             ),
@@ -54,7 +54,7 @@ class _FamiliesListState extends State<FamiliesList> {
                       if (userData['role'] == 'seller') {
                         return ListView.separated(
                             shrinkWrap: true,
-                            physics: BouncingScrollPhysics(),
+                            physics: const BouncingScrollPhysics(),
                             itemBuilder: (context, index) => familiesContainer(
                                 model: HandCubit.get(context).sellers[index],
                                 onTap: () {
@@ -68,7 +68,7 @@ class _FamiliesListState extends State<FamiliesList> {
                                             .uid,
                                       ));
                                 }),
-                            separatorBuilder: (context, index) => SizedBox(
+                            separatorBuilder: (context, index) => const SizedBox(
                                   height: 10,
                                 ),
                             itemCount: HandCubit.get(context).sellers.length);
@@ -80,7 +80,7 @@ class _FamiliesListState extends State<FamiliesList> {
           fallback: (context) => Container(
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: gradientColor)),
-              child: Center(
+              child: const Center(
                   child: CircularProgressIndicator.adaptive(
                 backgroundColor: Colors.white,
               ))),

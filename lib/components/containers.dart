@@ -62,10 +62,10 @@ Widget defaultButtonTap(String text, Function onTap) {
 Widget familiesContainer({UserModel model, Function onTap}) {
   return Center(
     child: ListView(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       shrinkWrap: true,
       children: [
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Padding(
@@ -87,7 +87,7 @@ Widget familiesContainer({UserModel model, Function onTap}) {
                     color: Colors.black38),
                 child: Text(
                   model.name,
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 30),
@@ -102,13 +102,13 @@ Widget familiesContainer({UserModel model, Function onTap}) {
 }
 
 Widget PositionedBuild({double h, double w, String txt}) {
-  return Container(
+  return SizedBox(
     height: h,
     width: w,
     child: Card(
       elevation: 0.0,
       color: Colors.black54,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           bottomRight: Radius.circular(100),
           topLeft: Radius.circular(100),
@@ -119,7 +119,7 @@ Widget PositionedBuild({double h, double w, String txt}) {
       child: Center(
           child: Text(
             txt,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
           )),
     ),
@@ -141,8 +141,8 @@ Widget buildProductsItem(ProductsModel model,Object tag){
             child: FadeInImage(
               width: double.infinity,
               fit: BoxFit.fitWidth,
-              image: NetworkImage('${model.image}'),
-              placeholder: AssetImage('assets/pleaceholder.png'),
+              image: NetworkImage(model.image),
+              placeholder: const AssetImage('assets/pleaceholder.png'),
             ),
           ),
           height: 120,
@@ -151,8 +151,8 @@ Widget buildProductsItem(ProductsModel model,Object tag){
             color: Colors.black87,
           ),
         ),
-         SizedBox(height: 10,),
-         Text('${model.name}',style: TextStyle(
+         const SizedBox(height: 10,),
+         Text(model.name,style: const TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
           color: Colors.white

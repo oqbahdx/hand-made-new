@@ -13,10 +13,11 @@ class SharedPref {
     pref = await SharedPreferences.getInstance();
     if (value is String) return await pref.setString(key, value);
     if (value is int) return await pref.setInt(key, value);
-    if (value is bool)
+    if (value is bool) {
       return await pref.setBool(key, value);
-    else
+    } else {
       return await pref.setDouble(key, value);
+    }
   }
 
 

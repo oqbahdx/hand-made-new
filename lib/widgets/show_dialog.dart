@@ -92,37 +92,31 @@ showDialogOTPBuildSimple(BuildContext context, String numberController) {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                     ),
-                    child: Container(
-                      child: Center(
-                          child: Text(
-                        numberController,
-                        style: bigText,
-                      )),
-                    ),
+                    child: Center(
+                        child: Text(
+                      numberController,
+                      style: bigText,
+                    )),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       Expanded(
-                        child: Container(
-                          child: IconButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              icon: const Icon(Icons.clear,color: Colors.red,)),
-                        ),
+                        child: IconButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            icon: const Icon(Icons.clear,color: Colors.red,)),
                       ),
                       Expanded(
-                        child: Container(
-                          child: TextButton(
-                              onPressed: () {
-                                moveToPage(context, VerifyOtp.id);
-                              },
-                              child: Text(
-                                'OK',
-                                style: smallText,
-                              )),
-                        ),
+                        child: TextButton(
+                            onPressed: () {
+                              moveToPage(context, VerifyOtp.id);
+                            },
+                            child: Text(
+                              'OK',
+                              style: smallText,
+                            )),
                       )
                     ],
                   )

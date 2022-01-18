@@ -30,12 +30,13 @@ void main() async {
   var onBoarding = await SharedPref.getData(key: 'onBoarding');
   uId = await SharedPref.getData(key: 'uId');
   if (onBoarding != null) {
-    if (token != null)
-      startPage = StartPage();
-    else
-      startPage = LoginPage();
+    if (token != null) {
+      startPage = const StartPage();
+    } else {
+      startPage = const LoginPage();
+    }
   } else {
-    startPage = OnBoarding();
+    startPage = const OnBoarding();
   }
   BlocOverrides.runZoned(
     () => runApp(DevicePreview(
@@ -51,7 +52,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final HandCubit _handCubit = HandCubit();
 
-  MyApp({this.startPage});
+  MyApp({Key key, this.startPage}) : super(key: key);
 
   final Widget startPage;
 
@@ -71,7 +72,7 @@ class MyApp extends StatelessWidget {
         home: startPage,
         routes: {
           OnBoarding.id: (context) =>
-              BlocProvider.value(value: _handCubit, child: OnBoarding()),
+              BlocProvider.value(value: _handCubit, child: const OnBoarding()),
           StartPage.id: (context) =>
               BlocProvider.value(value: _handCubit, child: const StartPage()),
           MapPage.id: (context) =>
@@ -82,9 +83,9 @@ class MyApp extends StatelessWidget {
           RegisterMainPage.id: (context) => BlocProvider.value(
               value: _handCubit, child: const RegisterMainPage()),
           SellerRegisterPage.id: (context) => BlocProvider.value(
-              value: _handCubit, child: SellerRegisterPage()),
+              value: _handCubit, child: const SellerRegisterPage()),
           BuyerRegisterPage.id: (context) =>
-              BlocProvider.value(value: _handCubit, child: BuyerRegisterPage()),
+              BlocProvider.value(value: _handCubit, child: const BuyerRegisterPage()),
           OTPPage.id: (context) => BlocProvider.value(
               value: _handCubit,
               child: BlocProvider.value(
@@ -92,11 +93,11 @@ class MyApp extends StatelessWidget {
           VerifyOtp.id: (context) =>
               BlocProvider.value(value: _handCubit, child: const VerifyOtp()),
           SellerDetails.id: (context) =>
-              BlocProvider.value(value: _handCubit, child: SellerDetails()),
+              BlocProvider.value(value: _handCubit, child: const SellerDetails()),
           Profile.id: (context) =>
-              BlocProvider.value(value: _handCubit, child: Profile()),
-          MyProducts.id: (context) => MyProducts(),
-          ProductText.id: (context) => ProductText()
+              BlocProvider.value(value: _handCubit, child: const Profile()),
+          MyProducts.id: (context) => const MyProducts(),
+          ProductText.id: (context) => const ProductText()
         },
       ),
     );
