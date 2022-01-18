@@ -24,6 +24,8 @@ class HandCubit extends Cubit<HandMadeState> {
 
   changeIndex(int index) {
     pageIndex = index;
+    // if(index ==2)
+    //   getSellers();
     emit(HandChangeButtonNavState());
   }
 

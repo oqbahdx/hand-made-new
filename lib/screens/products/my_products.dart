@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,7 +5,6 @@ import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/models/products_model.dart';
-import 'package:hand_made_new/screens/products/products_detalis.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 
@@ -83,16 +81,23 @@ class _MyProductsState extends State<MyProducts> {
                               action: Container(),
                               elevation: 20.0
                             ),
-                            body: Hero(
-                              tag: 'key',
-                              child: FadeInImage(
-                                height: 350,
-                                width: double.infinity,
-                                fit: BoxFit.fitWidth,
-                                image: NetworkImage('${HandCubit.get(context).myProducts[index].image}'),
-                                placeholder: AssetImage('assets/pleaceholder.png'),
-                              ),
-                            ),
+                            body: Column(
+                              children: [
+                                Hero(
+                                  tag: 'key',
+                                  child: FadeInImage(
+                                    height: 350,
+                                    width: double.infinity,
+                                    fit: BoxFit.fitWidth,
+                                    image: NetworkImage('${HandCubit.get(context).myProducts[index].image}'),
+                                    placeholder: AssetImage('assets/pleaceholder.png'),
+                                  ),
+
+                                ),
+                                SizedBox(height: 30,),
+                                Text('${HandCubit.get(context).myProducts[index].description}')
+                              ],
+                            )
                           );
                         }));
                       },

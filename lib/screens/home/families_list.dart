@@ -18,12 +18,6 @@ class FamiliesList extends StatefulWidget {
 }
 
 class _FamiliesListState extends State<FamiliesList> {
-  @override
-  void initState() {
-    HandCubit.get(context).getSellers();
-    HandCubit.get(context).getCurrentUser();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +42,8 @@ class _FamiliesListState extends State<FamiliesList> {
                           decoration: BoxDecoration(
                               gradient: LinearGradient(colors: gradientColor)),
                           child: Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
+                            child: CircularProgressIndicator.adaptive(
+                             backgroundColor: Colors.white,
                             ),
                           ),
                         );
@@ -87,8 +81,8 @@ class _FamiliesListState extends State<FamiliesList> {
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: gradientColor)),
               child: Center(
-                  child: CircularProgressIndicator(
-                color: Colors.white,
+                  child: CircularProgressIndicator.adaptive(
+                backgroundColor: Colors.white,
               ))),
         );
       },

@@ -15,15 +15,10 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   @override
-  void initState() {
-    HandCubit.get(context).getCurrentUser();
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     TextEditingController nameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
+    var height = MediaQuery.of(context).size.height;
     return BlocConsumer<HandCubit, HandMadeState>(
       listener: (context, state) {},
       builder: (context, state) {
@@ -39,7 +34,7 @@ class _ProfileState extends State<Profile> {
                 child: Column(
                   children: [
                     SizedBox(
-                      height: 30,
+                      height: height *.04,
                     ),
                     CircleAvatar(
                       backgroundColor: Colors.deepOrange,
@@ -55,7 +50,7 @@ class _ProfileState extends State<Profile> {
                       ),
                     ),
                     SizedBox(
-                      height: 30,
+                      height: height *.03,
                     ),
                     Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -71,7 +66,7 @@ class _ProfileState extends State<Profile> {
                           ),
                         )),
                     SizedBox(
-                      height: 50,
+                      height: height *.05,
                     ),
                     Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -87,14 +82,14 @@ class _ProfileState extends State<Profile> {
                           ),
                         )),
                     SizedBox(
-                      height: 30,
+                      height: height *.03,
                     ),
                     Switch.adaptive(value: model.isAvailable,
                         onChanged: (value){
 
                         }),
                     SizedBox(
-                      height: 20,
+                      height: height *.02,
                     ),
                     containerBuildTap(
                       text: 'UPDATE',

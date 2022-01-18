@@ -8,7 +8,6 @@ import 'package:hand_made_new/screens/home/profile.dart';
 import 'package:hand_made_new/screens/products/my_products.dart';
 import 'package:hand_made_new/screens/products/products%20test.dart';
 
-
 import 'package:hand_made_new/storage/shared.dart';
 
 import '/screens/account/login.dart';
@@ -51,6 +50,7 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final HandCubit _handCubit = HandCubit();
+
   MyApp({this.startPage});
 
   final Widget startPage;
@@ -95,8 +95,8 @@ class MyApp extends StatelessWidget {
               BlocProvider.value(value: _handCubit, child: SellerDetails()),
           Profile.id: (context) =>
               BlocProvider.value(value: _handCubit, child: Profile()),
-          MyProducts.id:(context)=> MyProducts(),
-          ProductText.id:(context)=>ProductText()
+          MyProducts.id: (context) => MyProducts(),
+          ProductText.id: (context) => ProductText()
         },
       ),
     );

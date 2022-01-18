@@ -26,7 +26,7 @@ class _MapPageState extends State<MapPage> {
   var seller = [];
   @override
   void initState() {
-    HandCubit.get(context).getSellers();
+    // HandCubit.get(context).getSellers();
     checkPermissions();
     rootBundle.loadString('assets/map_style.txt').then((value) {
       setState(() {

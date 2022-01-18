@@ -36,14 +36,9 @@ class _StartPageState extends State<StartPage> {
     'Families List',
   ];
   @override
-  void initState() {
-    HandCubit.get(context).getSellers();
-    super.initState();
-  }
-  @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => HandCubit(),
+      create: (context) => HandCubit()..getSellers()..getCurrentUser(),
       child: BlocConsumer<HandCubit, HandMadeState>(
         listener: (context, state) {},
         builder: (context, state) {
