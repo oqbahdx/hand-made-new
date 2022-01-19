@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/containers.dart';
+import 'package:hand_made_new/styles/colors.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key key}) : super(key: key);
@@ -40,8 +41,13 @@ class _ProfileState extends State<Profile> {
           condition: state is! HandGetCurrentUserLoadingState,
           builder: (context) => Scaffold(
             body: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: gradientColor
+                )
+              ),
               alignment: Alignment.center,
-              child: Center(
+              child: SingleChildScrollView(
                 child: Column(
                   children: [
                     SizedBox(
@@ -102,7 +108,7 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: height *.02,
                     ),
-                    containerBuildTap(
+                    buildTapBlack(
                       text: 'UPDATE',
                       h: 60
                     )
@@ -111,8 +117,17 @@ class _ProfileState extends State<Profile> {
               ),
             ),
           ),
-          fallback: (context) => const Center(
-            child: CircularProgressIndicator(),
+          fallback: (context) => Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: gradientColor
+              )
+            ),
+            child: const Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ),
           ),
         );
       },

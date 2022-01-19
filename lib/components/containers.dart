@@ -84,7 +84,7 @@ Widget familiesContainer({UserModel model, Function onTap}) {
                 width: 350,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    color: Colors.black38),
+                    color: Colors.black54),
                 child: Text(
                   model.name,
                   style: const TextStyle(
@@ -106,7 +106,7 @@ Widget positionedBuild({double h, double w, String txt}) {
     height: h,
     width: w,
     child: Card(
-      elevation: 0.0,
+      elevation: 20.0,
       color: Colors.black54,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
@@ -163,6 +163,37 @@ Widget buildProductsItem(ProductsModel model,Object tag){
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(15),
       color: Colors.black54,
+    ),
+  );
+}
+
+Widget buildTapBlack(
+    {String text, Function onTap, double h = 50, double w = 600}) {
+  return GestureDetector(
+    onTap: onTap,
+    child: Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Card(
+        elevation: 20.0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        color: Colors.transparent,
+        child: Container(
+          child: Center(
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: containerStyle,
+            ),
+          ),
+          height: h,
+          width: w,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              color: Colors.black54),
+        ),
+      ),
     ),
   );
 }

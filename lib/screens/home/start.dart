@@ -4,6 +4,7 @@ import 'package:hand_made_new/screens/home/profile.dart';
 import 'package:hand_made_new/screens/home/time_line.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
+import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 import 'package:hand_made_new/widgets/drawer_widget.dart';
@@ -38,51 +39,43 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HandCubit>(
-      create: (context) => HandCubit()..getSellers()..getCurrentUser(),
+      create: (context) => HandCubit()..getSellers()..getCurrentUser()..getMyProducts(),
       child: BlocConsumer<HandCubit, HandMadeState>(
         listener: (context, state) {},
         builder: (context, state) {
           return SafeArea(
-            child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: Scaffold(
-                appBar: appBarWidget(
-                    title: Text(titles[HandCubit.get(context).pageIndex],
-                        style: normalText),
-                    elevation: 20.0,
-                    action: Container()),
-                body: Center(
-                  child: homePages.elementAt(HandCubit.get(context).pageIndex),
-                ),
-                bottomNavigationBar: Container(
-                  height: 80,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 20,
-                          color: Colors.black.withOpacity(.1),
-                        )
-                      ],
-                    ),
-                    child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15.0, vertical: 12),
-                        child: startBottomNav(
-                            index: HandCubit.get(context).pageIndex,
-                            function: (index) {
-                              HandCubit.get(context).changeIndex(index);
-                            },
-                            gButton: [
-                              gButtonNav(icon: Icons.person, text: 'profile'),
-                              gButtonNav(icon: Icons.map, text: 'map'),
-                              gButtonNav(
-                                  icon: Icons.ten_k_outlined,
-                                  text: 'time line'),
-                              gButtonNav(icon: Icons.group, text: 'families'),
-                            ]))),
-                drawer: const DrawerBuild(),
+            child: Scaffold(
+              appBar: appBarWidget(
+                  title: Text(titles[HandCubit.get(context).pageIndex],
+                      style: normalText),
+                  elevation: 0.0,
+                  action: Container()),
+              body: Center(
+                child: homePages.elementAt(HandCubit.get(context).pageIndex),
               ),
+              bottomNavigationBar: Container(
+                height: 70,
+                  decoration:  BoxDecoration(
+                    gradient: LinearGradient(colors: gradientColor)
+
+                  ),
+                  child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 12),
+                      child: startBottomNav(
+                          index: HandCubit.get(context).pageIndex,
+                          function: (index) {
+                            HandCubit.get(context).changeIndex(index);
+                          },
+                          gButton: [
+                            gButtonNav(icon: Icons.person, text: 'profile'),
+                            gButtonNav(icon: Icons.map, text: 'map'),
+                            gButtonNav(
+                                icon: Icons.ten_k_outlined,
+                                text: 'time line'),
+                            gButtonNav(icon: Icons.group, text: 'families'),
+                          ]))),
+              drawer: const DrawerBuild(),
             ),
           );
         },

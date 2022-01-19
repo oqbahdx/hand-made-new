@@ -14,7 +14,6 @@ Widget defaultTextFormField(
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 10),
     child: TextFormField(
-
       style: const TextStyle(
         fontWeight: FontWeight.bold
       ),
@@ -24,6 +23,9 @@ Widget defaultTextFormField(
       validator: function,
       onSaved: saveFunction,
       decoration: InputDecoration(
+        fillColor: Colors.white,
+          focusColor: Colors.white,
+          hoverColor: Colors.white,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),

@@ -42,8 +42,9 @@ class _FamiliesListState extends State<FamiliesList> {
                           decoration: BoxDecoration(
                               gradient: LinearGradient(colors: gradientColor)),
                           child: const Center(
-                            child: CircularProgressIndicator.adaptive(
-                             backgroundColor: Colors.white,
+                            child: CircularProgressIndicator(
+
+                              color: Colors.white,
                             ),
                           ),
                         );
@@ -81,8 +82,8 @@ class _FamiliesListState extends State<FamiliesList> {
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: gradientColor)),
               child: const Center(
-                  child: CircularProgressIndicator.adaptive(
-                backgroundColor: Colors.white,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
               ))),
         );
       },

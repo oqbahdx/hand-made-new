@@ -20,7 +20,7 @@ class _ProductTextState extends State<ProductText> {
   ProductsModel model;
   @override
   void initState() {
-    HandCubit.get(context).getCurrentUserProducts();
+    // HandCubit.get(context).getCurrentUserProducts();
     super.initState();
   }
   @override

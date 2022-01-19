@@ -23,12 +23,6 @@ class SellerProducts extends StatefulWidget {
 
 class _SellerProductsState extends State<SellerProducts> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    HandCubit.get(context).getCurrentUserProducts();
-  }
-  @override
   Widget build(BuildContext context) {
     return BlocConsumer<HandCubit,HandMadeState>(
       listener: (context,state){},
@@ -49,9 +43,9 @@ class _SellerProductsState extends State<SellerProducts> {
               ),
             ),
             child: ConditionalBuilder(
-              condition: HandCubit.get(context).products.isNotEmpty,
+              condition: state is HandGetSellersLoadingState,
               builder: (context)=>FutureBuilder(
-                future:FirebaseFirestore.instance.collection('products').where('uId',isEqualTo: widget.uId).get(),
+                future:HandCubit.get(context).getCurrentUserProducts(widget.uId),
                 builder: (context,index)=>GridView.builder
                   (
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

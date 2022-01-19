@@ -401,10 +401,10 @@ class HandCubit extends Cubit<HandMadeState> {
   ProductsModel productsModel;
   List<ProductsModel> products = [];
 
-  getCurrentUserProducts() {
+  getCurrentUserProducts(String uid) {
     products = [];
     emit(HandGetCurrentUserProductsLoadingState());
-    FirebaseFirestore.instance.collection('/products').get().then((value) {
+    FirebaseFirestore.instance.collection('/products').where('uId',isEqualTo: uid).get().then((value) {
       for (var element in value.docs) {
         products.add(ProductsModel.fromJson(element.data()));
         emit(HandGetCurrentUserProductsSuccessState());
@@ -421,18 +421,17 @@ class HandCubit extends Cubit<HandMadeState> {
   }
 
   List<ProductsModel> myProducts = [];
-
   getMyProducts() {
+    myProducts = [];
     emit(HandGetMyProductsLoading());
     FirebaseAuth auth = FirebaseAuth.instance;
     var userId = auth.currentUser.uid;
-
     FirebaseFirestore.instance
         .collection('products')
         .where('uId', isEqualTo: userId)
         .get()
         .then((value) {
-      myProducts = [];
+
       for (var element in value.docs) {
         myProducts.add(ProductsModel.fromJson(element.data()));
       }

@@ -6,6 +6,7 @@ import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/screens/products/add_product.dart';
 import 'package:hand_made_new/screens/products/my_products.dart';
+import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/navigators.dart';
 
@@ -34,97 +35,106 @@ class _DrawerBuildState extends State<DrawerBuild> {
         return ConditionalBuilder(
           condition: state is! HandGetUserLoadingState,
           builder: (context) => Drawer(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 30,
-                  ),
-                  SizedBox(
-                    height: h * 0.20,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Stack(
-                          children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              maxRadius: 50,
-                              child: model.profileImage != ""
-                                  ? ClipRRect(
-                                      borderRadius: BorderRadius.circular(100),
-                                      child: FadeInImage(
-                                        placeholder:
-                                            const AssetImage('assets/pleaceholder.png'),
-                                        image: NetworkImage(
-                                          model.profileImage,
-                                        ),
-                                        height: double.infinity,
-                                        width: double.infinity,
-                                      ))
-                                  : Image.asset('assets/personicon.png'),
-                            ),
-                            Positioned(
-                                bottom: 0,
-                                right: 0,
-                                child: GestureDetector(
-                                    onTap: () {},
-                                    child: const Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
-                                    ))),
-                          ],
-                        ),
-                        Text(
-                          model.name,
-                          style: normalText,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const Divider(),
-                  SizedBox(
-                    height: h * 0.42,
-                    child: model.role == "seller"
-                      ? GridView(
-                    children: [
-                      containerBuildTap(
-                          text: 'Add Product',
-                          onTap: () {
-                            moveToPage(context, AddProduct.id);
-                          }),
-                      containerBuildTap(text: 'My Products', onTap: () {
-                        moveToPage(context, MyProducts.id);
-                      }),
-                      containerBuildTap(text: 'My TimeLine', onTap: () {}),
-                      containerBuildTap(text: 'Favorite', onTap: () {}),
-                      containerBuildTap(text: 'Contact Us', onTap: () {}),
-                    ],
-                    shrinkWrap: true,
-                    gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 3 / 2,
-                      crossAxisSpacing: 5.0,
-                    ),
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: gradientColor
                   )
-                      : GridView(
-                    children: [
-                      containerBuildTap(text: 'Favorite', onTap: () {}),
-                      containerBuildTap(text: 'Contact Us', onTap: () {}),
-                    ],
-                    shrinkWrap: true,
-                    gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 3 / 2,
-                      crossAxisSpacing: 5.0,
+                ),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 30,
                     ),
-                  ),),
-                  SizedBox(height: h * 0.15,),
-                  SizedBox(
-                      height: h * 0.08,
-                      child: defaultButtonTap('LOGOUT', () {}),),
-                ],
+                    SizedBox(
+                      height: h * 0.20,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Stack(
+                            children: [
+                              CircleAvatar(
+                                backgroundColor: Colors.transparent,
+                                maxRadius: 50,
+                                child: model.profileImage != ""
+                                    ? ClipRRect(
+                                        borderRadius: BorderRadius.circular(100),
+                                        child: FadeInImage(
+                                          placeholder:
+                                              const AssetImage('assets/pleaceholder.png'),
+                                          image: NetworkImage(
+                                            model.profileImage,
+                                          ),
+                                          height: double.infinity,
+                                          width: double.infinity,
+                                        ))
+                                    : Image.asset('assets/personicon.png'),
+                              ),
+                              Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: GestureDetector(
+                                      onTap: () {},
+                                      child: const Icon(
+                                        Icons.edit,
+                                        color: Colors.white,
+                                      ))),
+                            ],
+                          ),
+                          Text(
+                            model.name,
+                            style: normalText,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const Divider(),
+                    SizedBox(
+                      height: h * 0.42,
+                      child: model.role == "seller"
+                        ? GridView(
+                      children: [
+                        buildTapBlack(
+                            text: 'Add Product',
+                            onTap: () {
+                              moveToPage(context, AddProduct.id);
+                            }),
+                        buildTapBlack(text: 'My Products', onTap: () {
+                          moveToPage(context, MyProducts.id);
+                        }),
+                        buildTapBlack(text: 'My TimeLine', onTap: () {}),
+                        buildTapBlack(text: 'Favorite', onTap: () {}),
+                        buildTapBlack(text: 'Contact Us', onTap: () {}),
+                      ],
+                      shrinkWrap: true,
+                      gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 3 / 2,
+                        crossAxisSpacing: 5.0,
+                      ),
+                    )
+                        : GridView(
+                      children: [
+                        buildTapBlack(text: 'Favorite', onTap: () {}),
+                        buildTapBlack(text: 'Contact Us', onTap: () {}),
+                      ],
+                      shrinkWrap: true,
+                      gridDelegate:
+                      const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: 3 / 2,
+                        crossAxisSpacing: 5.0,
+                      ),
+                    ),),
+                    SizedBox(height: h * 0.15,),
+                    SizedBox(
+                        height: h * 0.08,
+                        child: buildTapBlack(text: 'LOGOUT',onTap:  () {
+
+                        }),),
+                  ],
+                ),
               )),
           fallback: (context) => const Center(
             child: CircularProgressIndicator(),

@@ -8,6 +8,7 @@ import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/navigator.dart';
 import 'package:hand_made_new/screens/account/sellers_details.dart';
+import 'package:hand_made_new/styles/colors.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class MapPage extends StatefulWidget {
@@ -26,7 +27,6 @@ class _MapPageState extends State<MapPage> {
   var seller = [];
   @override
   void initState() {
-    // HandCubit.get(context).getSellers();
     checkPermissions();
     rootBundle.loadString('assets/map_style.txt').then((value) {
       setState(() {
@@ -71,7 +71,7 @@ class _MapPageState extends State<MapPage> {
   // }
 
   checkPermissions() async {
-    await Permission.locationAlways.request().isGranted &&
+        await Permission.locationAlways.request().isGranted &&
         await Permission.location.request().isGranted &&
         await Permission.locationWhenInUse.request().isGranted;
   }
@@ -85,45 +85,61 @@ class _MapPageState extends State<MapPage> {
         return ConditionalBuilder(
           condition: state is! HandGetSellersLoadingState,
           builder: (context) => Scaffold(
-              body: GoogleMap(
+              body: Container(
+                decoration: BoxDecoration(
+                  gradient:LinearGradient(
+                    colors:gradientColor
+                  )
+                ),
+                child: GoogleMap(
             markers: sellerMarkers,
             myLocationEnabled: true,
             myLocationButtonEnabled: true,
             initialCameraPosition: const CameraPosition(
-              target: LatLng(
-                15.734730,
-                32.577591,
-              ),
-              zoom: 12,
+                target: LatLng(
+                  15.734730,
+                  32.577591,
+                ),
+                zoom: 12,
             ),
             onMapCreated: (GoogleMapController controller) {
-              setState(() {
-                sellerMarkers.clear();
+                setState(() {
+                  sellerMarkers.clear();
 
-                _onMapCreate(controller);
-                sellerMarkers.addAll({
-                  Marker(
-                      infoWindow: InfoWindow(
-                          title: seller.name,
-                          snippet: seller.email,
-                          onTap: () {
-                            moveToPageWithData(context,
-                                namePage: SellerDetails(
-                                  name: seller.name,
-                                ));
-                          }),
-                      markerId: MarkerId(seller.uid),
-                      icon: myIcon,
-                      position: LatLng(
-                        seller.latitude,
-                        seller.longitude,
-                      )),
+                  _onMapCreate(controller);
+                  sellerMarkers.addAll({
+                    Marker(
+                        infoWindow: InfoWindow(
+                            title: seller.name,
+                            snippet: seller.email,
+                            onTap: () {
+                              moveToPageWithData(context,
+                                  namePage: SellerDetails(
+                                    name: seller.name,
+                                  ));
+                            }),
+                        markerId: MarkerId(seller.uid),
+                        icon: myIcon,
+                        position: LatLng(
+                          seller.latitude,
+                          seller.longitude,
+                        )),
+                  });
                 });
-              });
             },
-          )),
-          fallback: (context) => const Center(
-            child: CircularProgressIndicator(),
+          ),
+              )),
+          fallback: (context) => Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: gradientColor
+                )
+            ),
+            child: const Center(
+              child: CircularProgressIndicator(
+                color: Colors.white,
+              ),
+            ),
           ),
         );
       },

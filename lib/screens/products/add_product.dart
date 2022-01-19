@@ -5,6 +5,7 @@ import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/screens/products/my_products.dart';
+import 'package:hand_made_new/styles/colors.dart';
 
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
@@ -23,7 +24,6 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddProductState extends State<AddProduct> {
-
   GlobalKey<FormState> formKey = GlobalKey();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
@@ -41,18 +41,13 @@ class _AddProductState extends State<AddProduct> {
   Widget build(BuildContext context) {
     double _height = MediaQuery.of(context).size.height;
     return BlocConsumer<HandCubit, HandMadeState>(
-      listener: (context,state){
-        if(state is HandAddProductSuccessState){
+      listener: (context, state) {
+        if (state is HandAddProductSuccessState) {
           showMessageSuccess('Product Add Successfully');
           moveToPage(context, MyProducts.id);
-        }
-
-         else if(state is HandAddProductErrorState){
-            showMessageError('Field Add Product');
-          }else{
-
-        }
-
+        } else if (state is HandAddProductErrorState) {
+          showMessageError('Field Add Product');
+        } else {}
       },
       builder: (context, state) {
         return SafeArea(
@@ -64,12 +59,13 @@ class _AddProductState extends State<AddProduct> {
                 ),
                 action: Container(),
                 elevation: 0.0),
-            body: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
+            body: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: gradientColor)),
               child: Form(
                 key: formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                child: ListView(
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
                       height: _height * 0.03,
@@ -126,7 +122,7 @@ class _AddProductState extends State<AddProduct> {
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(5),
                           child: HandCubit.get(context).image == null
-                              ? containerBuildTap(
+                              ? buildTapBlack(
                                   text: 'Select image',
                                   onTap: () {
                                     showDialogBuild(context);
@@ -147,8 +143,8 @@ class _AddProductState extends State<AddProduct> {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: ConditionalBuilder(
                           condition: state is! HandUploadImageLoadingState,
-                          builder: (context) => containerBuildTap(
-                            h: _height * 0.08,
+                          builder: (context) => buildTapBlack(
+                              h: _height * 0.08,
                               text: 'Add Product',
                               onTap: () {
                                 if (formKey.currentState.validate() &&
