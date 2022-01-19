@@ -25,8 +25,8 @@ class _ProductDetailsState extends State<ProductDetails> {
         child: FadeInImage(
           width: double.infinity,
           fit: BoxFit.fitWidth,
-          image: NetworkImage('${model.image}'),
-          placeholder: AssetImage('assets/pleaceholder.png'),
+          image: NetworkImage(model.image),
+          placeholder: const AssetImage('assets/pleaceholder.png'),
         ),
       ),
     );

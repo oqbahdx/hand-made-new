@@ -25,7 +25,7 @@ class _StartPageState extends State<StartPage> {
   int currentIndex = 1;
   List<Widget> homePages = [
     const Profile(),
-          const MapPage(),
+    const MapPage(),
     const TimeLine(),
     const FamiliesList()
   ];
@@ -37,7 +37,7 @@ class _StartPageState extends State<StartPage> {
   ];
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
+    return BlocProvider<HandCubit>(
       create: (context) => HandCubit()..getSellers()..getCurrentUser(),
       child: BlocConsumer<HandCubit, HandMadeState>(
         listener: (context, state) {},

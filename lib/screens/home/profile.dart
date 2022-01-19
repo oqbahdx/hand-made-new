@@ -15,6 +15,12 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    HandCubit.get(context).getCurrentUser();
+  }
+  @override
   Widget build(BuildContext context) {
     TextEditingController nameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
@@ -23,8 +29,13 @@ class _ProfileState extends State<Profile> {
       listener: (context, state) {},
       builder: (context, state) {
         var model = HandCubit.get(context).userModel;
-        nameController.text = model.name;
-        emailController.text = model.email;
+        if(model.name == null){
+          const CircularProgressIndicator();
+        }else{
+          nameController.text = model.name;
+          emailController.text = model.email;
+        }
+
         return ConditionalBuilder(
           condition: state is! HandGetCurrentUserLoadingState,
           builder: (context) => Scaffold(

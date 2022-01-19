@@ -77,7 +77,7 @@ class _SellerDetailsState extends State<SellerDetails>
                                 // productsCategory: ,
                               ));
                         },
-                        child: PositionedBuild(
+                        child: positionedBuild(
                           h: h * 0.350,
                           w: h * 0.350,
                           txt: "Products",
@@ -93,7 +93,7 @@ class _SellerDetailsState extends State<SellerDetails>
                         animation.value * w, 0.0, 0.0),
                     child: Padding(
                       padding: const EdgeInsets.only(right: 90),
-                      child: PositionedBuild(
+                      child: positionedBuild(
                         h: h * 0.350,
                         w: h * 0.350,
                         txt: "Time Line",

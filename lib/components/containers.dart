@@ -101,7 +101,7 @@ Widget familiesContainer({UserModel model, Function onTap}) {
   );
 }
 
-Widget PositionedBuild({double h, double w, String txt}) {
+Widget positionedBuild({double h, double w, String txt}) {
   return SizedBox(
     height: h,
     width: w,
@@ -145,7 +145,7 @@ Widget buildProductsItem(ProductsModel model,Object tag){
               placeholder: const AssetImage('assets/pleaceholder.png'),
             ),
           ),
-          height: 120,
+          height: 115,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Colors.black87,
@@ -159,7 +159,7 @@ Widget buildProductsItem(ProductsModel model,Object tag){
         ),),
       ],
     ),
-   height: 160,
+   height: 185,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(15),
       color: Colors.black54,

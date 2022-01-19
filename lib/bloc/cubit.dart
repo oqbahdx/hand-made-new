@@ -191,7 +191,7 @@ class HandCubit extends Cubit<HandMadeState> {
     sellers = [];
     FirebaseFirestore.instance
         .collection('/users')
-        .where('role', isEqualTo: 'seller')
+        .where('role',isEqualTo: 'seller')
         .where('isAvailable', isEqualTo: true)
         .get()
         .then((value) {
@@ -375,11 +375,14 @@ class HandCubit extends Cubit<HandMadeState> {
         .set(userModel.toJson());
   }
 
-  getCurrentUser() async {
+  getCurrentUser()  {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    var currentUser = auth.currentUser.uid;
     emit(HandGetCurrentUserLoadingState());
+
     FirebaseFirestore.instance
         .collection('/users')
-        .doc(uId)
+        .doc(currentUser)
         .get()
         .then((value) {
       if (kDebugMode) {

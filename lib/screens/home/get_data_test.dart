@@ -5,7 +5,7 @@ import 'package:hand_made_new/bloc/cubit.dart';
 class GetUserName extends StatefulWidget {
   final String documentId;
 
-  const GetUserName({this.documentId});
+   const GetUserName({Key key, this.documentId}) : super(key: key);
 
   @override
   State<GetUserName> createState() => _GetUserNameState();
