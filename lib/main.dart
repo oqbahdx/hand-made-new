@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/screens/account/sellers_details.dart';
+import 'package:hand_made_new/screens/drawer/contact_us.dart';
 import 'package:hand_made_new/screens/home/profile.dart';
 import 'package:hand_made_new/screens/products/my_products.dart';
 import 'package:hand_made_new/screens/products/products%20test.dart';
@@ -97,7 +98,8 @@ class MyApp extends StatelessWidget {
           Profile.id: (context) =>
               BlocProvider.value(value: _handCubit, child: const Profile()),
           MyProducts.id: (context) => const MyProducts(),
-          ProductText.id: (context) => const ProductText()
+          ProductText.id: (context) => const ProductText(),
+          ContactUs.id:(context)=>const ContactUs()
         },
       ),
     );

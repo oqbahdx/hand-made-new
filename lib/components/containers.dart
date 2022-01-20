@@ -128,7 +128,7 @@ Widget positionedBuild({double h, double w, String txt}) {
 
 }
 
-Widget buildProductsItem(ProductsModel model,Object tag){
+Widget buildProductsItem( model,Object tag){
   return Container(
 
     // alignment: Alignment.center,

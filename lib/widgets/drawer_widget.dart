@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/containers.dart';
+import 'package:hand_made_new/screens/drawer/contact_us.dart';
 import 'package:hand_made_new/screens/products/add_product.dart';
 import 'package:hand_made_new/screens/products/my_products.dart';
 import 'package:hand_made_new/styles/colors.dart';
@@ -117,7 +118,9 @@ class _DrawerBuildState extends State<DrawerBuild> {
                         : GridView(
                       children: [
                         buildTapBlack(text: 'Favorite', onTap: () {}),
-                        buildTapBlack(text: 'Contact Us', onTap: () {}),
+                        buildTapBlack(text: 'Contact Us', onTap: () {
+                          moveToPage(context, ContactUs.id);
+                        }),
                       ],
                       shrinkWrap: true,
                       gridDelegate:
@@ -130,7 +133,9 @@ class _DrawerBuildState extends State<DrawerBuild> {
                     SizedBox(height: h * 0.15,),
                     SizedBox(
                         height: h * 0.08,
-                        child: buildTapBlack(text: 'LOGOUT',onTap:  () {
+                        child: buildTapBlack(
+
+                            text: 'LOGOUT',onTap:  () {
 
                         }),),
                   ],

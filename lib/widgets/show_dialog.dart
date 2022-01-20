@@ -9,7 +9,11 @@ showDialogBuild(BuildContext context) {
   return showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text('Select Image From :', style: normalText),
+        backgroundColor: Colors.black54,
+        title: const Text('Select Image From :', style: TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold
+        )),
         content: SizedBox(
           height: 150,
           child: Column(

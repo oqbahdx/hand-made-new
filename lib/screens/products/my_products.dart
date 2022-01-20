@@ -34,7 +34,6 @@ class _MyProductsState extends State<MyProducts> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    HandCubit.get(context).getMyProducts();
   }
   @override
   Widget build(BuildContext context) {
@@ -45,30 +44,32 @@ class _MyProductsState extends State<MyProducts> {
       builder: (context, state) {
         var model = HandCubit.get(context).productsModel;
         return Scaffold(
-          appBar: appBarWidget(
-              title: const Text(
-                'My Products',
-                style: TextStyle(fontWeight: FontWeight.bold),
+            appBar: appBarWidget(
+                title: const Text(
+                  'My Products',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                action: Container(),
+                elevation: 20.0),
+            body: Container(
+              padding: const EdgeInsets.only(top: 15, right: 5, left: 5),
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: gradientColor,
+                ),
               ),
-              action: Container(),
-              elevation: 20.0),
-          body: Container(
-            padding: const EdgeInsets.only(top: 15, right: 5, left: 5),
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: gradientColor,
+              child: ConditionalBuilder(
+                condition: HandCubit.get(context).myProducts.isNotEmpty,
+                builder: (context)=>FutureBuilder(
+                    future:HandCubit.get(context).getMyProducts(),
+                    builder: (context,index){
+                  return buildProductsItem(HandCubit.get(context).myProducts, '');
+                }),
+                fallback: (context)=>const Center(child:  CircularProgressIndicator (
+                  color: Colors.white,
+                ),),
               ),
-            ),
-            child: ConditionalBuilder(
-              condition: HandCubit.get(context).myProducts.length >0,
-              builder: (context)=>FutureBuilder(builder: (context,index){
-                return buildProductsItem(model, '');
-              }),
-              fallback: (context)=>const Center(child:  CircularProgressIndicator (
-                color: Colors.white,
-              ),),
-            ),
-          ));
+            ));
       },
     );
   }
