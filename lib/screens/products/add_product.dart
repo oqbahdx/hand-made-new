@@ -11,7 +11,7 @@ import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 import 'package:hand_made_new/widgets/navigators.dart';
 import 'package:hand_made_new/widgets/show_dialog.dart';
-import 'package:hand_made_new/widgets/text_from_field.dart';
+import 'package:hand_made_new/widgets/text_form_background.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 
 class AddProduct extends StatefulWidget {
@@ -65,53 +65,39 @@ class _AddProductState extends State<AddProduct> {
               child: Form(
                 key: formKey,
                 child: ListView(
+                  physics: const BouncingScrollPhysics(),
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
                       height: _height * 0.03,
                     ),
-                    defaultTextFormField(
-                      text: 'product name',
-                      controller: _nameController,
-                      type: TextInputType.name,
-                      function: (value) {
-                        if (value.isEmpty) {
-                          return 'this field can not be empty';
+                    buildTextFormFieldWithBackground(
+                        controller: _nameController,
+                        validator: (value){
+                        if(value.isEmpty){
+                          return 'Please Enter Product Name';
                         }
-                      },
-                      sec: false,
-                      showPass: null,
-                    ),
+                        },
+                        txt: 'Name Of The Product'),
                     SizedBox(
                       height: _height * 0.03,
                     ),
-                    defaultTextFormField(
-                      text: 'description',
-                      controller: _descriptionController,
-                      type: TextInputType.text,
-                      function: (value) {
-                        if (value.isEmpty) {
-                          return 'this field can not be empty';
-                        }
-                      },
-                      sec: false,
-                      showPass: null,
-                    ),
+                    buildTextFormFieldWithBackground(
+
+                        controller: _descriptionController, txt: 'Description',validator: (value){
+                          if(value.isEmpty){
+                            return "Please Enter The Description";
+                          }
+                    }),
                     SizedBox(
                       height: _height * 0.03,
                     ),
-                    defaultTextFormField(
-                      text: 'price',
-                      controller: _priceController,
-                      type: TextInputType.number,
-                      function: (value) {
-                        if (value.isEmpty) {
-                          return 'this field can not be empty';
-                        }
-                      },
-                      sec: false,
-                      showPass: null,
-                    ),
+                    buildTextFormFieldWithBackground(
+                        controller: _priceController, txt: 'Price',validator: (value){
+                          if(value.isEmpty){
+                            return "Please Enter The Price";
+                          }
+                    }),
                     SizedBox(
                       height: _height * 0.06,
                     ),

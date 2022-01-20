@@ -70,7 +70,7 @@ class _SellerDetailsState extends State<SellerDetails>
                     ),
                   ),
                   SizedBox(
-                    height: h * 0.10,
+                    height: h * 0.06,
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 90),

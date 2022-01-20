@@ -5,6 +5,7 @@ import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/styles/colors.dart';
+import 'package:hand_made_new/widgets/text_forms.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key key}) : super(key: key);
@@ -54,7 +55,7 @@ class _ProfileState extends State<Profile> {
                       height: height *.04,
                     ),
                     CircleAvatar(
-                      backgroundColor: Colors.deepOrange,
+                      backgroundColor: Colors.black54,
                       radius: 70,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
@@ -69,42 +70,24 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: height *.03,
                     ),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: TextFormField(
-                          textAlign: TextAlign.center,
-                          controller: nameController,
-                          style: const TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        )),
+                    buildTextFormFieldWithBackground(controller: nameController),
                     SizedBox(
                       height: height *.05,
                     ),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: TextFormField(
-                          textAlign: TextAlign.center,
-                          controller: emailController,
-                          style: const TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                            ),
-                          ),
-                        )),
+                    buildTextFormFieldWithBackground(controller: emailController),
                     SizedBox(
                       height: height *.03,
                     ),
-                    Switch.adaptive(value: model.isAvailable,
-                        onChanged: (value){
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                     const Text('OFFLINE',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                     Switch.adaptive(value: model.isAvailable,
+                         onChanged: (value){
 
-                        }),
+                         }),
+                     const Text('ONLINE',style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16),),
+                   ],),
                     SizedBox(
                       height: height *.02,
                     ),
@@ -130,7 +113,7 @@ class _ProfileState extends State<Profile> {
             ),
           ),
         );
-      },
+      }
     );
   }
 }

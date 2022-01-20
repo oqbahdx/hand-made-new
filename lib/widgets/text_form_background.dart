@@ -1,60 +1,51 @@
 import 'package:flutter/material.dart';
 
-
-
-Widget defaultTextFormField({
-  TextEditingController controller,
-  int maxLine,
-  TextAlign align,
-  TextInputType inputType,
-  TextStyle style,
-  TextInputAction next, String text, TextInputType type, IconData icn, String Function(dynamic value) function,
-}){
-  return TextFormField(
-    controller: controller,
-    maxLength: maxLine,
-    textAlign: align,
-    keyboardType: inputType,
-    style: style,
-    textInputAction: next,
-   decoration: const InputDecoration(
-     counterText: ''
-   ),
-  );
-}
-
-Widget buildTextFormFieldWithBackground({TextEditingController controller ,String txt}){
-  return  Padding(
+Widget buildTextFormFieldWithBackground(
+    {TextEditingController controller,
+    String txt,
+    Function(String) validator,
+   }) {
+  return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: TextFormField(
-
         cursorColor: Colors.white,
+        validator: validator,
         textAlign: TextAlign.center,
         controller: controller,
-        style: const TextStyle(
-            color: Colors.black, fontWeight: FontWeight.bold,fontSize: 20),
+        style:  const TextStyle(
+            color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 20),
         decoration: InputDecoration(
+          labelText: txt,
+          labelStyle: TextStyle(
+              color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 20),
           fillColor: Colors.white70,
+          errorStyle:
+              const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           filled: true,
-          focusedBorder:  OutlineInputBorder(
+          focusedBorder: OutlineInputBorder(
             borderSide: const BorderSide(
               color: Colors.white,
               width: 2.0,
             ),
-
             borderRadius: BorderRadius.circular(15),
           ),
-          border:  OutlineInputBorder(
+          border: OutlineInputBorder(
             borderSide: const BorderSide(
               color: Colors.white,
               width: 2.0,
             ),
-
             borderRadius: BorderRadius.circular(15),
           ),
           enabledBorder: OutlineInputBorder(
             borderSide: const BorderSide(
               color: Colors.black54,
+              width: 2.0,
+            ),
+            borderRadius: BorderRadius.circular(15),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderSide: const BorderSide(
+              color: Colors.red,
               width: 2.0,
             ),
             borderRadius: BorderRadius.circular(15),
