@@ -43,7 +43,6 @@ class _FamiliesListState extends State<FamiliesList> {
                               gradient: LinearGradient(colors: gradientColor)),
                           child: const Center(
                             child: CircularProgressIndicator(
-
                               color: Colors.white,
                             ),
                           ),

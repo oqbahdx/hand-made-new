@@ -3,7 +3,7 @@ import 'package:hand_made_new/styles/colors.dart';
 
 class TimeLine extends StatefulWidget {
   const TimeLine({Key key}) : super(key: key);
-
+  static String id = "TimeLine";
   @override
   _TimeLineState createState() => _TimeLineState();
 }
