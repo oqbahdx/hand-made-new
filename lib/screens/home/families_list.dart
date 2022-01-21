@@ -1,9 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:conditional_builder/conditional_builder.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/navigator.dart';
@@ -18,72 +15,73 @@ class FamiliesList extends StatefulWidget {
 }
 
 class _FamiliesListState extends State<FamiliesList> {
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HandCubit, HandMadeState>(
       listener: (context, state) {},
       builder: (context, state) {
-        return ConditionalBuilder(
-          condition: HandCubit.get(context).sellers.isNotEmpty,
-          builder: (context) => Scaffold(
-            body: Container(
-                height: double.infinity,
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(colors: gradientColor)),
-                child: StreamBuilder(
-                    stream: FirebaseFirestore.instance
-                        .collection('/users')
-                        .doc(FirebaseAuth.instance.currentUser.uid)
-                        .snapshots(),
-                    builder: (context, snapshot) {
-                      if (!snapshot.hasData) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              gradient: LinearGradient(colors: gradientColor)),
-                          child: const Center(
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
+        return Scaffold(
+          body: Container(
+            height: double.infinity,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+              colors: gradientColor,
+            )),
+            child: StreamBuilder(
+              stream: FirebaseFirestore.instance
+                  .collection('users').where('role',isEqualTo: 'seller').limit(10)
+                  .snapshots(),
+              builder: (BuildContext context,
+                  AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(color: Colors.white,),
+                  );
+                }
+
+                return ListView(
+
+                  children: snapshot.data.docs.map((document){
+                    final dynamic data = document.data();
+                      return Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                      child: InkWell(
+                        onTap: (){
+                          moveToPageWithData(context,namePage: SellerDetails(
+                            uId: data['uId'].toString(),
+                            name: data['name'].toString(),
+                          ));
+                        },
+                        child: Card(
+                          elevation: 20.0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          color: Colors.transparent,
+                          child: Container(
+                            alignment: Alignment.center,
+                            height: 150,
+                            width: 350,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: Colors.black54),
+                            child: Text(
+                              document['name'],
+                              style: const TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30),
                             ),
                           ),
-                        );
-                      }
+                        ),
+                      ),
+                    );
+                  }).toList(),
 
-                      final userData = snapshot.data.data();
-
-                      if (userData['role'] == 'seller') {
-                        return ListView.separated(
-                            shrinkWrap: true,
-                            physics: const BouncingScrollPhysics(),
-                            itemBuilder: (context, index) => familiesContainer(
-                                model: HandCubit.get(context).sellers[index],
-                                onTap: () {
-                                  moveToPageWithData(context,
-                                      namePage: SellerDetails(
-                                        name: HandCubit.get(context)
-                                            .sellers[index]
-                                            .name,
-                                        uId: HandCubit.get(context)
-                                            .sellers[index]
-                                            .uid,
-                                      ));
-                                }),
-                            separatorBuilder: (context, index) => const SizedBox(
-                                  height: 10,
-                                ),
-                            itemCount: HandCubit.get(context).sellers.length);
-                      }
-
-                      return Container();
-                    })),
+                );
+              },
+            ),
           ),
-          fallback: (context) => Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: gradientColor)),
-              child: const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-              ))),
         );
       },
     );

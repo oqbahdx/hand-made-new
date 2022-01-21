@@ -39,7 +39,7 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HandCubit>(
-      create: (context) => HandCubit()..getSellers()..getCurrentUser()..getMyProducts(),
+      create: (context) => HandCubit()..getCurrentUser(),
       child: BlocConsumer<HandCubit, HandMadeState>(
         listener: (context, state) {},
         builder: (context, state) {
