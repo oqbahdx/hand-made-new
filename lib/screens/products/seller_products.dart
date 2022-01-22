@@ -56,14 +56,14 @@ class _SellerProductsState extends State<SellerProducts> {
                     .snapshots(),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
+                  if (!snapshot.hasData) {
                     return const Center(
                       child: CircularProgressIndicator(
                         color: Colors.white,
                       ),
                     );
                   }
-                  else {
+
                     return GridView(
                       gridDelegate:
                           const SliverGridDelegateWithFixedCrossAxisCount(
@@ -114,7 +114,6 @@ class _SellerProductsState extends State<SellerProducts> {
                         );
                       }).toList(),
                     );
-                  }
                 },
               ),
             ),

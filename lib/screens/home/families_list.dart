@@ -48,7 +48,7 @@ class _FamiliesListState extends State<FamiliesList> {
                       child: InkWell(
                         onTap: (){
                           moveToPageWithData(context,namePage: SellerDetails(
-                            uId: data['uId'].toString(),
+                            uId: data['uid'].toString(),
                             name: data['name'].toString(),
                           ));
                         },

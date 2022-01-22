@@ -29,7 +29,6 @@ class _SellerDetailsState extends State<SellerDetails>
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
-    double w = MediaQuery.of(context).size.width;
     return SafeArea(
 
           child: Scaffold(
@@ -52,14 +51,12 @@ class _SellerDetailsState extends State<SellerDetails>
                     padding: const EdgeInsets.only(left: 90),
                     child: GestureDetector(
                       onTap: () {
+                        print(widget.name);
+                        print(widget.uId);
                         moveToPageWithData(context,
                             namePage: SellerProducts(
                               sellerName: widget.name,
                               uId: widget.uId,
-                              // productImage: ,
-                              // productName: ,
-                              // productPrice: ,
-                              // productsCategory: ,
                             ));
                       },
                       child: positionedBuild(

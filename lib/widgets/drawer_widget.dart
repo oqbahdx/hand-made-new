@@ -25,13 +25,6 @@ class DrawerBuild extends StatefulWidget {
 
 class _DrawerBuildState extends State<DrawerBuild> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    HandCubit.get(context).getCurrentUser();
-  }
-
-  @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
     var model = HandCubit.get(context).userModel;
@@ -71,7 +64,7 @@ class _DrawerBuildState extends State<DrawerBuild> {
                                       height: double.infinity,
                                       width: double.infinity,
                                     ))
-                                : Image.asset('assets/personicon.png'),
+                                : Image.asset('assets/pleaceholder.png',color: Colors.black,),
                           ),
                           Positioned(
                               bottom: 0,
