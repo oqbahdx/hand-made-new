@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 
 class ProductDetails extends StatefulWidget {
+  final String productId;
+  final String productName;
+  final String productPrice;
+  final String productDes;
+  final String productImage;
   const ProductDetails({
-    Key key,
+    Key key, this.productId, this.productPrice, this.productDes, this.productImage, this.productName,
   }) : super(key: key);
   static String id = "ProductDetails";
 
@@ -20,22 +24,26 @@ class _ProductDetailsState extends State<ProductDetails> {
       appBar: appBarWidget(
           elevation: 0.0,
           action: Container(),
-          title: const Text(
-            'Product Name',
-            style: TextStyle(fontWeight: FontWeight.bold),
+          title:  Text(
+            widget.productName,
+            style: const TextStyle(fontWeight: FontWeight.bold),
           )),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(colors: gradientColor),
         ),
-        child: Column(
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
           children: [
-            SizedBox(
-              height: 0,
+            Container(
+              height: 300,
+              child: Hero(
+                tag: widget.productId,
+                child: Image.network(
+                    widget.productImage,width: double.infinity,fit: BoxFit.cover,),
+              ),
             ),
-            Image.network(
-                'https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'),
-            SizedBox(
+            const SizedBox(
               height: 25,
             ),
             Card(
@@ -46,24 +54,26 @@ class _ProductDetailsState extends State<ProductDetails> {
                 color: Colors.black54,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const [
-                    Text(
-                      '2500 SDG',
-                      style: TextStyle(
+                  children: [
+                     Text(
+                      '${widget.productPrice} SDG',
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                           fontSize: 20),
                     ),
-                    Icon(
-                      Icons.favorite_border,
-                      size: 35,
-                      color: Colors.red,
-                    )
+                    IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.favorite_border,
+                          size: 35,
+                          color: Colors.red,
+                        ))
                   ],
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             Card(
@@ -72,16 +82,15 @@ class _ProductDetailsState extends State<ProductDetails> {
               child: Container(
                 height: 250,
                 color: Colors.black54,
-                child: const Padding(
-                  padding: EdgeInsets.all(8.0),
+                child:  Padding(
+                  padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    '11111111111111111111111111111111111111111111111111111111111111111111111111',
-                    style: TextStyle(
+                       widget.productDes,
+                    style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
                         fontSize: 20),
                     textAlign: TextAlign.start,
-
                   ),
                 ),
               ),

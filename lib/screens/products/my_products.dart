@@ -6,6 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/containers.dart';
+import 'package:hand_made_new/components/navigator.dart';
+import 'package:hand_made_new/screens/products/products_detalis.dart';
 import 'package:hand_made_new/storage/shared.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
@@ -78,43 +80,55 @@ class _MyProductsState extends State<MyProducts> {
                           mainAxisSpacing: 45,
                         ),
                         children: snapshot.data.docs.map((document) {
-                          return Container(
-                            child: Column(
-                              children: [
-                                Container(
-                                  clipBehavior: Clip.hardEdge,
-                                  child: Hero(
-                                    tag: 'tag',
-                                    child: FadeInImage(
-                                      width: double.infinity,
-                                      fit: BoxFit.fitWidth,
-                                      image: NetworkImage(document['image']),
-                                      placeholder: const AssetImage(
-                                          'assets/pleaceholder.png'),
+                          final dynamic data = document.data();
+                          return InkWell(
+                            onTap: (){
+                              moveToPageWithData(context,namePage: ProductDetails(
+                                productPrice: data['price'].toString(),
+                                productImage: data['image'].toString(),
+                                productDes: data['description'].toString(),
+                                productId: document.id,
+                                productName: data['name'].toString(),
+                              ));
+                            },
+                            child: Container(
+                              child: Column(
+                                children: [
+                                  Container(
+                                    clipBehavior: Clip.hardEdge,
+                                    child: Hero(
+                                      tag: document.id,
+                                      child: FadeInImage(
+                                        width: double.infinity,
+                                        fit: BoxFit.fitWidth,
+                                        image: NetworkImage(document['image']),
+                                        placeholder: const AssetImage(
+                                            'assets/pleaceholder.png'),
+                                      ),
+                                    ),
+                                    height: h * 0.16,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      color: Colors.black87,
                                     ),
                                   ),
-                                  height: h * 0.16,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: Colors.black87,
+                                  const SizedBox(
+                                    height: 10,
                                   ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  document['name'],
-                                  style: const TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                              ],
-                            ),
-                            height: 200,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.black54,
+                                  Text(
+                                    document['name'],
+                                    style: const TextStyle(
+                                        fontSize: 30,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                ],
+                              ),
+                              height: 200,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.black54,
+                              ),
                             ),
                           );
                         }).toList(),

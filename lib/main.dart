@@ -72,8 +72,8 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Amiri',
         ),
         debugShowCheckedModeBanner: false,
-        initialRoute: ProductDetails.id,
-        // home: startPage,
+        // initialRoute: ProductDetails.id,
+        home: startPage,
         routes: {
           OnBoarding.id: (context) =>
               BlocProvider.value(value: _handCubit, child: const OnBoarding()),
