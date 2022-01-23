@@ -72,32 +72,38 @@ class _AddProductState extends State<AddProduct> {
                       height: _height * 0.03,
                     ),
                     buildTextFormFieldWithBackground(
+                      inputType: TextInputType.text,
                         controller: _nameController,
-                        validator: (value){
-                        if(value.isEmpty){
-                          return 'Please Enter Product Name';
-                        }
+                        validator: (value) {
+                          if (value.isEmpty) {
+                            return 'Please Enter Product Name';
+                          }
                         },
                         txt: 'Name Of The Product'),
                     SizedBox(
                       height: _height * 0.03,
                     ),
                     buildTextFormFieldWithBackground(
-
-                        controller: _descriptionController, txt: 'Description',validator: (value){
-                          if(value.isEmpty){
+                        inputType: TextInputType.text,
+                        controller: _descriptionController,
+                        txt: 'Description',
+                        validator: (value) {
+                          if (value.isEmpty) {
                             return "Please Enter The Description";
                           }
-                    }),
+                        }),
                     SizedBox(
                       height: _height * 0.03,
                     ),
                     buildTextFormFieldWithBackground(
-                        controller: _priceController, txt: 'Price',validator: (value){
-                          if(value.isEmpty){
+                        inputType: TextInputType.number,
+                        controller: _priceController,
+                        txt: 'Price',
+                        validator: (value) {
+                          if (value.isEmpty) {
                             return "Please Enter The Price";
                           }
-                    }),
+                        }),
                     SizedBox(
                       height: _height * 0.06,
                     ),

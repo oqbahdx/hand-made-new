@@ -4,6 +4,7 @@ Widget buildTextFormFieldWithBackground(
     {TextEditingController controller,
     String txt,
     Function(String) validator,
+      TextInputType inputType
    }) {
   return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -12,11 +13,13 @@ Widget buildTextFormFieldWithBackground(
         validator: validator,
         textAlign: TextAlign.center,
         controller: controller,
+        keyboardType: inputType,
+
         style:  const TextStyle(
             color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 20),
         decoration: InputDecoration(
           labelText: txt,
-          labelStyle: TextStyle(
+          labelStyle: const TextStyle(
               color: Colors.black54, fontWeight: FontWeight.bold, fontSize: 20),
           fillColor: Colors.white70,
           errorStyle:

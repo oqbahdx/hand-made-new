@@ -6,6 +6,7 @@ import 'package:hand_made_new/storage/shared.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 import 'package:hand_made_new/widgets/navigators.dart';
 import 'package:hand_made_new/widgets/on_boarding_widgets.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnBoarding extends StatefulWidget {
@@ -45,14 +46,21 @@ class _OnBoardingState extends State<OnBoarding> {
   PageController pageController = PageController();
   bool isLast = false;
 
+  getPermissions() async {
+    Map<Permission, PermissionStatus> status = await [
+      Permission.locationWhenInUse,
+      Permission.location,
+      Permission.locationAlways,
+      Permission.camera,
+      Permission.storage,
+    ].request();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: appBarWidget(
-        elevation: 0.0,
-        action: Container()
-      ),
+      appBar: appBarWidget(elevation: 0.0, action: Container()),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -106,9 +114,16 @@ class _OnBoardingState extends State<OnBoarding> {
                         },
                         icn: Icons.arrow_forward_ios)
                     : floatingNextButton(
-                        function: () {
+                        function: () async {
                           submit();
-                          moveToPageAndFinish(context, const LoginPage());
+                          if (await Permission.location.isGranted &&
+                              await   Permission.accessMediaLocation.isGranted &&
+                              await   Permission.locationAlways.isGranted &&
+                              await  Permission.camera.isGranted &&
+                              await  Permission.storage.isGranted){
+                            moveToPageAndFinish(context, const LoginPage());
+                          }
+
                         },
                         icn: Icons.home),
               ],

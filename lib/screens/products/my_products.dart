@@ -1,14 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:conditional_builder/conditional_builder.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
-import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/components/navigator.dart';
 import 'package:hand_made_new/screens/products/products_detalis.dart';
-import 'package:hand_made_new/storage/shared.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 
@@ -47,7 +44,13 @@ class _MyProductsState extends State<MyProducts> {
                     'My Products',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  action: Container(),
+                  action: IconButton(
+                    icon: const Icon(
+                      Icons.edit,
+                      color: Colors.black54,
+                    ),
+                    onPressed: () {},
+                  ),
                   elevation: 20.0),
               body: Container(
                 padding: const EdgeInsets.only(top: 15, right: 5, left: 5),
@@ -82,14 +85,15 @@ class _MyProductsState extends State<MyProducts> {
                         children: snapshot.data.docs.map((document) {
                           final dynamic data = document.data();
                           return InkWell(
-                            onTap: (){
-                              moveToPageWithData(context,namePage: ProductDetails(
-                                productPrice: data['price'].toString(),
-                                productImage: data['image'].toString(),
-                                productDes: data['description'].toString(),
-                                productId: document.id,
-                                productName: data['name'].toString(),
-                              ));
+                            onTap: () {
+                              moveToPageWithData(context,
+                                  namePage: ProductDetails(
+                                    productPrice: data['price'].toString(),
+                                    productImage: data['image'].toString(),
+                                    productDes: data['description'].toString(),
+                                    productId: document.id,
+                                    productName: data['name'].toString(),
+                                  ));
                             },
                             child: Container(
                               child: Column(
