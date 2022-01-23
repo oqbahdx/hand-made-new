@@ -8,7 +8,7 @@ import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/screens/account/login.dart';
 import 'package:hand_made_new/screens/drawer/contact_us.dart';
 import 'package:hand_made_new/screens/drawer/favorite.dart';
-import 'package:hand_made_new/screens/home/time_line.dart';
+import 'package:hand_made_new/screens/home/chat_list.dart';
 import 'package:hand_made_new/screens/products/add_product.dart';
 import 'package:hand_made_new/screens/products/my_products.dart';
 import 'package:hand_made_new/styles/colors.dart';
@@ -103,7 +103,7 @@ class _DrawerBuildState extends State<DrawerBuild> {
                             buildTapBlack(
                                 text: 'My TimeLine',
                                 onTap: () {
-                                  moveToPage(context, TimeLine.id);
+                                  moveToPage(context, ChatList.id);
                                 }),
                             buildTapBlack(
                                 text: 'Favorite',

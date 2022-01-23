@@ -74,7 +74,7 @@ class _SellerDetailsState extends State<SellerDetails>
                     child: positionedBuild(
                       h: h * 0.350,
                       w: h * 0.350,
-                      txt: "Time Line",
+                      txt: "Chat",
                     ),
                   ),
                 ],

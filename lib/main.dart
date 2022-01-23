@@ -7,7 +7,7 @@ import 'package:hand_made_new/screens/account/sellers_details.dart';
 import 'package:hand_made_new/screens/drawer/contact_us.dart';
 import 'package:hand_made_new/screens/drawer/favorite.dart';
 import 'package:hand_made_new/screens/home/profile.dart';
-import 'package:hand_made_new/screens/home/time_line.dart';
+import 'package:hand_made_new/screens/home/chat_list.dart';
 import 'package:hand_made_new/screens/products/my_products.dart';
 import 'package:hand_made_new/screens/products/products%20test.dart';
 import 'package:hand_made_new/screens/products/products_detalis.dart';
@@ -104,7 +104,7 @@ class MyApp extends StatelessWidget {
           ProductText.id: (context) => const ProductText(),
           ContactUs.id:(context)=>const ContactUs(),
           FavoritePage.id:(context)=> const FavoritePage(),
-          TimeLine.id:(context)=>const TimeLine(),
+          ChatList.id:(context)=>const ChatList(),
           ProductDetails.id:(context)=>const ProductDetails()
         },
       ),

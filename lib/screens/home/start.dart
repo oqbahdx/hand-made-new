@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/screens/home/profile.dart';
-import 'package:hand_made_new/screens/home/time_line.dart';
+import 'package:hand_made_new/screens/home/chat_list.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/styles/colors.dart';
@@ -27,7 +27,7 @@ class _StartPageState extends State<StartPage> {
   List<Widget> homePages = [
     const Profile(),
     const MapPage(),
-    const TimeLine(),
+    const ChatList(),
     const FamiliesList()
   ];
   List<String> titles = [
