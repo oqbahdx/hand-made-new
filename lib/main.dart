@@ -13,6 +13,8 @@ import 'package:hand_made_new/screens/products/products%20test.dart';
 import 'package:hand_made_new/screens/products/products_detalis.dart';
 
 import 'package:hand_made_new/storage/shared.dart';
+import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:responsive_framework/utils/scroll_behavior.dart';
 
 import '/screens/account/login.dart';
 import '/screens/account/buyer_register.dart';
@@ -67,7 +69,17 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         useInheritedMediaQuery: true,
         locale: DevicePreview.locale(context),
-        builder: DevicePreview.appBuilder,
+        builder: (context,widget)=>ResponsiveWrapper.builder(
+            BouncingScrollWrapper.builder(context, widget),
+            maxWidth: 1200,
+            minWidth: 480,
+            defaultScale: true,
+            breakpoints: [
+              const ResponsiveBreakpoint.resize(480, name: MOBILE),
+              const ResponsiveBreakpoint.autoScale(800, name: TABLET),
+              const ResponsiveBreakpoint.resize(1000, name: DESKTOP),
+            ],
+            background: Container(color: const Color(0xFFF5F5F5))),
         theme: ThemeData(
           fontFamily: 'Amiri',
         ),
