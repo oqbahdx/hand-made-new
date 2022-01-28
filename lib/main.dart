@@ -83,8 +83,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Amiri',
         ),
-        debugShowCheckedModeBanner: false,
-        // initialRoute: ProductDetails.id,
+         debugShowCheckedModeBanner: false,
+         // initialRoute: ProductText.id,
         home: startPage,
         routes: {
           OnBoarding.id: (context) =>

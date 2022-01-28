@@ -431,4 +431,33 @@ class HandCubit extends Cubit<HandMadeState> {
         .snapshots();
 
   }
+  updateUser({
+    @required String image,
+    @required String name,
+    @required String email,
+    @required bool isAvailable ,
+}){
+    emit(HandUpdateCurrentUserProfileLoading());
+    UserModel currentUserModel = UserModel(
+      profileImage: image,
+      name: name,
+      email: email,
+      isAvailable: isAvailable
+    );
+  FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.uid).
+  update(currentUserModel.toJson()).then((value){
+
+    emit(HandUpdateCurrentUserProfileLoading());
+  }).catchError((err){
+    print(err.toString());
+    emit(HandUpdateCurrentUserProfileError(err.toString()));
+  });
+  }
+
+
+
+  changeIsOnline(bool value){
+    emit(HandChangeIsOnlineState());
+  }
+
 }

@@ -134,3 +134,13 @@ class HandGetMyProductsError extends HandMadeState{
 
   HandGetMyProductsError(this.error);
 }
+
+class HandUpdateCurrentUserProfileLoading extends HandMadeState{}
+class HandUpdateCurrentUserProfileSuccess extends HandMadeState{}
+class HandUpdateCurrentUserProfileError extends HandMadeState{
+  final String error;
+
+  HandUpdateCurrentUserProfileError(this.error);
+}
+
+class HandChangeIsOnlineState extends HandMadeState{}

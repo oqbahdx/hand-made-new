@@ -18,6 +18,7 @@ static String id = "ProductText";
 class _ProductTextState extends State<ProductText> {
   List<ProductsModel> products = [];
   ProductsModel model;
+  bool isOnline = true;
   @override
   void initState() {
     // HandCubit.get(context).getCurrentUserProducts();
@@ -25,52 +26,14 @@ class _ProductTextState extends State<ProductText> {
   }
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HandCubit,HandMadeState>(
-      listener: (context,state){},
-      builder: (context,state){
-        return Scaffold(
-          body: Scaffold(
-            appBar: AppBar(),
-            body: ConditionalBuilder(
-              condition: state is !HandGetCurrentUserProductsLoadingState,
-              builder: (context)=>FutureBuilder(
-                  future: FirebaseFirestore.instance.collection('/products').get().then((value){
-                    for (var element in value.docs) {
-                      products.add(ProductsModel.fromJson(element.data()));
-                    }
-                    if (kDebugMode) {
-                      print(products[2].name);
-                    }
-                  }),
-                  builder: (BuildContext context,AsyncSnapshot snapshot){
-                    if(snapshot.hasData){
-                      // return  buildProductsItem(
-                      //     model
-                      // );
-                      Text(products[2].name,style: const TextStyle(
-                        fontSize: 50
-                      ),);
-                    }
-                    return  GridView.builder(gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 3 / 2,
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 45),
-                        itemBuilder: (context,index)=> buildProductsItem(
-                          products[index],
-                          products[index],
-                        ),
-                        itemCount: products.length,);
-                  }
-
-
-              ),
-              fallback:(context)=> const Center(child: Text("No Products"),),
-            ),
-          ),
-        );
-      },
-
+    return Scaffold(
+      body: Center(
+        child: Switch.adaptive(value: isOnline, onChanged:(bool value){
+          setState(() {
+            isOnline = value;
+          });
+        }),
+      ),
     );
   }
 }
