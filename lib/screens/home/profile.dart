@@ -5,6 +5,7 @@ import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/styles/colors.dart';
+import 'package:hand_made_new/widgets/show_dialog.dart';
 import 'package:hand_made_new/widgets/text_forms.dart';
 
 class Profile extends StatefulWidget {
@@ -53,19 +54,42 @@ class _ProfileState extends State<Profile> {
                       SizedBox(
                         height: height * .04,
                       ),
-                      CircleAvatar(
+                      Stack(children: [
+                      HandCubit.get(context).image==null?CircleAvatar(
+                          backgroundColor: Colors.black54,
+                          radius: 70,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(100),
+                            child: Image.network(
+                              model.profileImage,
+                              height: double.infinity,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ):CircleAvatar(
                         backgroundColor: Colors.black54,
                         radius: 70,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(100),
-                          child: Image.network(
-                            model.profileImage,
-                            height: double.infinity,
-                            width: double.infinity,
+                          child: Image.file(
+                            HandCubit.get(context).image,
                             fit: BoxFit.cover,
+
                           ),
                         ),
                       ),
+                        Positioned(
+                            bottom: 5,
+                            right: 0,
+                            child: IconButton(
+                          icon: const Icon(Icons.edit,size: 30,),
+
+                          color: Colors.white, onPressed: () {
+                              showDialogBuild(context);
+                            },
+                        ))
+                      ],),
                       SizedBox(
                         height: height * .03,
                       ),
@@ -106,7 +130,13 @@ class _ProfileState extends State<Profile> {
                                 image: 'image',
                                 name: nameController.text,
                                 email: emailController.text,
-                                isAvailable: isOnline);
+                                isAvailable: isOnline,
+                            lat: model.latitude,
+                            lang: model.longitude,
+                            phone: model.phone,
+                            uid: model.uid,
+                             role: model.role,
+                             password: model.password);
                           }),
                       fallback: (context) => Container(
                         decoration: BoxDecoration(

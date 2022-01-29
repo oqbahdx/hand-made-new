@@ -156,7 +156,7 @@ class HandCubit extends Cubit<HandMadeState> {
 
   void createBuyer({String uid, String name, String email}) {
     BuyerModel buyerModel =
-        BuyerModel(uid: uid, name: name, email: email, profileImage: '');
+        BuyerModel(uid: uid, name: name, email: email, profileImage: 'https://firebasestorage.googleapis.com/v0/b/hand-made-adbb4.appspot.com/o/applogo.png?alt=media&token=9d581d89-bf1c-40e5-af93-e65bbaf75e4d');
     FirebaseFirestore.instance
         .collection('buyers')
         .doc(uid)
@@ -191,7 +191,7 @@ class HandCubit extends Cubit<HandMadeState> {
     sellers = [];
     FirebaseFirestore.instance
         .collection('/users')
-        .where('role',isEqualTo: 'seller')
+        .where('role', isEqualTo: 'seller')
         .where('isAvailable', isEqualTo: true)
         .get()
         .then((value) {
@@ -324,7 +324,7 @@ class HandCubit extends Cubit<HandMadeState> {
           phone: phone,
           isAvailable: true,
           uid: value.user.uid,
-          profileImage: '',
+          profileImage: 'https://firebasestorage.googleapis.com/v0/b/hand-made-adbb4.appspot.com/o/applogo.png?alt=media&token=9d581d89-bf1c-40e5-af93-e65bbaf75e4d',
         );
         showMessageSuccess('Registered successfully');
         emit(HandUserRegisterSuccessState());
@@ -375,7 +375,7 @@ class HandCubit extends Cubit<HandMadeState> {
         .set(userModel.toJson());
   }
 
-  getCurrentUser()  {
+  getCurrentUser() {
     FirebaseAuth auth = FirebaseAuth.instance;
     var currentUser = auth.currentUser.uid;
     emit(HandGetCurrentUserLoadingState());
@@ -404,7 +404,11 @@ class HandCubit extends Cubit<HandMadeState> {
   getCurrentUserProducts(String uid) {
     products = [];
     emit(HandGetCurrentUserProductsLoadingState());
-    FirebaseFirestore.instance.collection('/products').where('uId',isEqualTo: uid).get().then((value) {
+    FirebaseFirestore.instance
+        .collection('/products')
+        .where('uId', isEqualTo: uid)
+        .get()
+        .then((value) {
       for (var element in value.docs) {
         products.add(ProductsModel.fromJson(element.data()));
         emit(HandGetCurrentUserProductsSuccessState());
@@ -421,6 +425,7 @@ class HandCubit extends Cubit<HandMadeState> {
   }
 
   List<ProductsModel> myProducts = [];
+
   getMyProducts() {
     emit(HandGetMyProductsLoading());
     FirebaseAuth auth = FirebaseAuth.instance;
@@ -429,35 +434,46 @@ class HandCubit extends Cubit<HandMadeState> {
         .collection('products')
         .where('uId', isEqualTo: userId)
         .snapshots();
-
   }
+
   updateUser({
     @required String image,
     @required String name,
     @required String email,
-    @required bool isAvailable ,
-}){
+    @required bool isAvailable,
+    @required double lat,
+    @required double lang,
+    @required String password,
+    @required String phone,
+    @required String role,
+    @required String uid,
+  }) {
     emit(HandUpdateCurrentUserProfileLoading());
     UserModel currentUserModel = UserModel(
       profileImage: image,
       name: name,
       email: email,
-      isAvailable: isAvailable
+      isAvailable: isAvailable,
+      latitude: lat,
+      longitude: lang,
+      password: password,
+      phone: phone,
+      role: role,
+      uid: uid,
     );
-  FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser.uid).
-  update(currentUserModel.toJson()).then((value){
-
-    emit(HandUpdateCurrentUserProfileLoading());
-  }).catchError((err){
-    print(err.toString());
-    emit(HandUpdateCurrentUserProfileError(err.toString()));
-  });
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser.uid)
+        .update(currentUserModel.toJson())
+        .then((value) {
+      emit(HandUpdateCurrentUserProfileLoading());
+    }).catchError((err) {
+      print(err.toString());
+      emit(HandUpdateCurrentUserProfileError(err.toString()));
+    });
   }
 
-
-
-  changeIsOnline(bool value){
+  changeIsOnline(bool value) {
     emit(HandChangeIsOnlineState());
   }
-
 }

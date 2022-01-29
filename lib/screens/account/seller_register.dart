@@ -114,15 +114,9 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                       h: h * 0.075,
                       text: 'REGISTER',
                       onTap: () async {
-                        var status = await Permission.location.status;
-                        if (status.isDenied) {
-                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                              content: Text(
-                                  "Please give app location permission to register as seller")));
-                         Timer(const Duration(seconds: 3),(){
-                           openAppSettings();
-                         });
-                        } else {
+                        if (await Permission.locationAlways.request().isGranted&&
+                            await Permission.location.request().isGranted&&
+                            await Permission.locationWhenInUse.request().isGranted) {
                           HandCubit.get(context).userSellerRegister(
                             name: nameController.text,
                             email: emailController.text,
@@ -131,7 +125,17 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           );
                           moveToPageAndFinish(context, const StartPage());
                         }
-                      }),
+                        else {
+                          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                              content:  Text(
+                                  'Please Give The App location Permission')));
+                          Timer(const Duration(seconds: 3),(){
+                            openAppSettings();
+                          });
+                        }
+                      }
+
+                      ),
                   fallback: (context) =>
                       const Center(child: CircularProgressIndicator()),
                 ),

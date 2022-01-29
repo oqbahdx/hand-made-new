@@ -87,31 +87,18 @@ class MyApp extends StatelessWidget {
          // initialRoute: ProductText.id,
         home: startPage,
         routes: {
-          OnBoarding.id: (context) =>
-              BlocProvider.value(value: _handCubit, child: const OnBoarding()),
-          StartPage.id: (context) =>
-              BlocProvider.value(value: _handCubit, child: const StartPage()),
-          MapPage.id: (context) =>
-              BlocProvider.value(value: _handCubit, child: const MapPage()),
+          OnBoarding.id: (context) =>const OnBoarding(),
+          StartPage.id: (context) => const StartPage(),
+          MapPage.id: (context) => const MapPage(),
           AddProduct.id: (context) => const AddProduct(),
-          LoginPage.id: (context) =>
-              BlocProvider.value(value: _handCubit, child: const LoginPage()),
-          RegisterMainPage.id: (context) => BlocProvider.value(
-              value: _handCubit, child: const RegisterMainPage()),
-          SellerRegisterPage.id: (context) => BlocProvider.value(
-              value: _handCubit, child: const SellerRegisterPage()),
-          BuyerRegisterPage.id: (context) =>
-              BlocProvider.value(value: _handCubit, child: const BuyerRegisterPage()),
-          OTPPage.id: (context) => BlocProvider.value(
-              value: _handCubit,
-              child: BlocProvider.value(
-                  value: _handCubit, child: const OTPPage())),
-          VerifyOtp.id: (context) =>
-              BlocProvider.value(value: _handCubit, child: const VerifyOtp()),
-          SellerDetails.id: (context) =>
-              BlocProvider.value(value: _handCubit, child: const SellerDetails()),
-          Profile.id: (context) =>
-              BlocProvider.value(value: _handCubit, child: const Profile()),
+          LoginPage.id: (context) => const LoginPage(),
+          RegisterMainPage.id: (context) => const RegisterMainPage(),
+          SellerRegisterPage.id: (context) => const SellerRegisterPage(),
+          BuyerRegisterPage.id: (context) => const BuyerRegisterPage(),
+          OTPPage.id: (context) =>  const OTPPage(),
+          VerifyOtp.id: (context) => const VerifyOtp(),
+          SellerDetails.id: (context) => const SellerDetails(),
+          Profile.id: (context) => const Profile(),
           MyProducts.id: (context) => const MyProducts(),
           ProductText.id: (context) => const ProductText(),
           ContactUs.id:(context)=>const ContactUs(),
