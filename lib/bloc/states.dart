@@ -144,3 +144,11 @@ class HandUpdateCurrentUserProfileError extends HandMadeState{
 }
 
 class HandChangeIsOnlineState extends HandMadeState{}
+
+class HandUpdateProfileWithImageLoading extends HandMadeState{}
+class HandUpdateProfileWithImageSuccess extends HandMadeState{}
+class HandUpdateProfileWithImageError extends HandMadeState{
+  final String error;
+
+  HandUpdateProfileWithImageError(this.error);
+}

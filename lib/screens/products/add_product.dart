@@ -141,7 +141,7 @@ class _AddProductState extends State<AddProduct> {
                               onTap: () {
                                 if (formKey.currentState.validate() &&
                                     HandCubit.get(context).image != null) {
-                                  HandCubit.get(context).addProductWithImage(
+                                      HandCubit.get(context).addProductWithImage(
                                       name: _nameController.text,
                                       des: _descriptionController.text,
                                       price: _priceController.text);

@@ -26,7 +26,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    bool isOnline = true;
+
     TextEditingController nameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
     var height = MediaQuery.of(context).size.height;
@@ -39,6 +39,7 @@ class _ProfileState extends State<Profile> {
           } else {
             nameController.text = model.name;
             emailController.text = model.email;
+          HandCubit.get(context).isOnline  = model.isAvailable;
           }
 
           return ConditionalBuilder(
@@ -54,42 +55,48 @@ class _ProfileState extends State<Profile> {
                       SizedBox(
                         height: height * .04,
                       ),
-                      Stack(children: [
-                      HandCubit.get(context).image==null?CircleAvatar(
-                          backgroundColor: Colors.black54,
-                          radius: 70,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(100),
-                            child: Image.network(
-                              model.profileImage,
-                              height: double.infinity,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ):CircleAvatar(
-                        backgroundColor: Colors.black54,
-                        radius: 70,
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: Image.file(
-                            HandCubit.get(context).image,
-                            fit: BoxFit.cover,
-
-                          ),
-                        ),
+                      Stack(
+                        children: [
+                          HandCubit.get(context).image == null
+                              ? CircleAvatar(
+                                  backgroundColor: Colors.black54,
+                                  radius: 70,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: Image.network(
+                                      model.profileImage,
+                                      height: double.infinity,
+                                      width: double.infinity,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                )
+                              : CircleAvatar(
+                                  backgroundColor: Colors.black54,
+                                  radius: 70,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(100),
+                                    child: Image.file(
+                                      HandCubit.get(context).image,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                          Positioned(
+                              bottom: 5,
+                              right: 0,
+                              child: IconButton(
+                                icon: const Icon(
+                                  Icons.edit,
+                                  size: 30,
+                                ),
+                                color: Colors.white,
+                                onPressed: () {
+                                  showDialogBuild(context);
+                                },
+                              ))
+                        ],
                       ),
-                        Positioned(
-                            bottom: 5,
-                            right: 0,
-                            child: IconButton(
-                          icon: const Icon(Icons.edit,size: 30,),
-
-                          color: Colors.white, onPressed: () {
-                              showDialogBuild(context);
-                            },
-                        ))
-                      ],),
                       SizedBox(
                         height: height * .03,
                       ),
@@ -112,8 +119,11 @@ class _ProfileState extends State<Profile> {
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           Switch.adaptive(
-                              value: model.isAvailable ,
-                              onChanged: HandCubit.get(context).changeIsOnline(isOnline)),
+                              value: model.isAvailable,
+                              onChanged: (bool value) {
+                               HandCubit.get(context).changeIsOnline(value);
+
+                              }),
                           const Text(
                             'ONLINE',
                             style: TextStyle(
@@ -124,29 +134,34 @@ class _ProfileState extends State<Profile> {
                       SizedBox(
                         height: height * .02,
                       ),
-                      ConditionalBuilder(condition: state is !HandUpdateCurrentUserProfileLoading,
-                          builder: (context)=>buildTapBlack(text: 'UPDATE', h: 60,onTap: (){
-                            HandCubit.get(context).updateUser(
-                                image: 'image',
-                                name: nameController.text,
-                                email: emailController.text,
-                                isAvailable: isOnline,
-                            lat: model.latitude,
-                            lang: model.longitude,
-                            phone: model.phone,
-                            uid: model.uid,
-                             role: model.role,
-                             password: model.password);
-                          }),
-                      fallback: (context) => Container(
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(colors: gradientColor)),
-                        child: const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
+                      ConditionalBuilder(
+                        condition:
+                            state is! HandUpdateCurrentUserProfileLoading,
+                        builder: (context) => buildTapBlack(
+                            text: 'UPDATE',
+                            h: 60,
+                            onTap: () {
+                              HandCubit.get(context).updateProfileWithImage(
+                                  uid: model.uid,
+                                  role: model.role,
+                                  isAvailable: HandCubit.get(context).isOnline,
+                                  name: nameController.text,
+                                  email: emailController.text,
+                                  password: model.password,
+                                  phone: model.phone,
+                                  lang: model.longitude,
+                                  lat: model.latitude);
+                            }),
+                        fallback: (context) => Container(
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(colors: gradientColor)),
+                          child: const Center(
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),)
+                      )
                     ],
                   ),
                 ),

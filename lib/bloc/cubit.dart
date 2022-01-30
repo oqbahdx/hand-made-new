@@ -51,7 +51,9 @@ class HandCubit extends Cubit<HandMadeState> {
       emit(HandUpdateImageSuccessState());
     }
     if (kDebugMode) {
-      print(image.path.split('/').last);
+      print(image.path
+          .split('/')
+          .last);
     }
     emit(HandUpdateImageSuccessState());
   }
@@ -74,12 +76,11 @@ class HandCubit extends Cubit<HandMadeState> {
 
   GlobalKey<FormState> formKey = GlobalKey();
 
-  void sellerRegister(
-      {String name,
-      String email,
-      String password,
-      String phone,
-      String isAvailable}) async {
+  void sellerRegister({String name,
+    String email,
+    String password,
+    String phone,
+    String isAvailable}) async {
     FirebaseAuth auth = FirebaseAuth.instance;
 
     try {
@@ -109,14 +110,13 @@ class HandCubit extends Cubit<HandMadeState> {
     }
   }
 
-  void createSeller(
-      {String uid,
-      @required String name,
-      @required String email,
-      @required String phone,
-      String isAvailable,
-      double longitude,
-      double latitude}) async {
+  void createSeller({String uid,
+    @required String name,
+    @required String email,
+    @required String phone,
+    String isAvailable,
+    double longitude,
+    double latitude}) async {
     Position location = await Geolocator.getCurrentPosition();
     SellerModel sellerModel = SellerModel(
         uid: uid,
@@ -156,7 +156,10 @@ class HandCubit extends Cubit<HandMadeState> {
 
   void createBuyer({String uid, String name, String email}) {
     BuyerModel buyerModel =
-        BuyerModel(uid: uid, name: name, email: email, profileImage: 'https://firebasestorage.googleapis.com/v0/b/hand-made-adbb4.appspot.com/o/applogo.png?alt=media&token=9d581d89-bf1c-40e5-af93-e65bbaf75e4d');
+    BuyerModel(uid: uid,
+        name: name,
+        email: email,
+        profileImage: 'https://firebasestorage.googleapis.com/v0/b/hand-made-adbb4.appspot.com/o/applogo.png?alt=media&token=9d581d89-bf1c-40e5-af93-e65bbaf75e4d');
     FirebaseFirestore.instance
         .collection('buyers')
         .doc(uid)
@@ -240,14 +243,53 @@ class HandCubit extends Cubit<HandMadeState> {
     emit(HandUploadImageLoadingState());
     firebase_storage.FirebaseStorage.instance
         .ref()
-        .child('products/${Uri.file(image.path).pathSegments.last}')
+        .child('products/${Uri
+        .file(image.path)
+        .pathSegments
+        .last}')
         .putFile(image)
         .then((value) {
-      value.ref.getDownloadURL().then((value) {
+         value.ref.getDownloadURL().then((value) {
         addProduct(name: name, des: des, image: value, price: price);
         emit(HandUpdateImageSuccessState());
       }).catchError((error) {
         emit(HandUploadImageErrorState(error.toString()));
+      });
+    });
+  }
+
+  void updateProfileWithImage({
+    String name,
+    String email,
+    bool isAvailable,
+    double lat,
+    double lang,
+    String password,
+    String phone,
+    String role,
+    String uid,
+  }) {
+    emit(HandUpdateProfileWithImageLoading());
+    firebase_storage.FirebaseStorage.instance.ref().child('usersImage/${Uri
+        .file(image.path)
+        .pathSegments
+        .last}').
+    putFile(image).then((value) {
+      emit(HandUpdateProfileWithImageSuccess());
+      value.ref.getDownloadURL().then((value) {
+        updateUser(image: value,
+            name: name,
+            email: email,
+            isAvailable: isAvailable,
+            lat: lat,
+            lang: lang,
+            password: password,
+            phone: phone,
+            role: role,
+            uid: uid);
+      }).catchError((err){
+        print(err.toString());
+        emit(HandUpdateProfileWithImageError(err.toString()));
       });
     });
   }
@@ -257,7 +299,11 @@ class HandCubit extends Cubit<HandMadeState> {
     FirebaseAuth auth = FirebaseAuth.instance;
     var userId = auth.currentUser.uid;
     ProductsModel productsModel = ProductsModel(
-        uId: userId, name: name, description: des, image: image, price: price);
+        uId: userId,
+        name: name,
+        description: des,
+        image: image,
+        price: price);
     FirebaseFirestore.instance
         .collection('products')
         .add(productsModel.addProduct())
@@ -347,17 +393,16 @@ class HandCubit extends Cubit<HandMadeState> {
 
   UserModel userModel;
 
-  void createUser(
-      {String uid,
-      String name,
-      String email,
-      String phone,
-      String password,
-      double latitude,
-      double longitude,
-      String role,
-      String profileImage,
-      bool isAvailable}) {
+  void createUser({String uid,
+    String name,
+    String email,
+    String phone,
+    String password,
+    double latitude,
+    double longitude,
+    String role,
+    String profileImage,
+    bool isAvailable}) {
     userModel = UserModel(
         uid: uid,
         name: name,
@@ -472,8 +517,9 @@ class HandCubit extends Cubit<HandMadeState> {
       emit(HandUpdateCurrentUserProfileError(err.toString()));
     });
   }
-
+  bool isOnline;
   changeIsOnline(bool value) {
+    isOnline = value;
     emit(HandChangeIsOnlineState());
   }
 }
