@@ -1,4 +1,5 @@
 import 'package:conditional_builder/conditional_builder.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
@@ -26,22 +27,22 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-
     TextEditingController nameController = TextEditingController();
     TextEditingController emailController = TextEditingController();
     var height = MediaQuery.of(context).size.height;
-    return BlocConsumer<HandCubit, HandMadeState>(
-        listener: (context, state) {},
+    return BlocBuilder<HandCubit, HandMadeState>(
         builder: (context, state) {
           var model = HandCubit.get(context).userModel;
-          if (model.name == null) {
-            const CircularProgressIndicator();
-          } else {
-            nameController.text = model.name;
+          // if (model.name == null) {
+          //   const CircularProgressIndicator();
+          // } else {
+          //   nameController.text = model.name;
+          //   emailController.text = model.email;
+          //   HandCubit.get(context).isOnline = model.isAvailable;
+          // }
+          nameController.text = model.name;
             emailController.text = model.email;
-          HandCubit.get(context).isOnline  = model.isAvailable;
-          }
-
+            HandCubit.get(context).isOnline = model.isAvailable;
           return ConditionalBuilder(
             condition: state is! HandGetCurrentUserLoadingState,
             builder: (context) => Scaffold(
@@ -119,10 +120,11 @@ class _ProfileState extends State<Profile> {
                                 fontWeight: FontWeight.bold, fontSize: 16),
                           ),
                           Switch.adaptive(
-                              value: model.isAvailable,
+                              value: HandCubit.get(context).isOnline,
                               onChanged: (bool value) {
-                               HandCubit.get(context).changeIsOnline(value);
-
+                               setState(() {
+                                 HandCubit.get(context).isOnline = value;
+                               });
                               }),
                           const Text(
                             'ONLINE',
@@ -135,8 +137,7 @@ class _ProfileState extends State<Profile> {
                         height: height * .02,
                       ),
                       ConditionalBuilder(
-                        condition:
-                            state is! HandUpdateCurrentUserProfileLoading,
+                        condition: state is! HandUpdateProfileWithImageLoading,
                         builder: (context) => buildTapBlack(
                             text: 'UPDATE',
                             h: 60,
