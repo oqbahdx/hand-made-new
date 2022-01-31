@@ -38,9 +38,8 @@ class _StartPageState extends State<StartPage> {
   ];
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<HandCubit>(
-      create: (context) => HandCubit()..getCurrentUser(),
-      child: BlocConsumer<HandCubit, HandMadeState>(
+
+      return BlocConsumer<HandCubit, HandMadeState>(
         listener: (context, state) {},
         builder: (context, state) {
           return SafeArea(
@@ -79,7 +78,6 @@ class _StartPageState extends State<StartPage> {
             ),
           );
         },
-      ),
     );
   }
 }
