@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Amiri',
         ),
          debugShowCheckedModeBanner: false,
-         // initialRoute: ProductText.id,
+         // initialRoute: ProductTest.id,
         home: startPage,
         routes: {
           OnBoarding.id: (context) =>const OnBoarding(),
@@ -100,7 +100,7 @@ class MyApp extends StatelessWidget {
           SellerDetails.id: (context) => const SellerDetails(),
           Profile.id: (context) => const Profile(),
           MyProducts.id: (context) => const MyProducts(),
-          ProductText.id: (context) => const ProductText(),
+          ProductTest.id: (context) => const ProductTest(),
           ContactUs.id:(context)=>const ContactUs(),
           FavoritePage.id:(context)=> const FavoritePage(),
           ChatList.id:(context)=>const ChatList(),

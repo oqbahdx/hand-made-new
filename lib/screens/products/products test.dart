@@ -1,38 +1,33 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:conditional_builder/conditional_builder.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hand_made_new/bloc/cubit.dart';
-import 'package:hand_made_new/bloc/states.dart';
-import 'package:hand_made_new/components/containers.dart';
-import 'package:hand_made_new/models/products_model.dart';
 
-class ProductText extends StatefulWidget {
-  const ProductText({Key key}) : super(key: key);
-static String id = "ProductText";
+class ProductTest extends StatefulWidget {
+  static String id = "ProductTest";
+
+  const ProductTest({Key key}) : super(key: key);
+
   @override
-  _ProductTextState createState() => _ProductTextState();
+  _ProductTestState createState() => _ProductTestState();
 }
 
-class _ProductTextState extends State<ProductText> {
-  List<ProductsModel> products = [];
-  ProductsModel model;
-  bool isOnline = true;
-  @override
-  void initState() {
-    // HandCubit.get(context).getCurrentUserProducts();
-    super.initState();
-  }
+class _ProductTestState extends State<ProductTest> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Switch.adaptive(value: isOnline, onChanged:(bool value){
-          setState(() {
-            isOnline = value;
-          });
-        }),
+        child: Container(
+          clipBehavior: Clip.antiAliasWithSaveLayer,
+          height: 250,
+          width: 250,
+          child: Image.network(
+            'https://images.unsplash.com/photo-1506354666786-959d6d497f1a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+            height: double.infinity,
+            width: double.infinity,
+            fit: BoxFit.fill,
+          ),
+          decoration: BoxDecoration(
+             borderRadius: BorderRadius.circular(100)),
+        ),
       ),
     );
   }

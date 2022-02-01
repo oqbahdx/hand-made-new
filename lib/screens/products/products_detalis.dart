@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
@@ -35,12 +36,22 @@ class _ProductDetailsState extends State<ProductDetails> {
         child: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
-            Container(
-              height: 300,
-              child: Hero(
-                tag: widget.productId,
-                child: Image.network(
-                    widget.productImage,width: double.infinity,fit: BoxFit.cover,),
+            Center(
+              child: Container(
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                height: 250,
+                width: 250,
+                child: Hero(
+                  tag: widget.productId,
+                  child: Image.network(
+                     widget.productImage,
+                    height: double.infinity,
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100)),
               ),
             ),
             const SizedBox(

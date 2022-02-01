@@ -1,4 +1,5 @@
 import 'package:conditional_builder/conditional_builder.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
@@ -27,12 +28,12 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     TextEditingController nameController = TextEditingController();
-    TextEditingController emailController = TextEditingController();
+    TextEditingController phoneController = TextEditingController();
     var height = MediaQuery.of(context).size.height;
     return BlocBuilder<HandCubit, HandMadeState>(builder: (context, state) {
       var model = HandCubit.get(context).userModel;
       nameController.text = model.name;
-      emailController.text = model.email;
+      phoneController.text = model.phone;
       bool isOnline = model.isAvailable;
       return ConditionalBuilder(
         condition: state is! HandGetCurrentUserLoadingState,
@@ -51,10 +52,15 @@ class _ProfileState extends State<Profile> {
                     children: [
                       HandCubit.get(context).image == null
                           ? Container(
+                              clipBehavior: Clip.antiAliasWithSaveLayer,
                               height: 150,
                               width: 150,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(15),
+                                    bottomRight: Radius.circular(15),
+                                    topLeft: Radius.circular(15),
+                                    topRight: Radius.circular(15)),
                                 color: Colors.black54,
                               ),
                               child: Image.network(
@@ -68,8 +74,12 @@ class _ProfileState extends State<Profile> {
                               clipBehavior: Clip.antiAliasWithSaveLayer,
                               height: 150,
                               width: 150,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(100),
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(15),
+                                    bottomRight: Radius.circular(15),
+                                    topLeft: Radius.circular(15),
+                                    topRight: Radius.circular(15)),
                                 color: Colors.black54,
                               ),
                               child: Image.file(
@@ -101,7 +111,7 @@ class _ProfileState extends State<Profile> {
                   SizedBox(
                     height: height * .05,
                   ),
-                  buildTextFormFieldWithBackground(controller: emailController),
+                  buildTextFormFieldWithBackground(controller: phoneController),
                   SizedBox(
                     height: height * .03,
                   ),
@@ -142,20 +152,20 @@ class _ProfileState extends State<Profile> {
                                   role: model.role,
                                   isAvailable: model.isAvailable,
                                   name: nameController.text,
-                                  email: emailController.text,
+                                  email: model.email,
                                   password: model.password,
-                                  phone: model.phone,
+                                  phone: phoneController.text,
                                   lang: model.longitude,
                                   lat: model.latitude)
                               : HandCubit.get(context).updateProfile(
                                   image: HandCubit.get(context).image.path,
                                   name: nameController.text,
-                                  email: emailController.text,
+                                  email: model.email,
                                   isAvailable: model.isAvailable,
                                   lat: model.latitude,
                                   lang: model.longitude,
                                   password: model.password,
-                                  phone: model.phone,
+                                  phone: phoneController.text,
                                   role: model.role,
                                   uid: model.uid);
                         }),
