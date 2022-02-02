@@ -101,8 +101,9 @@ class _MyProductsState extends State<MyProducts> {
                               width: 250,
                               child: Hero(
                                 tag: document.id,
-                                child: Image.network(
-                                  document['image'],
+                                child: FadeInImage(
+                                  placeholder: AssetImage('assets/pleaceholder.png'),
+                                  image: NetworkImage(document['image']),
                                   height: double.infinity,
                                   width: double.infinity,
                                   fit: BoxFit.fill,

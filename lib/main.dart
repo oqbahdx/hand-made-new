@@ -64,12 +64,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => HandCubit(),
+    return BlocProvider<HandCubit>(
+      create: (context) => HandCubit()..getCurrentUser(),
+      lazy: true,
       child: MaterialApp(
         useInheritedMediaQuery: true,
         locale: DevicePreview.locale(context),
-        builder: (context,widget)=>ResponsiveWrapper.builder(
+        builder: (context, widget) => ResponsiveWrapper.builder(
             BouncingScrollWrapper.builder(context, widget),
             maxWidth: 1200,
             minWidth: 480,
@@ -83,11 +84,12 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Amiri',
         ),
-         debugShowCheckedModeBanner: false,
-         // initialRoute: ProductTest.id,
+        debugShowCheckedModeBanner: false,
+        // initialRoute: ProductTest.id,
         home: startPage,
         routes: {
-          OnBoarding.id: (context) =>const OnBoarding(),
+          OnBoarding.id: (_) => const OnBoarding(),
+
           StartPage.id: (context) => const StartPage(),
           MapPage.id: (context) => const MapPage(),
           AddProduct.id: (context) => const AddProduct(),
@@ -95,16 +97,16 @@ class MyApp extends StatelessWidget {
           RegisterMainPage.id: (context) => const RegisterMainPage(),
           SellerRegisterPage.id: (context) => const SellerRegisterPage(),
           BuyerRegisterPage.id: (context) => const BuyerRegisterPage(),
-          OTPPage.id: (context) =>  const OTPPage(),
+          OTPPage.id: (context) => const OTPPage(),
           VerifyOtp.id: (context) => const VerifyOtp(),
           SellerDetails.id: (context) => const SellerDetails(),
           Profile.id: (context) => const Profile(),
           MyProducts.id: (context) => const MyProducts(),
           ProductTest.id: (context) => const ProductTest(),
-          ContactUs.id:(context)=>const ContactUs(),
-          FavoritePage.id:(context)=> const FavoritePage(),
-          ChatList.id:(context)=>const ChatList(),
-          ProductDetails.id:(context)=>const ProductDetails()
+          ContactUs.id: (context) => const ContactUs(),
+          FavoritePage.id: (context) => const FavoritePage(),
+          ChatList.id: (context) => const ChatList(),
+          ProductDetails.id: (context) => const ProductDetails()
         },
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
@@ -47,35 +48,23 @@ class _DrawerBuildState extends State<DrawerBuild> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      Stack(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.transparent,
-                            maxRadius: 50,
-                            child: model.profileImage != ""
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(100),
-                                    child: FadeInImage(
-                                      placeholder: const AssetImage(
-                                          'assets/pleaceholder.png'),
-                                      image: NetworkImage(
-                                        model.profileImage,
-                                      ),
-                                      height: double.infinity,
-                                      width: double.infinity,
-                                    ))
-                                : Image.asset('assets/pleaceholder.png',color: Colors.black,),
-                          ),
-                          Positioned(
-                              bottom: 0,
-                              right: 0,
-                              child: GestureDetector(
-                                  onTap: () {},
-                                  child: const Icon(
-                                    Icons.edit,
-                                    color: Colors.white,
-                                  ))),
-                        ],
+                      Container(
+                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                        height: 120,
+                        width: 120,
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topRight:Radius.circular(15),topLeft: Radius.circular(15),
+                              bottomRight: Radius.circular(15),bottomLeft:Radius.circular(15)
+                          )
+                        ),
+                        child: FadeInImage(
+                          placeholder: const AssetImage('assets/pleaceholder.png'),
+                          image: NetworkImage(model.profileImage),
+                          fit: BoxFit.fill,
+                          width: double.infinity,
+                          height: double.infinity,
+                        ),
                       ),
                       Text(
                         model.name,

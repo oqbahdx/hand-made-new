@@ -29,28 +29,34 @@ class _FamiliesListState extends State<FamiliesList> {
             )),
             child: StreamBuilder(
               stream: FirebaseFirestore.instance
-                  .collection('users').where('role',isEqualTo: 'seller').limit(10)
+                  .collection('users')
+                  .where('role', isEqualTo: 'seller')
+                  .where('isAvailable', isEqualTo: true)
+                  .limit(10)
                   .snapshots(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(
-                    child: CircularProgressIndicator(color: Colors.white,),
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                    ),
                   );
                 }
 
                 return ListView(
-
-                  children: snapshot.data.docs.map((document){
+                  children: snapshot.data.docs.map((document) {
                     final dynamic data = document.data();
-                      return Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
                       child: InkWell(
-                        onTap: (){
-                          moveToPageWithData(context,namePage: SellerDetails(
-                            uId: data['uid'].toString(),
-                            name: data['name'].toString(),
-                          ));
+                        onTap: () {
+                          moveToPageWithData(context,
+                              namePage: SellerDetails(
+                                uId: data['uid'].toString(),
+                                name: data['name'].toString(),
+                              ));
                         },
                         child: Card(
                           elevation: 20.0,
@@ -77,7 +83,6 @@ class _FamiliesListState extends State<FamiliesList> {
                       ),
                     );
                   }).toList(),
-
                 );
               },
             ),

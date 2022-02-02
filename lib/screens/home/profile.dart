@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/containers.dart';
+import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/show_dialog.dart';
 import 'package:hand_made_new/widgets/text_forms.dart';
@@ -30,7 +31,15 @@ class _ProfileState extends State<Profile> {
     TextEditingController nameController = TextEditingController();
     TextEditingController phoneController = TextEditingController();
     var height = MediaQuery.of(context).size.height;
-    return BlocBuilder<HandCubit, HandMadeState>(builder: (context, state) {
+    return BlocConsumer<HandCubit, HandMadeState>(
+
+        listener: (context,state){
+          if(state is HandUpdateProfileWithImageSuccess){
+            showMessageSuccess('The Profile Has been Updated Successfully');
+          }
+        },
+        builder: (context, state) {
+
       var model = HandCubit.get(context).userModel;
       nameController.text = model.name;
       phoneController.text = model.phone;

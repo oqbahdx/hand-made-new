@@ -87,43 +87,25 @@ class _SellerProductsState extends State<SellerProducts> {
                             ));
                           },
                           child: Container(
-                            child: Column(
-                              children: [
-                                Container(
-                                  clipBehavior: Clip.hardEdge,
-                                  child: Hero(
-                                    tag: document.id,
-                                    child: FadeInImage(
-                                      width: double.infinity,
-                                      fit: BoxFit.fitWidth,
-                                      image: NetworkImage(document['image']),
-                                      placeholder: const AssetImage(
-                                          'assets/pleaceholder.png'),
-                                    ),
-                                  ),
-                                  height: h * 0.16,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(15),
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                                Text(
-                                  document['name'],
-                                  style: const TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.white),
-                                ),
-                              ],
+                            clipBehavior: Clip.antiAliasWithSaveLayer,
+                            height: 250,
+                            width: 250,
+                            child: Hero(
+                              tag: document.id,
+                              child: Image.network(
+                                document['image'],
+                                height: double.infinity,
+                                width: double.infinity,
+                                fit: BoxFit.fill,
+                              ),
                             ),
-                            height: 200,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.black54,
-                            ),
+                            decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topRight: Radius.circular(15),
+                                  topLeft: Radius.circular(15),
+                                  bottomRight: Radius.circular(15),
+                                  bottomLeft: Radius.circular(15),
+                                )),
                           ),
                         );
                       }).toList(),
