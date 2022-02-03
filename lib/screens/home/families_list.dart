@@ -56,6 +56,7 @@ class _FamiliesListState extends State<FamiliesList> {
                               namePage: SellerDetails(
                                 uId: data['uid'].toString(),
                                 name: data['name'].toString(),
+                                image: data['profileImage'].toString(),
                               ));
                         },
                         child: Card(

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hand_made_new/chat/seller_chat.dart';
 import 'package:hand_made_new/screens/account/sellers_details.dart';
 import 'package:hand_made_new/screens/drawer/contact_us.dart';
 import 'package:hand_made_new/screens/drawer/favorite.dart';
@@ -85,7 +86,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Amiri',
         ),
         debugShowCheckedModeBanner: false,
-        // initialRoute: ProductTest.id,
+        // initialRoute: SellerChat.id,
         home: startPage,
         routes: {
           OnBoarding.id: (_) => const OnBoarding(),
@@ -106,7 +107,8 @@ class MyApp extends StatelessWidget {
           ContactUs.id: (context) => const ContactUs(),
           FavoritePage.id: (context) => const FavoritePage(),
           ChatList.id: (context) => const ChatList(),
-          ProductDetails.id: (context) => const ProductDetails()
+          ProductDetails.id: (context) => const ProductDetails(),
+          SellerChat.id:(context)=> const SellerChat()
         },
       ),
     );

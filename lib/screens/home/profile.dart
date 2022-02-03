@@ -167,7 +167,7 @@ class _ProfileState extends State<Profile> {
                                   lang: model.longitude,
                                   lat: model.latitude)
                               : HandCubit.get(context).updateProfile(
-                                  image: HandCubit.get(context).image.path,
+                                  image: model.profileImage,
                                   name: nameController.text,
                                   email: model.email,
                                   isAvailable: model.isAvailable,

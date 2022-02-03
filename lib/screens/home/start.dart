@@ -33,7 +33,7 @@ class _StartPageState extends State<StartPage> {
   List<String> titles = [
     'Profile',
     'Map',
-    'TimeLine',
+    'Chats',
     'Families List',
   ];
   @override
@@ -67,12 +67,12 @@ class _StartPageState extends State<StartPage> {
                             HandCubit.get(context).changeIndex(index);
                           },
                           gButton: [
-                            gButtonNav(icon: Icons.person, text: 'profile'),
-                            gButtonNav(icon: Icons.map, text: 'map'),
+                            gButtonNav(icon: Icons.person, text: 'PROFILE'),
+                            gButtonNav(icon: Icons.map, text: 'MAP'),
                             gButtonNav(
-                                icon: Icons.ten_k_outlined,
-                                text: 'time line'),
-                            gButtonNav(icon: Icons.group, text: 'families'),
+                                icon: Icons.message,
+                                text: 'CHATS'),
+                            gButtonNav(icon: Icons.group, text: 'FAMILIES'),
                           ]))),
               drawer: const DrawerBuild(),
             ),

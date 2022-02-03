@@ -311,7 +311,7 @@ class HandCubit extends Cubit<HandMadeState> {
         .putFile(image)
         .then((value) {
       emit(HandUpdateProfileWithImageSuccess());
-      value.ref.getDownloadURL().then((value) {
+        value.ref.getDownloadURL().then((value) {
         updateUser(
             image: value,
             name: name,
@@ -547,7 +547,9 @@ class HandCubit extends Cubit<HandMadeState> {
         .then((value) {
       emit(HandUpdateCurrentUserProfileLoading());
     }).catchError((err) {
-      print(err.toString());
+      if (kDebugMode) {
+        print(err.toString());
+      }
       emit(HandUpdateCurrentUserProfileError(err.toString()));
     });
   }
@@ -558,4 +560,7 @@ class HandCubit extends Cubit<HandMadeState> {
     isOnline = value;
     emit(HandChangeIsOnlineState());
   }
+
+ 
+
 }

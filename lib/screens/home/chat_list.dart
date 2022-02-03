@@ -35,18 +35,21 @@ class _ChatListState extends State<ChatList> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
           child: InkWell(
+
             onTap: () {
               print("*****");
             },
             child: Container(
+
               height: 60,
-              width: 60,
+              width: 100,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
                   color: Colors.black54),
               child: const Center(
                 child: Icon(
-                  Icons.add,
+                  Icons.message,
+                  size: 30,
                   color: Colors.white,
                 ),
               ),
