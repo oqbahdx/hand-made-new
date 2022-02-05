@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/models/buyer_model.dart';
+import 'package:hand_made_new/models/message.dart';
 import 'package:hand_made_new/models/products_model.dart';
 import 'package:hand_made_new/models/seller_model.dart';
 import 'package:hand_made_new/bloc/states.dart';
@@ -311,7 +312,7 @@ class HandCubit extends Cubit<HandMadeState> {
         .putFile(image)
         .then((value) {
       emit(HandUpdateProfileWithImageSuccess());
-        value.ref.getDownloadURL().then((value) {
+      value.ref.getDownloadURL().then((value) {
         updateUser(
             image: value,
             name: name,
@@ -561,6 +562,9 @@ class HandCubit extends Cubit<HandMadeState> {
     emit(HandChangeIsOnlineState());
   }
 
- 
+  List<MessageModel> messages = [];
 
+  sendMessage({String senderId, String receiverId, String text, String date}) {
+    // FirebaseFirestore.instance.collection('users').
+  }
 }

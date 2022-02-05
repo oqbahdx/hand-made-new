@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
@@ -32,6 +33,7 @@ class _FamiliesListState extends State<FamiliesList> {
                   .collection('users')
                   .where('role', isEqualTo: 'seller')
                   .where('isAvailable', isEqualTo: true)
+
                   .limit(10)
                   .snapshots(),
               builder: (BuildContext context,
