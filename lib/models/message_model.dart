@@ -1,5 +1,8 @@
 class MessageModel {
   String senderId;
+
+  MessageModel({this.senderId, this.receiverId, this.text, this.date});
+
   String receiverId;
   String text;
   String date;

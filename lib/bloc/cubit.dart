@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/models/buyer_model.dart';
-import 'package:hand_made_new/models/message.dart';
+import 'package:hand_made_new/models/message_model.dart';
 import 'package:hand_made_new/models/products_model.dart';
 import 'package:hand_made_new/models/seller_model.dart';
 import 'package:hand_made_new/bloc/states.dart';
@@ -564,7 +564,53 @@ class HandCubit extends Cubit<HandMadeState> {
 
   List<MessageModel> messages = [];
 
-  sendMessage({String senderId, String receiverId, String text, String date}) {
-    // FirebaseFirestore.instance.collection('users').
+  sendMessage({String receiverId, String text, String date}) {
+    MessageModel messageModel = MessageModel(
+        text: text,
+        senderId: userModel.uid,
+        date: date,
+        receiverId: receiverId);
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userModel.uid)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('messages')
+        .add(messageModel.toJson())
+        .then((value) {
+      emit(HandSendMessageSuccess());
+    }).catchError((err) {
+      emit(HandSendMessageError(err.toString()));
+    });
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(receiverId)
+        .collection('chats')
+        .doc(userModel.uid)
+        .collection('messages')
+        .add(messageModel.toJson())
+        .then((value) {
+      emit(HandSendMessageSuccess());
+    }).catchError((err) {
+      emit(HandSendMessageError(err.toString()));
+    });
+  }
+
+  getMessages({String receiverId}) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userModel.uid)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('messages')
+         .snapshots()
+        .listen((event) {
+      messages = [];
+      for (var element in event.docs) {
+        messages.add(MessageModel.formJson(element.data()));
+      }
+      print(messages);
+    });
+    emit(HandGetMessagesSuccess());
   }
 }

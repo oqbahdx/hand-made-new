@@ -152,3 +152,13 @@ class HandUpdateProfileWithImageError extends HandMadeState{
 
   HandUpdateProfileWithImageError(this.error);
 }
+
+class HandSendMessageLoading extends HandMadeState {}
+class HandSendMessageSuccess extends HandMadeState {}
+class HandSendMessageError extends HandMadeState {
+  final String error ;
+
+  HandSendMessageError(this.error);
+}
+
+class HandGetMessagesSuccess extends HandMadeState {}
