@@ -35,10 +35,13 @@ class _LoginPageState extends State<LoginPage> {
       child: BlocConsumer<HandCubit, HandMadeState>(
         listener: (context, state) {
           if(state is HandBuyerLoginSuccessState){
-            SharedPref.saveData(
-                key: 'uId', value: state.uid.toString()).then((value){
-              moveToPageAndFinish(context, const StartPage());
-            });
+
+              SharedPref.saveData(key: 'uid', value: true).then((value) {
+                if (value) {
+                  moveToPageAndFinish(context, const StartPage());
+                }
+              });
+
 
           }
         },
@@ -138,8 +141,6 @@ class _LoginPageState extends State<LoginPage> {
                               HandCubit.get(context).login(
                                   email: emailController.text,
                                   password: passwordController.text);
-
-                              SharedPref.saveData(key: uId, value: 'uid');
 
                             }
 

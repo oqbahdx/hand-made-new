@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -21,9 +23,16 @@ class SellerChat extends StatefulWidget {
 }
 
 class _SellerChatState extends State<SellerChat> {
+  ScrollController scrollController = ScrollController();
   TextEditingController messageController = TextEditingController();
+
+  void scrollDown(){
+    scrollController.jumpTo(scrollController.position.maxScrollExtent);
+  }
+
   @override
   Widget build(BuildContext context) {
+    Timer(const Duration(milliseconds: 0), () => scrollController.jumpTo(scrollController.position.maxScrollExtent));
     return Builder(builder: (context) {
       return BlocConsumer<HandCubit, HandMadeState>(
         listener: (context, state) {},
@@ -49,7 +58,10 @@ class _SellerChatState extends State<SellerChat> {
                   child: Column(
                     children: [
                       Expanded(
-                        child: ListView.separated(itemBuilder:(context,index){
+                        child: ListView.separated(
+                          controller: scrollController,
+                            shrinkWrap: true,
+                            itemBuilder:(context,index){
                           var message = HandCubit.get(context).messages[index];
                           if(widget.uid == message.receiverId) {
                             return  receiveMessage(message);

@@ -143,7 +143,7 @@ class _DrawerBuildState extends State<DrawerBuild> {
                       text: 'LOGOUT',
                       onTap: () async {
                         _signOut();
-                        await SharedPref.removeData(key: uId);
+                        await SharedPref.removeData(key: 'uid');
                         moveToPageAndFinish(context, const LoginPage());
                       }),
                 ),
