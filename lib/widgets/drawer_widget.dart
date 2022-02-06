@@ -25,6 +25,9 @@ class DrawerBuild extends StatefulWidget {
 }
 
 class _DrawerBuildState extends State<DrawerBuild> {
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -139,7 +142,7 @@ class _DrawerBuildState extends State<DrawerBuild> {
                   child: buildTapBlack(
                       text: 'LOGOUT',
                       onTap: () async {
-                        await   FirebaseAuth.instance.currentUser.delete();
+                        _signOut();
                         await SharedPref.removeData(key: uId);
                         moveToPageAndFinish(context, const LoginPage());
                       }),

@@ -35,9 +35,9 @@ void main() async {
   await Firebase.initializeApp();
   Widget startPage;
   var onBoarding = await SharedPref.getData(key: 'onBoarding');
-  uId = await SharedPref.getData(key: 'uId');
+  uId = await SharedPref.getData(key: 'uid');
   if (onBoarding != null) {
-    if (token != null) {
+    if (uId != null) {
       startPage = const StartPage();
     } else {
       startPage = const LoginPage();

@@ -138,6 +138,9 @@ class _LoginPageState extends State<LoginPage> {
                               HandCubit.get(context).login(
                                   email: emailController.text,
                                   password: passwordController.text);
+
+                              SharedPref.saveData(key: uId, value: 'uid');
+
                             }
 
 
@@ -158,7 +161,7 @@ class _LoginPageState extends State<LoginPage> {
                             style: normalText,
                           ),
                           gradientText(
-                              text: 'REG',
+                              text: 'REGISTER',
                               onTap: () {
                                 moveToPageAndFinish(
                                     context, const RegisterMainPage());

@@ -30,5 +30,5 @@ class SharedPref {
 }
 
 String token = '';
-String uId = "";
+String uId ;
 

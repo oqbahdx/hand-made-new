@@ -588,6 +588,7 @@ class HandCubit extends Cubit<HandMadeState> {
         .collection('chats')
         .doc(userModel.uid)
         .collection('messages')
+    
         .add(messageModel.toJson())
         .then((value) {
       emit(HandSendMessageSuccess());
@@ -602,14 +603,15 @@ class HandCubit extends Cubit<HandMadeState> {
         .doc(userModel.uid)
         .collection('chats')
         .doc(receiverId)
-        .collection('messages')
+         .collection('messages')
+         .orderBy('date')
          .snapshots()
         .listen((event) {
       messages = [];
       for (var element in event.docs) {
         messages.add(MessageModel.formJson(element.data()));
       }
-      print(messages);
+      print(messages[0]);
     });
     emit(HandGetMessagesSuccess());
   }
