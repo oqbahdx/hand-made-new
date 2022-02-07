@@ -42,7 +42,7 @@ class _MyProductsState extends State<MyProducts> {
               appBar: appBarWidget(
                   title: const Text(
                     'My Products',
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25),
                   ),
                   action: IconButton(
                     icon: const Icon(

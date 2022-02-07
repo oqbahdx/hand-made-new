@@ -9,8 +9,14 @@ class ProductDetails extends StatefulWidget {
   final String productPrice;
   final String productDes;
   final String productImage;
+
   const ProductDetails({
-    Key key, this.productId, this.productPrice, this.productDes, this.productImage, this.productName,
+    Key key,
+    this.productId,
+    this.productPrice,
+    this.productDes,
+    this.productImage,
+    this.productName,
   }) : super(key: key);
   static String id = "ProductDetails";
 
@@ -25,88 +31,118 @@ class _ProductDetailsState extends State<ProductDetails> {
       appBar: appBarWidget(
           elevation: 0.0,
           action: Container(),
-          title:  Text(
+          title: Text(
             widget.productName,
-            style: const TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
           )),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(colors: gradientColor),
-        ),
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          children: [
-            Center(
-              child: Container(
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                height: 250,
-                width: 250,
-                child: Hero(
-                  tag: widget.productId,
-                  child: Image.network(
-                     widget.productImage,
-                    height: double.infinity,
-                    width: double.infinity,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(100)),
-              ),
-            ),
-            const SizedBox(
-              height: 25,
-            ),
-            Card(
-              color: Colors.transparent,
-              elevation: 20.0,
-              child: Container(
-                height: 55,
-                color: Colors.black54,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                     Text(
-                      '${widget.productPrice} SDG',
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 20),
+            gradient: LinearGradient(
+          colors: gradientColor,
+        )),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Card(
+            elevation: 20.0,
+            color: Colors.transparent,
+            child: Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 20, right: 20),
+                    child: Align(
+                      alignment: Alignment.centerRight,
+                      child: Icon(
+                        Icons.favorite_border_outlined,
+                        size: 40,
+                        color: Colors.red,
+                      ),
                     ),
-                    IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.favorite_border,
-                          size: 35,
-                          color: Colors.red,
-                        ))
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Card(
-              elevation: 20.0,
-              color: Colors.transparent,
-              child: Container(
-                height: 250,
-                color: Colors.black54,
-                child:  Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                       widget.productDes,
-                    style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                        fontSize: 20),
-                    textAlign: TextAlign.start,
                   ),
-                ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    widget.productName,
+                    style: const TextStyle(fontSize: 40, color: Colors.white),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    height: 250,
+                    width: 250,
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                    child: Hero(
+                      tag: widget.productId,
+                      child: Image.network(
+                        widget.productImage,
+                        fit: BoxFit.fill,
+                        height: double.infinity,
+                        width: double.infinity,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Container(
+                    height: 50,
+                    color: Colors.white70,
+                    child: Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children:  [
+                          const Text(
+                            'Price',
+                            style: TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold),
+                          ),
+                          Text(
+                            widget.productPrice.toString() + " GSD",
+                            style: const TextStyle(
+                                fontSize: 30, fontWeight: FontWeight.bold),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  const Spacer(),
+                  Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(15),
+                        bottomLeft: Radius.circular(15)
+                      ),
+                      color: Colors.white70,
+                    ),
+                    height: 262,
+
+                    child: Center(
+                      child: ListView(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text(widget.productDes,style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 30,
+                          ),),
+                        )
+                      ],)
+                    ),
+                  ),
+
+                ],
               ),
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );
