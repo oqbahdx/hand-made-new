@@ -27,13 +27,15 @@ Widget receiveMessage(MessageModel model) {
   return Align(
     alignment: Alignment.centerRight,
     child: Container(
-      alignment: Alignment.center,
-      child:  Text(
-        model.text,
-        style: const TextStyle(
-            color: Colors.black54,
-            fontWeight: FontWeight.bold,
-            fontSize: 22),
+
+      child:  Center(
+        child: Text(
+          model.text,
+          style: const TextStyle(
+              color: Colors.black54,
+              fontWeight: FontWeight.bold,
+              fontSize: 22),
+        ),
       ),
       height: 50,
       width: 200,

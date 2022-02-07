@@ -8,6 +8,8 @@ import 'package:hand_made_new/screens/products/seller_products.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 
+import '../../bloc/cubit.dart';
+
 class SellerDetails extends StatefulWidget {
   final String name;
   final String uId;
@@ -22,6 +24,7 @@ class SellerDetails extends StatefulWidget {
 }
 
 class _SellerDetailsState extends State<SellerDetails> {
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
