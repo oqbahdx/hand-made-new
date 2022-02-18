@@ -6,23 +6,23 @@ Widget onBoardingWidget(String imageName, String title, String body) {
     children: [
       Expanded(
           child: Image(
-            fit: BoxFit.contain,
+            fit: BoxFit.fill,
             height: 550,
-        width: 350,
+        width: 450,
         image: AssetImage(imageName),
       )),
       const SizedBox(
         height: 150,
       ),
       Text(title,style: const TextStyle(
-        fontSize: 30,
+        fontSize: 40,
         fontWeight: FontWeight.bold
       ),),
       const SizedBox(
         height: 150,
       ),
       Text(body,style: const TextStyle(
-          fontSize: 25,
+          fontSize: 35,
           fontWeight: FontWeight.bold
       ),),
     ],

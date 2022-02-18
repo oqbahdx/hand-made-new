@@ -39,7 +39,7 @@ class _OnBoardingState extends State<OnBoarding> {
   ];
   List<String> bodies = [
     'application for families who is made their food in house ',
-    'you can fine a families are near by you and seen their location in the map',
+    'find a families are near by you and see their location in the map',
     'Your health is important and you will eat a clean food',
   ];
 
@@ -68,11 +68,12 @@ class _OnBoardingState extends State<OnBoarding> {
             Expanded(
               child: PageView.builder(
                 physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) => onBoardingWidget(
-                  images[index],
-                  titles[index],
-                  bodies[index],
-                ),
+                itemBuilder: (context, index) =>
+                    onBoardingWidget(
+                      images[index],
+                      titles[index],
+                      bodies[index],
+                    ),
                 itemCount: 3,
                 controller: pageController,
                 onPageChanged: (int index) {
@@ -107,25 +108,24 @@ class _OnBoardingState extends State<OnBoarding> {
                 const Spacer(),
                 isLast == false
                     ? floatingNextButton(
-                        function: () {
-                          pageController.nextPage(
-                              duration: const Duration(milliseconds: 500),
-                              curve: Curves.easeInCubic);
-                        },
-                        icn: Icons.arrow_forward_ios)
+                    function: () {
+                      pageController.nextPage(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.easeInCubic);
+                    },
+                    icn: Icons.arrow_forward_ios)
                     : floatingNextButton(
-                        function: () async {
-                          submit();
-                          if (await Permission.location.isGranted &&
-                              await   Permission.accessMediaLocation.isGranted &&
-                              await   Permission.locationAlways.isGranted &&
-                              await  Permission.camera.isGranted &&
-                              await  Permission.storage.isGranted){
-                            moveToPageAndFinish(context, const LoginPage());
-                          }
-
-                        },
-                        icn: Icons.home),
+                    function: () async {
+                      submit();
+                      if (await Permission.location.isGranted &&
+                          await Permission.accessMediaLocation.isGranted &&
+                          await Permission.locationAlways.isGranted &&
+                          await Permission.camera.isGranted &&
+                          await Permission.storage.isGranted) {
+                        moveToPageAndFinish(context, const LoginPage());
+                      }
+                    },
+                    icn: Icons.home),
               ],
             )
           ],

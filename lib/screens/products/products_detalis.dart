@@ -134,11 +134,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
                           ),),
-                        )
+                        ),
                       ],)
                     ),
                   ),
-
                 ],
               ),
             ),
