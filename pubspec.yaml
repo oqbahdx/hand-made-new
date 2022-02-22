@@ -28,6 +28,8 @@ dependencies:
   geolocator: ^8.0.0
   permission_handler: ^8.3.0
   device_preview: ^1.0.0
+  url_launcher: ^6.0.20
+  font_awesome_flutter: ^9.2.0
   flutter:
     sdk: flutter
 
@@ -41,6 +43,8 @@ dependencies:
   video_player: ^2.2.14
   chewie: ^1.1.0
   responsive_framework: ^0.1.5
+
+
 
 
 dev_dependencies:
