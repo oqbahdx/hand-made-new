@@ -23,24 +23,26 @@ class _MapPageState extends State<MapPage> {
   String _mapStyle;
   GoogleMapController _mapController;
   Set<Marker> sellerMarkers = <Marker>{};
+  Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
   BitmapDescriptor myIcon;
   var seller = [];
+
   @override
   void initState() {
     checkPermissions();
+    getSellersMarkers();
     rootBundle.loadString('assets/map_style.txt').then((value) {
       setState(() {
         _mapStyle = value;
       });
     });
     BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size(48, 48)), 'assets/marker.png')
+            const ImageConfiguration(size: Size(60, 60)), 'assets/marker.png')
         .then((value) {
       setState(() {
         myIcon = value;
       });
     });
-
 
     super.initState();
   }
@@ -54,24 +56,42 @@ class _MapPageState extends State<MapPage> {
     }
   }
 
-  getSellersMarkers(){
+  getSellersMarkers() {
     seller = [];
-    FirebaseFirestore.instance.collection('users').get().then((duc){
-      if(duc.docs.isNotEmpty){
-        for(int i = 0;i<=duc.docs.length;i++){
+    FirebaseFirestore.instance.collection('users').get().then((duc) {
+      if (duc.docs.isNotEmpty) {
+        for (int i = 0; i <= duc.docs.length; i++) {
           seller.add(duc.docs[i].data());
-          // initMarker(duc.docs[i].data());
+         initMarker(duc.docs[i].data(), duc.docs[i].id);
         }
       }
     });
-
   }
-  // initMarker(seller){
-  //   _mapController.
-  // }
+
+  void initMarker(specify, specifyId) {
+    var markerIdVal = specifyId;
+    final MarkerId markerId = MarkerId(markerIdVal);
+    final Marker marker = Marker(
+        markerId: markerId,
+        position: LatLng(specify['location'].latitude , specify['location'].longitude,),
+        icon: myIcon,
+
+        onTap: (){
+          moveToPageWithData(context, namePage: SellerDetails(
+            uId: specify['uid'],
+            name: specify['name'],
+            image: specify['image'],
+          ));
+        },
+        infoWindow:
+            InfoWindow(title: specify['name'], snippet: specify['email']));
+    setState(() {
+      markers[markerId] = marker;
+    });
+  }
 
   checkPermissions() async {
-        await Permission.locationAlways.request().isGranted &&
+    await Permission.locationAlways.request().isGranted &&
         await Permission.location.request().isGranted &&
         await Permission.locationWhenInUse.request().isGranted;
   }
@@ -86,55 +106,29 @@ class _MapPageState extends State<MapPage> {
           condition: state is! HandGetSellersLoadingState,
           builder: (context) => Scaffold(
               body: Container(
-                decoration: BoxDecoration(
-                  gradient:LinearGradient(
-                    colors:gradientColor
-                  )
-                ),
-                child: GoogleMap(
-            markers: sellerMarkers,
-            myLocationEnabled: true,
-            myLocationButtonEnabled: true,
-            initialCameraPosition: const CameraPosition(
+            decoration:
+                BoxDecoration(gradient: LinearGradient(colors: gradientColor)),
+            child: GoogleMap(
+              markers: Set<Marker>.of(markers.values),
+              myLocationEnabled: true,
+              myLocationButtonEnabled: true,
+              initialCameraPosition: const CameraPosition(
                 target: LatLng(
                   15.734730,
                   32.577591,
                 ),
                 zoom: 12,
-            ),
-            onMapCreated: (GoogleMapController controller) {
+              ),
+              onMapCreated: (GoogleMapController controller) {
                 setState(() {
-                  sellerMarkers.clear();
-
                   _onMapCreate(controller);
-                  sellerMarkers.addAll({
-                    Marker(
-                        infoWindow: InfoWindow(
-                            title: seller.name,
-                            snippet: seller.email,
-                            onTap: () {
-                              moveToPageWithData(context,
-                                  namePage: SellerDetails(
-                                    name: seller.name,
-                                  ));
-                            }),
-                        markerId: MarkerId(seller.uid),
-                        icon: myIcon,
-                        position: LatLng(
-                          seller.latitude,
-                          seller.longitude,
-                        )),
-                  });
                 });
-            },
-          ),
-              )),
-          fallback: (context) => Container(
-            decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: gradientColor
-                )
+              },
             ),
+          )),
+          fallback: (context) => Container(
+            decoration:
+                BoxDecoration(gradient: LinearGradient(colors: gradientColor)),
             child: const Center(
               child: CircularProgressIndicator(
                 color: Colors.white,

@@ -18,9 +18,7 @@ class RegisterMainPage extends StatelessWidget {
       appBar: appBarWidget(
         title: Text('Register',style: normalText,),
         elevation: 0.0,
-        action: IconButton(onPressed: (){
-          moveToPageAndFinish(context, const StartPage());
-        }, icon: const Icon(Icons.close))
+        action: Container()
       ),
       body: SingleChildScrollView(
         child: Column(

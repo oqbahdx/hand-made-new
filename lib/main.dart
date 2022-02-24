@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HandCubit>(
-      create: (context) => HandCubit()..getCurrentUser(),
+      create: (context) => HandCubit(),
       lazy: true,
       child: MaterialApp(
         useInheritedMediaQuery: true,

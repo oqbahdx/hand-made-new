@@ -17,6 +17,11 @@ class FamiliesList extends StatefulWidget {
 
 class _FamiliesListState extends State<FamiliesList> {
   @override
+  void initState() {
+    HandCubit.get(context).getCurrentUser();
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     return BlocConsumer<HandCubit, HandMadeState>(
       listener: (context, state) {},

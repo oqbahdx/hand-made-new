@@ -6,8 +6,7 @@ class UserModel {
   String role;
   String phone;
   bool isAvailable;
-  double longitude;
-  double latitude;
+  var location;
   String profileImage;
 
   UserModel(
@@ -17,9 +16,7 @@ class UserModel {
       this.password,
       this.role,
       this.phone,
-      this.isAvailable,
-      this.longitude,
-      this.latitude,
+      this.isAvailable, this.location,
       this.profileImage});
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -28,8 +25,7 @@ class UserModel {
     email = json['email'];
     password = json['password'];
     isAvailable = json['isAvailable'];
-    longitude = json['longitude'];
-    latitude = json['latitude'];
+    location = json['location'];
     profileImage = json['profileImage'];
     role = json['role'];
     phone = json['phone'];
@@ -42,8 +38,7 @@ class UserModel {
       'email': email,
       'password': password,
       'isAvailable': isAvailable,
-      'latitude': latitude,
-      'longitude': longitude,
+      'location': location,
       'profileImage': profileImage,
       'phone': phone,
       'role': role,

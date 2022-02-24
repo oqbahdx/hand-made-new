@@ -102,7 +102,7 @@ class _MyProductsState extends State<MyProducts> {
                               child: Hero(
                                 tag: document.id,
                                 child: FadeInImage(
-                                  placeholder: AssetImage('assets/pleaceholder.png'),
+                                  placeholder: const AssetImage('assets/pleaceholder.png',),
                                   image: NetworkImage(document['image']),
                                   height: double.infinity,
                                   width: double.infinity,

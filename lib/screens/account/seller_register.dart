@@ -124,7 +124,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                               phone: phoneController.text,
                               password: passwordController.text,
                             );
-                            moveToPageAndFinish(context, const LoginPage());
+
                           }
                           else {
                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
@@ -155,7 +155,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                         style: normalText,
                       ),
                       gradientText(
-                          text: 'LOG',
+                          text: 'LOGIN',
                           onTap: () {
                             Navigator.of(context).pushNamedAndRemoveUntil(
                                 LoginPage.id, (route) => false);

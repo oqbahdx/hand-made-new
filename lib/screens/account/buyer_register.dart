@@ -133,7 +133,7 @@ class _BuyerRegisterPageState extends State<BuyerRegisterPage> {
                             style: normalText,
                           ),
                           gradientText(
-                              text: 'LOG',
+                              text: 'LOGIN',
                               onTap: () {
                                 Navigator.of(context).pushNamedAndRemoveUntil(
                                     LoginPage.id, (route) => false);

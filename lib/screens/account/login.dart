@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                   style: normalText,
                 ),
                 elevation: 0.0,
-                action: IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
+                action: Container(),
               ),
               body: Form(
                 key: formKey,
