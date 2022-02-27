@@ -1,5 +1,10 @@
+import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_made_new/models/message_model.dart';
+
+import '../bloc/cubit.dart';
+import '../components/show_message.dart';
+import '../styles/colors.dart';
 
 Widget sendMessage(MessageModel model) {
   return Align(
@@ -49,3 +54,5 @@ Widget receiveMessage(MessageModel model) {
     ),
   );
 }
+
+

@@ -27,16 +27,18 @@ class _SellerChatState extends State<SellerChat> {
   ScrollController scrollController = ScrollController();
   TextEditingController messageController = TextEditingController();
   final ScrollController listScrollController = ScrollController();
-  @override
-  void initState() {
-    super.initState();
-    HandCubit.get(context).getMessages(receiverId: widget.uid);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   HandCubit.get(context).getMessages(receiverId: widget.uid);
+  // }
   @override
   Widget build(BuildContext context) {
-    Timer(const Duration(milliseconds: 0), () =>
-        listScrollController.jumpTo(
-            listScrollController.position.maxScrollExtent));
+    if(HandCubit.get(context).messages.isNotEmpty){
+      Timer(const Duration(milliseconds: 0), () =>
+          listScrollController.jumpTo(
+              listScrollController.position.maxScrollExtent));
+    }
     return Builder(builder: (context) {
       return BlocConsumer<HandCubit, HandMadeState>(
         listener: (context, state) {},
@@ -53,176 +55,186 @@ class _SellerChatState extends State<SellerChat> {
                 elevation: 20.0,
                 action: Image.network(widget.image)),
             body: ConditionalBuilder(
-              condition: HandCubit
-                  .get(context)
-                  .messages
-                  .length > 0,
-              builder: (context) =>
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        gradient: LinearGradient(colors: gradientColor)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
+              condition: state is !HandGetMessagesLoading,
+              builder: (context)=>ConditionalBuilder(
+                condition: HandCubit
+                    .get(context)
+                    .messages.isNotEmpty,
+                builder: (context) =>
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(colors: gradientColor)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
 
-                        children: [
-                          Expanded(
-                            child: ListView.separated(
-                                controller: listScrollController,
+                          children: [
+                            Expanded(
+                              child: ListView.separated(
+                                  controller: listScrollController,
 
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  var message = HandCubit
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    var message = HandCubit
+                                        .get(context)
+                                        .messages[index];
+                                    if (widget.uid == message.receiverId) {
+                                      return receiveMessage(message);
+                                    }
+                                    return sendMessage(message);
+                                  },
+                                  separatorBuilder: (context,
+                                      index) => const SizedBox(height: 10,),
+                                  itemCount: HandCubit
                                       .get(context)
-                                      .messages[index];
-                                  if (widget.uid == message.receiverId) {
-                                    return receiveMessage(message);
-                                  }
-                                  return sendMessage(message);
-                                },
-                                separatorBuilder: (context,
-                                    index) => const SizedBox(height: 10,),
-                                itemCount: HandCubit
-                                    .get(context)
-                                    .messages
-                                    .length),
-                          ),
-                          Container(
+                                      .messages
+                                      .length),
+                            ),
+                            Container(
 
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                border: Border.all(
-                                    color: Colors.black, width: 2)),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: TextFormField(
-                                    style: const TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold),
-                                    controller: messageController,
-                                    decoration: const InputDecoration(
-                                        border: InputBorder.none,
-                                        hintText: '  Type Something Here',
-                                        hintStyle: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 25,
-                                            fontWeight: FontWeight.bold)),
-                                  ),
-                                ),
-                                ConditionalBuilder(
-                                  condition: state is! HandSendMessageLoading,
-                                  builder: (context) =>
-                                      IconButton(
-                                        onPressed: () {
-                                          if (messageController.text == '') {
-                                            showMessageError(
-                                                'please enter text');
-                                          } else {
-                                            HandCubit.get(context).sendMessage(
-                                              text: messageController.text,
-                                              receiverId: widget.uid,
-                                              date: DateTime.now().toString(),
-                                            );
-                                            messageController.text = '';
-                                          }
-                                        },
-                                        icon: const Icon(Icons.send),
-                                        iconSize: 35,
-                                      ),
-                                  fallback: (context) =>
-                                  const Center(
-                                    child: CircularProgressIndicator(
-                                      color: Colors.black,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all(
+                                      color: Colors.black, width: 2)),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: TextFormField(
+                                      style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
+                                      controller: messageController,
+                                      decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          hintText: '  Type Something Here',
+                                          hintStyle: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 25,
+                                              fontWeight: FontWeight.bold)),
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-              fallback: (context) => Container(
-
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: gradientColor,
-
-                  ),
-
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(height: MediaQuery.of(context).size.height * .35,),
-                   const Text("No Messages Here",style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 50
-                    ),),
-                   const Spacer(),
-                    Container(
-
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                              colors: gradientColor
-                          ),
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                              color: Colors.black, width: 2)),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: TextFormField(
-                              style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold),
-                              controller: messageController,
-                              decoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: '  Type Something Here',
-                                  hintStyle: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold)),
-                            ),
-                          ),
-                          ConditionalBuilder(
-                            condition: state is! HandSendMessageLoading,
-                            builder: (context) =>
-                                IconButton(
-                                  onPressed: () {
-                                    if (messageController.text == '') {
-                                      showMessageError(
-                                          'please enter text');
-                                    } else {
-                                      HandCubit.get(context).sendMessage(
-                                        text: messageController.text,
-                                        receiverId: widget.uid,
-                                        date: DateTime.now().toString(),
-                                      );
-                                      messageController.text = '';
-                                    }
-                                  },
-                                  icon: const Icon(Icons.send),
-                                  iconSize: 35,
-                                ),
-                            fallback: (context) =>
-                            const Center(
-                              child: CircularProgressIndicator(
-                                color: Colors.black,
+                                  ConditionalBuilder(
+                                    condition: state is! HandSendMessageLoading,
+                                    builder: (context) =>
+                                        IconButton(
+                                          onPressed: () {
+                                            if (messageController.text == '') {
+                                              showMessageError(
+                                                  'please enter text');
+                                            } else {
+                                              HandCubit.get(context).sendMessage(
+                                                text: messageController.text,
+                                                receiverId: widget.uid,
+                                                date: DateTime.now().toString(),
+                                              );
+                                              messageController.text = '';
+                                            }
+                                          },
+                                          icon: const Icon(Icons.send),
+                                          iconSize: 35,
+                                        ),
+                                    fallback: (context) =>
+                                    const Center(
+                                      child: CircularProgressIndicator(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                          )
-                        ],
+                          ],
+                        ),
                       ),
-                    )
-                  ],
+                    ),
+                fallback: (context) => Container(
+
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: gradientColor,
+
+                    ),
+
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(height: MediaQuery.of(context).size.height * .35,),
+                      const Text("No Messages Here",style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 50
+                      ),),
+                      const Spacer(),
+                      Container(
+
+                        decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                                colors: gradientColor
+                            ),
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                                color: Colors.black, width: 2)),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 25,
+                                    fontWeight: FontWeight.bold),
+                                controller: messageController,
+                                decoration: const InputDecoration(
+                                    border: InputBorder.none,
+                                    hintText: '  Type Something Here',
+                                    hintStyle: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                            ),
+                            ConditionalBuilder(
+                              condition: state is! HandSendMessageLoading,
+                              builder: (context) =>
+                                  IconButton(
+                                    onPressed: () {
+                                      if (messageController.text == '') {
+                                        showMessageError(
+                                            'please enter text');
+                                      } else {
+                                        HandCubit.get(context).sendMessage(
+                                          text: messageController.text,
+                                          receiverId: widget.uid,
+                                          date: DateTime.now().toString(),
+                                        );
+                                        messageController.text = '';
+                                      }
+                                    },
+                                    icon: const Icon(Icons.send),
+                                    iconSize: 35,
+                                  ),
+                              fallback: (context) =>
+                              const Center(
+                                child: CircularProgressIndicator(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
+              ),
+              fallback: (context)=>Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: gradientColor
+                  ),
+                ),
+                child: const Center(child:  CircularProgressIndicator(color: Colors.white,),),
               ),
             ),
           );

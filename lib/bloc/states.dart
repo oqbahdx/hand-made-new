@@ -162,3 +162,4 @@ class HandSendMessageError extends HandMadeState {
 }
 
 class HandGetMessagesSuccess extends HandMadeState {}
+class HandGetMessagesLoading extends HandMadeState {}

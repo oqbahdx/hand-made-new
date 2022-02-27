@@ -296,7 +296,7 @@ class HandCubit extends Cubit<HandMadeState> {
     String name,
     String email,
     bool isAvailable,
-    String location,
+    GeoPoint location,
     String password,
     String phone,
     String role,
@@ -515,7 +515,7 @@ class HandCubit extends Cubit<HandMadeState> {
     @required String name,
     @required String email,
     @required bool isAvailable,
-    @required String location,
+    @required GeoPoint location,
     @required String password,
     @required String phone,
     @required String role,
@@ -590,6 +590,7 @@ class HandCubit extends Cubit<HandMadeState> {
   }
 
   getMessages({String receiverId}) {
+    emit(HandGetMessagesLoading());
     FirebaseFirestore.instance
         .collection('users')
         .doc(userModel.uid)
@@ -603,7 +604,7 @@ class HandCubit extends Cubit<HandMadeState> {
       for (var element in event.docs) {
         messages.add(MessageModel.formJson(element.data()));
       }
-      print(messages[0]);
+
     });
     emit(HandGetMessagesSuccess());
   }

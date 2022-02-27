@@ -24,6 +24,11 @@ TextStyle smallText = const TextStyle(
   fontWeight: FontWeight.bold,
 
 );
+TextStyle appBarStyle = const TextStyle(
+  fontSize: 21,
+  color: Colors.black,
+  fontWeight: FontWeight.bold,
+);
 
 Widget gradientText({String text,Function onTap}){
  return GestureDetector(

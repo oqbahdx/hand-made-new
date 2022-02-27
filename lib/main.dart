@@ -90,7 +90,6 @@ class MyApp extends StatelessWidget {
         home: startPage,
         routes: {
           OnBoarding.id: (_) => const OnBoarding(),
-
           StartPage.id: (context) => const StartPage(),
           MapPage.id: (context) => const MapPage(),
           AddProduct.id: (context) => const AddProduct(),

@@ -79,6 +79,7 @@ class _SellerDetailsState extends State<SellerDetails> {
                         uid: widget.uId,
                       ),
                     );
+                    HandCubit.get(context).getMessages(receiverId: widget.uId);
                   },
                   child: positionedBuild(
                     h: h * 0.350,
