@@ -24,7 +24,12 @@ class SellerDetails extends StatefulWidget {
 }
 
 class _SellerDetailsState extends State<SellerDetails> {
-
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    HandCubit.get(context).getMessages(receiverId: widget.uId);
+  }
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -79,7 +84,7 @@ class _SellerDetailsState extends State<SellerDetails> {
                         uid: widget.uId,
                       ),
                     );
-                    HandCubit.get(context).getMessages(receiverId: widget.uId);
+
                   },
                   child: positionedBuild(
                     h: h * 0.350,

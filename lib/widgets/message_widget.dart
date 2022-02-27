@@ -32,7 +32,6 @@ Widget receiveMessage(MessageModel model) {
   return Align(
     alignment: Alignment.centerRight,
     child: Container(
-
       child:  Center(
         child: Text(
           model.text,
@@ -43,7 +42,6 @@ Widget receiveMessage(MessageModel model) {
         ),
       ),
       height: 50,
-      width: 200,
       decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(

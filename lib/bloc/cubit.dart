@@ -195,9 +195,10 @@ class HandCubit extends Cubit<HandMadeState> {
     emit(HandGetSellersLoadingState());
     sellers = [];
     FirebaseFirestore.instance
-        .collection('/users')
-        .where('role', isEqualTo: 'seller')
+        .collection('users')
         .where('isAvailable', isEqualTo: true)
+        .where('role', isEqualTo: 'seller')
+        .limit(10)
         .get()
         .then((value) {
       for (var element in value.docs) {
@@ -450,6 +451,7 @@ class HandCubit extends Cubit<HandMadeState> {
   }
 
   getCurrentUser() {
+    emit(HandGetCurrentUserLoadingState());
     FirebaseAuth auth = FirebaseAuth.instance;
     var currentUser = auth.currentUser.uid;
     emit(HandGetCurrentUserLoadingState());
@@ -464,6 +466,7 @@ class HandCubit extends Cubit<HandMadeState> {
       }
       userModel = UserModel.fromJson(value.data());
       emit(HandGetCurrentUserSuccessState());
+      print(value.toString());
     }).catchError((error) {
       if (kDebugMode) {
         print(error.toString());

@@ -27,11 +27,6 @@ class _SellerChatState extends State<SellerChat> {
   ScrollController scrollController = ScrollController();
   TextEditingController messageController = TextEditingController();
   final ScrollController listScrollController = ScrollController();
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   HandCubit.get(context).getMessages(receiverId: widget.uid);
-  // }
   @override
   Widget build(BuildContext context) {
     if(HandCubit.get(context).messages.isNotEmpty){
@@ -70,10 +65,10 @@ class _SellerChatState extends State<SellerChat> {
                         child: Column(
 
                           children: [
+                            const SizedBox(height: 10,),
                             Expanded(
                               child: ListView.separated(
                                   controller: listScrollController,
-
                                   shrinkWrap: true,
                                   itemBuilder: (context, index) {
                                     var message = HandCubit
@@ -83,6 +78,7 @@ class _SellerChatState extends State<SellerChat> {
                                       return receiveMessage(message);
                                     }
                                     return sendMessage(message);
+                                    //Todo: fix container size issue
                                   },
                                   separatorBuilder: (context,
                                       index) => const SizedBox(height: 10,),

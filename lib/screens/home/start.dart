@@ -46,7 +46,7 @@ class _StartPageState extends State<StartPage> {
             child: Scaffold(
               appBar: appBarWidget(
                   title: Text(titles[HandCubit.get(context).pageIndex],
-                      style: appBarStyle),
+                      style: normalText),
                   elevation: 0.0,
                   action: Container()),
               body: Center(
