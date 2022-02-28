@@ -10,14 +10,15 @@ Widget sendMessage(MessageModel model) {
   return Align(
     alignment: Alignment.centerLeft,
     child: Container(
-      alignment: Alignment.center,
-      child: Text(
-        model.text,
-        style: const TextStyle(
-            color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 20),
+        child: Text(
+          model.text,
+          style: const TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 22),
+        ),
       ),
       height: 50,
-      width: 200,
       decoration: const BoxDecoration(
           color: Colors.black54,
           borderRadius: BorderRadius.only(
@@ -32,7 +33,8 @@ Widget receiveMessage(MessageModel model) {
   return Align(
     alignment: Alignment.centerRight,
     child: Container(
-      child:  Center(
+      child:  Padding(
+        padding: const EdgeInsets.only(top: 10,bottom: 10,left: 20,right: 20),
         child: Text(
           model.text,
           style: const TextStyle(

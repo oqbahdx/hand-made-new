@@ -63,7 +63,6 @@ class _SellerChatState extends State<SellerChat> {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
-
                           children: [
                             const SizedBox(height: 10,),
                             Expanded(
@@ -205,6 +204,7 @@ class _SellerChatState extends State<SellerChat> {
                                           date: DateTime.now().toString(),
                                         );
                                         messageController.text = '';
+
                                       }
                                     },
                                     icon: const Icon(Icons.send),
