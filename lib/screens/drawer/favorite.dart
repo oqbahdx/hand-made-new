@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hand_made_new/styles/colors.dart';
+import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 
 
@@ -23,12 +24,28 @@ class _FavoritePageState extends State<FavoritePage> {
             action: Container()
         ),
         body: Container(
-          child: const Center(
-            child: Text('Favorite',style: TextStyle(
-                fontSize: 50,
-                fontWeight: FontWeight.bold
-            ),),
-          ),
+              child: ListView.builder(
+                itemExtent: 120,
+              itemCount: 3,
+              itemBuilder: (context,index)=>const Card(
+                color: Colors.black87,
+                child: Center(
+                  child: ListTile(
+                    tileColor: Colors.black87,
+                    leading: FlutterLogo(),
+                    title: Text('One-line with both widgets',style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 22
+                    ),),
+                    trailing: Icon(
+                      Icons.favorite_outlined,
+                      size: 40,
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
+              ), ),
           decoration:
           BoxDecoration(gradient: LinearGradient(colors: gradientColor)),
         ),

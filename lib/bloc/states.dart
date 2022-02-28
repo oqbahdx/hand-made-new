@@ -163,3 +163,10 @@ class HandSendMessageError extends HandMadeState {
 
 class HandGetMessagesSuccess extends HandMadeState {}
 class HandGetMessagesLoading extends HandMadeState {}
+class HandAddToFavoriteLoading extends HandMadeState {}
+class HandAddToFavoriteSuccess extends HandMadeState {}
+class HandAddToFavoriteError extends HandMadeState {
+  final String error;
+
+  HandAddToFavoriteError(this.error);
+}

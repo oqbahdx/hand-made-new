@@ -77,7 +77,6 @@ class _SellerChatState extends State<SellerChat> {
                                       return receiveMessage(message);
                                     }
                                     return sendMessage(message);
-                                    //Todo: fix container size issue
                                   },
                                   separatorBuilder: (context,
                                       index) => const SizedBox(height: 10,),

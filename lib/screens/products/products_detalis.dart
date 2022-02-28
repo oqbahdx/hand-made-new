@@ -1,5 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 
@@ -52,26 +53,34 @@ class _ProductDetailsState extends State<ProductDetails> {
                   borderRadius: BorderRadius.circular(20)),
               child: Column(
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.only(top: 20, right: 20),
+                   Padding(
+                    padding: const EdgeInsets.only(top: 20, right: 20),
                     child: Align(
                       alignment: Alignment.centerRight,
-                      child: Icon(
+                      child: IconButton(onPressed: (){
+
+                        HandCubit.get(context).addToFavorite(
+                          userId: FirebaseAuth.instance.currentUser.uid,
+                          name: widget.productName,
+                          image: widget.productImage
+                        );
+
+                      }, icon: const Icon(
                         Icons.favorite_border_outlined,
                         size: 40,
                         color: Colors.red,
-                      ),
+                      ),)
                     ),
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 25,
                   ),
                   Text(
                     widget.productName,
                     style: const TextStyle(fontSize: 40, color: Colors.white),
                   ),
                   const SizedBox(
-                    height: 30,
+                    height: 25,
                   ),
                   Container(
                     height: 250,
@@ -124,8 +133,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ),
                       color: Colors.white70,
                     ),
-                    height: 262,
-
+                    height: 172,
                     child: Center(
                       child: ListView(children: [
                         Padding(

@@ -17,6 +17,8 @@ import 'dart:io';
 import 'package:geolocator/geolocator.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
+import '../models/favorite_model.dart';
+
 class HandCubit extends Cubit<HandMadeState> {
   HandCubit() : super(HandInitialState());
 
@@ -611,4 +613,23 @@ class HandCubit extends Cubit<HandMadeState> {
     });
     emit(HandGetMessagesSuccess());
   }
+
+  List<FavoriteModel> favorite = [];
+  addToFavorite({String name,String image,String userId}){
+    emit(HandAddToFavoriteLoading());
+    FavoriteModel favoriteModel = FavoriteModel(
+      isFavorite: true,
+      productImage: image,
+      productName: name,
+      userId: userId
+    );
+    FirebaseFirestore.instance.collection('favorites').add(favoriteModel.toJson()).then((value){
+      print(value.toString());
+      emit(HandAddToFavoriteSuccess());
+    }).catchError((err){
+      print(err.toString());
+      emit(HandAddToFavoriteError(err));
+    });
+  }
+
 }
