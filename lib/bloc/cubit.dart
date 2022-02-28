@@ -443,7 +443,6 @@ class HandCubit extends Cubit<HandMadeState> {
         isAvailable: true,
         phone: phone,
         location: location,
-
         role: role,
         password: password);
     FirebaseFirestore.instance
@@ -585,7 +584,6 @@ class HandCubit extends Cubit<HandMadeState> {
         .collection('chats')
         .doc(userModel.uid)
         .collection('messages')
-    
         .add(messageModel.toJson())
         .then((value) {
       emit(HandSendMessageSuccess());
@@ -601,35 +599,74 @@ class HandCubit extends Cubit<HandMadeState> {
         .doc(userModel.uid)
         .collection('chats')
         .doc(receiverId)
-         .collection('messages')
-         .orderBy('date')
-         .snapshots()
+        .collection('messages')
+        .orderBy('date')
+        .snapshots()
         .listen((event) {
       messages = [];
       for (var element in event.docs) {
         messages.add(MessageModel.formJson(element.data()));
       }
-
     });
     emit(HandGetMessagesSuccess());
   }
 
   List<FavoriteModel> favorite = [];
-  addToFavorite({String name,String image,String userId}){
+
+  addToFavorite(
+      {String name,
+      String image,
+      String userId,
+      String des,
+      String price,
+      String productId}) {
     emit(HandAddToFavoriteLoading());
     FavoriteModel favoriteModel = FavoriteModel(
       isFavorite: true,
+      productId: productId,
       productImage: image,
       productName: name,
-      userId: userId
+      userId: userId,
+      productDes: des,
+      productPrice: price,
     );
-    FirebaseFirestore.instance.collection('favorites').add(favoriteModel.toJson()).then((value){
+    FirebaseFirestore.instance
+        .collection('favorites')
+        .add(favoriteModel.toJson())
+        .then((value) {
       print(value.toString());
       emit(HandAddToFavoriteSuccess());
-    }).catchError((err){
+    }).catchError((err) {
       print(err.toString());
       emit(HandAddToFavoriteError(err));
     });
   }
 
+  deleteFavoriteItem({String productId}) {
+    FirebaseFirestore.instance
+        .collection('favorites')
+        .doc(productId)
+        .delete()
+        .then((value) {
+      emit(HandDeleteFavoriteItemSuccess());
+    }).catchError((err) {
+      emit(HandDeleteFavoriteItemError(err.toString()));
+    });
+  }
+
+  FavoriteModel favoriteModel;
+  List<FavoriteModel> favoritesList = [];
+
+  getAllFavorites() {
+    FirebaseFirestore.instance
+        .collection('favorites')
+        .where('userId', isEqualTo: FirebaseAuth.instance.currentUser.uid)
+        .get()
+        .then((value) {
+        favoritesList = [];
+      for (var element in value.docs) {
+        favoritesList.add(FavoriteModel.fromJson(element.data()));
+      }
+    });
+  }
 }

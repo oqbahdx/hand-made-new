@@ -170,3 +170,10 @@ class HandAddToFavoriteError extends HandMadeState {
 
   HandAddToFavoriteError(this.error);
 }
+class HandDeleteFavoriteItemSuccess extends HandMadeState {}
+class HandDeleteFavoriteItemLoading extends HandMadeState {}
+class HandDeleteFavoriteItemError extends HandMadeState {
+  final String err;
+
+  HandDeleteFavoriteItemError(this.err);
+}

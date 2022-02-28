@@ -113,24 +113,19 @@ Widget positionedBuild({double h, double w, String txt}) {
           bottomRight: Radius.circular(100),
           topLeft: Radius.circular(100),
         ),
-
       ),
-
       child: Center(
           child: Text(
-            txt,
-            style: const TextStyle(
-                fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
-          )),
+        txt,
+        style: const TextStyle(
+            fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+      )),
     ),
   );
-
-
 }
 
-Widget buildProductsItem( model,Object tag){
+Widget buildProductsItem(model, Object tag) {
   return Container(
-
     // alignment: Alignment.center,
     child: Column(
       children: [
@@ -151,15 +146,17 @@ Widget buildProductsItem( model,Object tag){
             color: Colors.black87,
           ),
         ),
-         const SizedBox(height: 10,),
-         Text(model.name,style: const TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-          color: Colors.white
-        ),),
+        const SizedBox(
+          height: 10,
+        ),
+        Text(
+          model.name,
+          style: const TextStyle(
+              fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
+        ),
       ],
     ),
-   height: 185,
+    height: 185,
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(15),
       color: Colors.black54,
@@ -190,8 +187,45 @@ Widget buildTapBlack(
           height: h,
           width: w,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: Colors.black54),
+              borderRadius: BorderRadius.circular(10), color: Colors.black54),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget favoriteBuild({String name, String image, String tag}) {
+  return Card(
+    elevation: 20.0,
+    shape: OutlineInputBorder(
+        borderSide: const BorderSide(color: Colors.white, width: 2),
+        borderRadius: BorderRadius.circular(15)),
+    color: Colors.black54,
+    shadowColor: Colors.red,
+    child: Center(
+      child: ListTile(
+        tileColor: Colors.black54,
+        leading: Container(
+          decoration: BoxDecoration(
+              color: Colors.black54, borderRadius: BorderRadius.circular(15)),
+          child: Hero(
+            tag: tag,
+            child: Image.network(
+              image,
+              height: double.infinity,
+              fit: BoxFit.fill,
+            ),
+          ),
+        ),
+        title: Text(
+          name,
+          style: const TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 30),
+        ),
+        trailing: const Icon(
+          Icons.favorite_outlined,
+          size: 40,
+          color: Colors.red,
         ),
       ),
     ),

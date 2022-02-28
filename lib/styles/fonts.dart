@@ -25,7 +25,7 @@ TextStyle smallText = const TextStyle(
 
 );
 TextStyle appBarStyle = const TextStyle(
-  fontSize: 21,
+  fontSize: 25,
   color: Colors.black,
   fontWeight: FontWeight.bold,
 );
