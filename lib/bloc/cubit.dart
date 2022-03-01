@@ -658,15 +658,22 @@ class HandCubit extends Cubit<HandMadeState> {
   List<FavoriteModel> favoritesList = [];
 
   getAllFavorites() {
+    emit(HandGetAllFavoritesLoading());
     FirebaseFirestore.instance
         .collection('favorites')
         .where('userId', isEqualTo: FirebaseAuth.instance.currentUser.uid)
         .get()
         .then((value) {
         favoritesList = [];
+
       for (var element in value.docs) {
         favoritesList.add(FavoriteModel.fromJson(element.data()));
+        print(favoritesList[0].productName);
       }
+      emit(HandGetAllFavoritesSuccess());
+    }).catchError((err){
+      print(err.toString());
+      emit(HandGetAllFavoritesError(err.toString()));
     });
   }
 }

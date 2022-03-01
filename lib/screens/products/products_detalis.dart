@@ -31,26 +31,30 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<HandCubit,HandMadeState>(
-      listener: (context,state){
-        if(state is HandAddToFavoriteSuccess){
+    return BlocConsumer<HandCubit, HandMadeState>(
+      listener: (context, state) {
+        if (state is HandAddToFavoriteSuccess) {
           showMessageSuccess('item has been added successfully');
         }
       },
-      builder: (context,state){
-     return   Scaffold(
+      builder: (context, state) {
+        var list = HandCubit.get(context)
+            .favoritesList;
+        bool exists = list.any((element) => element.productId == widget.productId);
+        return Scaffold(
           appBar: appBarWidget(
               elevation: 0.0,
               action: Container(),
               title: Text(
                 widget.productName,
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
               )),
           body: Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-                  colors: gradientColor,
-                )),
+              colors: gradientColor,
+            )),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Card(
@@ -59,7 +63,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                 child: Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                      color: Colors.black87,
+                      color: Colors.black54,
                       borderRadius: BorderRadius.circular(20)),
                   child: Column(
                     children: [
@@ -67,29 +71,44 @@ class _ProductDetailsState extends State<ProductDetails> {
                         padding: const EdgeInsets.only(top: 20, right: 20),
                         child: Align(
                             alignment: Alignment.centerRight,
-                            child: IconButton(onPressed: (){
-
-                              HandCubit.get(context).addToFavorite(
-                                userId: FirebaseAuth.instance.currentUser.uid,
-                                name: widget.productName,
-                                image: widget.productImage,
-                                des: widget.productDes,
-                                price: widget.productPrice,
-                                productId: widget.productId,
-                              );
-                            }, icon: const Icon(
-                              Icons.favorite_border_outlined,
-                              size: 40,
-                              color: Colors.red,
-                            ),)
-                        ),
+                            child: exists
+                                ? IconButton(
+                                    onPressed: () {
+                                      HandCubit.get(context).deleteFavoriteItem(
+                                          productId: widget.productId);
+                                    },
+                                    icon: const Icon(
+                                      Icons.favorite_outlined,
+                                      size: 40,
+                                      color: Colors.red,
+                                    ),
+                                  )
+                                : IconButton(
+                                    onPressed: () {
+                                      HandCubit.get(context).addToFavorite(
+                                        userId: FirebaseAuth
+                                            .instance.currentUser.uid,
+                                        name: widget.productName,
+                                        image: widget.productImage,
+                                        des: widget.productDes,
+                                        price: widget.productPrice,
+                                        productId: widget.productId,
+                                      );
+                                    },
+                                    icon: const Icon(
+                                      Icons.favorite_border_outlined,
+                                      size: 40,
+                                      color: Colors.red,
+                                    ),
+                                  )),
                       ),
                       const SizedBox(
                         height: 25,
                       ),
                       Text(
                         widget.productName,
-                        style: const TextStyle(fontSize: 40, color: Colors.white),
+                        style:
+                            const TextStyle(fontSize: 40, color: Colors.white),
                       ),
                       const SizedBox(
                         height: 25,
@@ -97,8 +116,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                       Container(
                         height: 250,
                         width: 250,
-                        decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(100)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100)),
                         child: Hero(
                           tag: widget.productId,
                           child: Image.network(
@@ -118,7 +137,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         child: Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children:  [
+                            children: [
                               const Text(
                                 'Price',
                                 style: TextStyle(
@@ -141,22 +160,25 @@ class _ProductDetailsState extends State<ProductDetails> {
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(15),
-                              bottomLeft: Radius.circular(15)
-                          ),
+                              bottomLeft: Radius.circular(15)),
                           color: Colors.white70,
                         ),
                         height: 172,
                         child: Center(
-                            child: ListView(children: [
-                              Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text(widget.productDes,style: const TextStyle(
+                            child: ListView(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                widget.productDes,
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 30,
-                                ),),
+                                ),
                               ),
-                            ],)
-                        ),
+                            ),
+                          ],
+                        )),
                       ),
                     ],
                   ),
@@ -166,7 +188,6 @@ class _ProductDetailsState extends State<ProductDetails> {
           ),
         );
       },
-
     );
   }
 }

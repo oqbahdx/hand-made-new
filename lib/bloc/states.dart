@@ -177,3 +177,11 @@ class HandDeleteFavoriteItemError extends HandMadeState {
 
   HandDeleteFavoriteItemError(this.err);
 }
+
+class HandGetAllFavoritesLoading extends HandMadeState{}
+class HandGetAllFavoritesSuccess extends HandMadeState{}
+class HandGetAllFavoritesError extends HandMadeState{
+  final String err;
+
+  HandGetAllFavoritesError(this.err);
+}

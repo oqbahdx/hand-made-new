@@ -25,8 +25,7 @@ class FavoritePage extends StatefulWidget {
 class _FavoritePageState extends State<FavoritePage> {
   @override
   void initState() {
-    HandCubit.get(context).getCurrentUser();
-    HandCubit.get(context).getSellers();
+    HandCubit.get(context).getAllFavorites();
     super.initState();
   }
 
@@ -34,75 +33,75 @@ class _FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     return BlocConsumer<HandCubit, HandMadeState>(
       listener: (context, state) {
-        if(state is HandDeleteFavoriteItemSuccess){
+        if (state is HandDeleteFavoriteItemSuccess) {
           showMessageError('Item has been deleted successfully');
         }
       },
       builder: (context, state) {
-        var user = HandCubit.get(context).userModel;
         return Scaffold(
-          appBar:appBarWidget(
-            title: Text('My Favorites',style: appBarStyle,),
-            elevation: 0.0,
-            action: Container()
-          ),
+          appBar: appBarWidget(
+              title: Text(
+                'My Favorites',
+                style: appBarStyle,
+              ),
+              elevation: 0.0,
+              action: Container()),
           body: ConditionalBuilder(
             condition: state is! HandGetUserSuccessState,
             builder: (context) => Container(
-              height: double.infinity,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                colors: gradientColor,
-              )),
-              child: FutureBuilder(
-                future: FirebaseFirestore.instance
-                    .collection('favorites').where('userId',isEqualTo: FirebaseAuth.instance.currentUser.uid)
-                    .get(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ),
-                    );
-                  }
-                  return ListView(
-                    itemExtent: 120,
-                    children: snapshot.data.docs.map((document) {
-                      final dynamic data = document.data();
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 15, vertical: 10),
-                        child: InkWell(
-                          onTap: () {
-                            moveToPageWithData(context,
-                                namePage: ProductDetails(
-                                  productId: document.id,
-                                  productPrice: document['productPrice'],
-                                  productImage: document['productImage'],
-                                  productDes: document['productDes'],
-                                  productName: document['productName'],
-                                ));
-                          },
-                          child: Dismissible(
-                            direction: DismissDirection.horizontal,
-                            key: UniqueKey(),
-                            onDismissed: (DismissDirection direction){
-                             HandCubit.get(context).deleteFavoriteItem(productId: document.id);
-                            },
-                            child: favoriteBuild(
-                                image: document['productImage'],
-                                name: document['productName'],
-                            tag: document.id),
-                          ),
+                height: double.infinity,
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                  colors: gradientColor,
+                )),
+                child:FutureBuilder(
+                  future: FirebaseFirestore.instance
+                      .collection('favorites').where('userId',isEqualTo: FirebaseAuth.instance.currentUser.uid)
+                      .get(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
                         ),
                       );
-                    }).toList(),
-                  );
-                },
-              ),
-            ),
+                    }
+                    return ListView(
+                      itemExtent: 120,
+                      children: snapshot.data.docs.map((document) {
+                        final dynamic data = document.data();
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
+                          child: InkWell(
+                            onTap: () {
+                              moveToPageWithData(context,
+                                  namePage: ProductDetails(
+                                    productId: document.id,
+                                    productPrice: document['productPrice'],
+                                    productImage: document['productImage'],
+                                    productDes: document['productDes'],
+                                    productName: document['productName'],
+                                  ));
+                            },
+                            child: Dismissible(
+                              direction: DismissDirection.horizontal,
+                              key: UniqueKey(),
+                              onDismissed: (DismissDirection direction){
+                                HandCubit.get(context).deleteFavoriteItem(productId: document.id);
+                              },
+                              child: favoriteBuild(
+                                  image: document['productImage'],
+                                  name: document['productName'],
+                                  tag: document.id),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                    );
+                  },
+                ),),
             fallback: (context) => Container(
               decoration: BoxDecoration(
                   gradient: LinearGradient(colors: gradientColor)),

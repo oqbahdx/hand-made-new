@@ -20,6 +20,7 @@ class _FamiliesListState extends State<FamiliesList> {
   @override
   void initState() {
     HandCubit.get(context).getCurrentUser();
+    HandCubit.get(context).getAllFavorites();
     HandCubit.get(context).getSellers();
     super.initState();
   }
