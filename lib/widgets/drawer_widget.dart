@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -61,12 +62,13 @@ class _DrawerBuildState extends State<DrawerBuild> {
                               bottomRight: Radius.circular(15),bottomLeft:Radius.circular(15)
                           )
                         ),
-                        child: FadeInImage(
-                          placeholder: const AssetImage('assets/pleaceholder.png'),
-                          image: NetworkImage(model.profileImage),
+                        child: CachedNetworkImage(
+                          imageUrl: model.profileImage,
                           fit: BoxFit.fill,
-                          width: double.infinity,
                           height: double.infinity,
+                          width : double.infinity,
+                          placeholder: (context, url) => Image.asset('assets/pleaceholder.png',color: Colors.black87,),
+                          errorWidget: (context, url, error) => const Icon(Icons.error),
                         ),
                       ),
                       Text(

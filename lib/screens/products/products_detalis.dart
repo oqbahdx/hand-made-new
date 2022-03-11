@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -120,11 +121,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                             borderRadius: BorderRadius.circular(100)),
                         child: Hero(
                           tag: widget.productId,
-                          child: Image.network(
-                            widget.productImage,
+                          child: CachedNetworkImage(
+                            imageUrl: widget.productImage,
                             fit: BoxFit.fill,
                             height: double.infinity,
-                            width: double.infinity,
+                            width : double.infinity,
+                            placeholder: (context, url) => Image.asset('assets/pleaceholder.png',color: Colors.black87),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
                           ),
                         ),
                       ),

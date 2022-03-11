@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -101,12 +102,13 @@ class _MyProductsState extends State<MyProducts> {
                               width: 250,
                               child: Hero(
                                 tag: document.id,
-                                child: FadeInImage(
-                                  placeholder: const AssetImage('assets/pleaceholder.png',),
-                                  image: NetworkImage(document['image']),
-                                  height: double.infinity,
-                                  width: double.infinity,
+                                child: CachedNetworkImage(
+                                  imageUrl: data['image'],
                                   fit: BoxFit.fill,
+                                  height: double.infinity,
+                                  width : double.infinity,
+                                  placeholder: (context, url) => Image.asset('assets/pleaceholder.png',color: Colors.black87,),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error),
                                 ),
                               ),
                               decoration: const BoxDecoration(

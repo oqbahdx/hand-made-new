@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -75,11 +76,13 @@ class _ProfileState extends State<Profile> {
                                 topRight: Radius.circular(15)),
                             color: Colors.black54,
                           ),
-                          child: Image.network(
-                            model.profileImage,
-                            fit: BoxFit.cover,
+                          child: CachedNetworkImage(
+                            imageUrl: model.profileImage,
+                            fit: BoxFit.fill,
                             height: double.infinity,
-                            width: double.infinity,
+                            width : double.infinity,
+                            placeholder: (context, url) => Image.asset('assets/pleaceholder.png',color: Colors.white),
+                            errorWidget: (context, url, error) => const Icon(Icons.error),
                           ),
                         )
                             : Container(

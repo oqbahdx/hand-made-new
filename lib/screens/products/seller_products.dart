@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter/material.dart';
@@ -92,11 +93,13 @@ class _SellerProductsState extends State<SellerProducts> {
                             width: 250,
                             child: Hero(
                               tag: document.id,
-                              child: Image.network(
-                                document['image'],
-                                height: double.infinity,
-                                width: double.infinity,
+                              child: CachedNetworkImage(
+                                imageUrl: data['image'],
                                 fit: BoxFit.fill,
+                                height: double.infinity,
+                                width : double.infinity,
+                                placeholder: (context, url) => Image.asset('assets/pleaceholder.png',color: Colors.black87),
+                                errorWidget: (context, url, error) => const Icon(Icons.error),
                               ),
                             ),
                             decoration: const BoxDecoration(
