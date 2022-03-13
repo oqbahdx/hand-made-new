@@ -98,7 +98,7 @@ class _SellerProductsState extends State<SellerProducts> {
                                 fit: BoxFit.fill,
                                 height: double.infinity,
                                 width : double.infinity,
-                                placeholder: (context, url) => Image.asset('assets/pleaceholder.png',color: Colors.black87),
+                                placeholder: (context, url) => Image.asset('assets/pleaceholder.png',color: Colors.white),
                                 errorWidget: (context, url, error) => const Icon(Icons.error),
                               ),
                             ),

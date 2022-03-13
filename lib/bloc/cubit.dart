@@ -676,4 +676,9 @@ class HandCubit extends Cubit<HandMadeState> {
       emit(HandGetAllFavoritesError(err.toString()));
     });
   }
+  bool isDrag = false;
+  showDeleteIcon(){
+    isDrag = true;
+    emit(HandShowDeleteIcon());
+  }
 }

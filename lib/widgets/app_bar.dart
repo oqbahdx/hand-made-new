@@ -9,6 +9,9 @@ PreferredSizeWidget appBarWidget({Widget title,
     centerTitle: true,
     elevation: elevation,
     actions: [action],
+    iconTheme:const IconThemeData(
+      color: Colors.black87
+    ),
 
     flexibleSpace: Container(
       decoration: const BoxDecoration(

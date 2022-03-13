@@ -185,3 +185,4 @@ class HandGetAllFavoritesError extends HandMadeState{
 
   HandGetAllFavoritesError(this.err);
 }
+class HandShowDeleteIcon extends HandMadeState{}
