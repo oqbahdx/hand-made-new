@@ -186,3 +186,10 @@ class HandGetAllFavoritesError extends HandMadeState{
   HandGetAllFavoritesError(this.err);
 }
 class HandShowDeleteIcon extends HandMadeState{}
+class HandDeleteProductSuccess extends HandMadeState{}
+class HandDeleteProductLoading extends HandMadeState{}
+class HandDeleteProductError extends HandMadeState{
+  final String err;
+
+  HandDeleteProductError(this.err);
+}

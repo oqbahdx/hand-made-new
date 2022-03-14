@@ -664,21 +664,38 @@ class HandCubit extends Cubit<HandMadeState> {
         .where('userId', isEqualTo: FirebaseAuth.instance.currentUser.uid)
         .get()
         .then((value) {
-        favoritesList = [];
+      favoritesList = [];
 
       for (var element in value.docs) {
         favoritesList.add(FavoriteModel.fromJson(element.data()));
         print(favoritesList[0].productName);
       }
       emit(HandGetAllFavoritesSuccess());
-    }).catchError((err){
+    }).catchError((err) {
       print(err.toString());
       emit(HandGetAllFavoritesError(err.toString()));
     });
   }
+
   bool isDrag = false;
-  showDeleteIcon(){
+
+  showDeleteIcon() {
     isDrag = true;
     emit(HandShowDeleteIcon());
+  }
+
+  deleteProduct({String id}) {
+    emit(HandDeleteProductLoading());
+    FirebaseFirestore.instance
+        .collection('products')
+        .doc(id)
+        .delete()
+        .then((value) {
+          emit(HandDeleteProductSuccess());
+    })
+        .catchError((err) {
+          emit(HandDeleteProductError(err.toString()));
+          print(err.toString());
+    });
   }
 }

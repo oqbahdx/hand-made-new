@@ -44,6 +44,8 @@ dependencies:
   chewie: ^1.1.0
   responsive_framework: ^0.1.5
   cached_network_image: ^3.2.0
+  rxdart: ^0.27.3
+  bloc_pattern: ^3.0.0
 
 
 

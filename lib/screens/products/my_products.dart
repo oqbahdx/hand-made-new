@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/navigator.dart';
-import 'package:hand_made_new/screens/drawer/contact_us.dart';
+import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/screens/products/products_detalis.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
@@ -40,15 +40,15 @@ class _MyProductsState extends State<MyProducts> {
   }
 
   bool isDrag = false;
-  Offset position = Offset(0.0, 0.0);
+  var dragData;
+  QueryDocumentSnapshot proId;
 
   @override
   Widget build(BuildContext context) {
+    // final ProductItemColor colorBloc = BlocProvider.of(context);
     return BlocConsumer<HandCubit, HandMadeState>(
       listener: (context, state) {},
       builder: (context, state) {
-        double h = MediaQuery.of(context).size.height;
-
         return SafeArea(
           child: Scaffold(
             appBar: appBarWidget(
@@ -91,7 +91,10 @@ class _MyProductsState extends State<MyProducts> {
                             mainAxisSpacing: 45,
                           ),
                           children: snapshot.data.docs.map((document) {
+                            dragData = document;
+                            proId = document;
                             final dynamic data = document.data();
+
                             return InkWell(
                               onTap: () {
                                 moveToPageWithData(context,
@@ -106,6 +109,7 @@ class _MyProductsState extends State<MyProducts> {
                                 HandCubit.get(context).getAllFavorites();
                               },
                               child: Draggable(
+                                data: dragData,
                                 onDragUpdate:
                                     (DragUpdateDetails dragUpdateDetails) {},
                                 onDragStarted: () {
@@ -113,7 +117,6 @@ class _MyProductsState extends State<MyProducts> {
                                     isDrag = true;
                                   });
                                 },
-                                onDragCompleted: () {},
                                 feedback: Container(
                                   clipBehavior: Clip.antiAliasWithSaveLayer,
                                   height: 250,
@@ -137,7 +140,7 @@ class _MyProductsState extends State<MyProducts> {
                                   decoration: const BoxDecoration(
                                       boxShadow: [
                                         BoxShadow(
-                                            color: Colors.red,
+                                            color: Colors.white,
                                             spreadRadius: 2.0,
                                             offset: Offset(5.0, 5.0)),
                                         BoxShadow(
@@ -161,7 +164,7 @@ class _MyProductsState extends State<MyProducts> {
                                 ),
                                 onDraggableCanceled: (velocity, offset) {
                                   setState(() {
-                                    position = offset;
+                                    isDrag = false;
                                   });
                                 },
                                 child: Container(
@@ -198,17 +201,28 @@ class _MyProductsState extends State<MyProducts> {
                         ),
                         isDrag
                             ? Positioned(
-                                top:MediaQuery.of(context).size.height / 2,
+                                top: MediaQuery.of(context).size.height / 2,
                                 left: MediaQuery.of(context).size.width / 3.1,
                                 child: DragTarget(
+                                  onWillAccept: (date) {
+                                    showMessageError('item deleted');
+                                    HandCubit.get(context)
+                                        .deleteProduct(id: proId.id);
+                                    return date == dragData;
+                                  },
+                                  onAccept: (date) {
 
-                                  builder: (context,List<dynamic> accepted,
-                                      List<dynamic> rejected,)=>const Icon(
+                                  },
+                                  builder: (
+                                    context,
+                                    List<dynamic> accepted,
+                                    List<dynamic> rejected,
+                                  ) =>
+                                      const Icon(
                                     Icons.delete,
                                     size: 180,
                                     color: Colors.red,
                                   ),
-
                                 ))
                             : Container()
                       ],
