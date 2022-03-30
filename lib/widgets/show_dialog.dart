@@ -9,81 +9,81 @@ showDialogBuild(BuildContext context) {
   return showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        backgroundColor: Colors.black54,
-        title: const Text('Select Image From :', style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold
-        )),
-        content: SizedBox(
-          height: 150,
-          child: Column(
-            children: [
-              const Divider(
-                color: Colors.grey,
-              ),
-              Container(
-                width: 350,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  gradient: const LinearGradient(colors: [
-                    Color(0xFFFF3E71),
-                    Color(0xFFFEC317),
-                  ], begin: Alignment.bottomLeft, end: Alignment.topRight),
-                ),
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.image,
-                    color: Colors.white,
+            backgroundColor: Colors.black54,
+            title: const Text('Select Image From :',
+                style: TextStyle(
+                    color: Colors.white, fontWeight: FontWeight.bold)),
+            content: SizedBox(
+              height: 150,
+              child: Column(
+                children: [
+                  const Divider(
+                    color: Colors.grey,
                   ),
-                  title: const Text(
-                    'Gallery',
-                    style: TextStyle(
-                        fontFamily: 'messiri', color: Colors.white),
-                  ),
-                  onTap: () {
-                    HandCubit.get(context).getImage(ImageSource.gallery);
+                  Container(
+                    width: 350,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      gradient: const LinearGradient(colors: [
+                        Color(0xFFFF3E71),
+                        Color(0xFFFEC317),
+                      ], begin: Alignment.bottomLeft, end: Alignment.topRight),
+                    ),
+                    child: ListTile(
+                      leading: const Icon(
+                        Icons.image,
+                        color: Colors.white,
+                      ),
+                      title: const Text(
+                        'Gallery',
+                        style: TextStyle(
+                            fontFamily: 'messiri', color: Colors.white),
+                      ),
+                      onTap: () {
+                        HandCubit.get(context).getImage(ImageSource.gallery);
 
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              Container(
-                width: 350,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  gradient: const LinearGradient(colors: [
-                    Color(0xFFFF3E71),
-                    Color(0xFFFEC317),
-                  ], begin: Alignment.bottomLeft, end: Alignment.topRight),
-                ),
-                child: ListTile(
-                  leading: const Icon(
-                    Icons.camera_alt,
-                    color: Colors.white,
+                        Navigator.of(context).pop();
+                      },
+                    ),
                   ),
-                  title: const Text('Camera',
-                      style: TextStyle(
-                          fontFamily: 'messiri', color: Colors.white)),
-                  onTap: () {
-                    HandCubit.get(context).getImage(ImageSource.camera);
-                    Navigator.of(context).pop();
-                  },
-                ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    width: 350,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      gradient: const LinearGradient(colors: [
+                        Color(0xFFFF3E71),
+                        Color(0xFFFEC317),
+                      ], begin: Alignment.bottomLeft, end: Alignment.topRight),
+                    ),
+                    child: ListTile(
+                      leading: const Icon(
+                        Icons.camera_alt,
+                        color: Colors.white,
+                      ),
+                      title: const Text('Camera',
+                          style: TextStyle(
+                              fontFamily: 'messiri', color: Colors.white)),
+                      onTap: () {
+                        HandCubit.get(context).getImage(ImageSource.camera);
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-      ));
+            ),
+          ));
 }
 
 showDialogOTPBuildSimple(BuildContext context, String numberController) {
   return showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-            title: Center(child: Text('Warring :  is correct ?', style: normalText)),
+            title: Center(
+                child: Text('Warring :  is correct ?', style: normalText)),
             content: SizedBox(
               height: 120,
               child: Column(
@@ -110,7 +110,10 @@ showDialogOTPBuildSimple(BuildContext context, String numberController) {
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            icon: const Icon(Icons.clear,color: Colors.red,)),
+                            icon: const Icon(
+                              Icons.clear,
+                              color: Colors.red,
+                            )),
                       ),
                       Expanded(
                         child: TextButton(
@@ -128,4 +131,42 @@ showDialogOTPBuildSimple(BuildContext context, String numberController) {
               ),
             ),
           ));
+}
+
+showDeleteConfirmation(
+    {BuildContext context,
+    Function cancelFun,
+    Function confirmFun,
+    String productName}) {
+  return showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(
+            'are sure want to delete $productName ?',
+            style: const TextStyle(
+                color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Colors.black54,
+          content: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                  onPressed: cancelFun,
+                  icon: const Icon(
+                    Icons.cancel,
+                    color: Colors.red,
+                    size: 40,
+                  )),
+              IconButton(
+                  onPressed: confirmFun,
+                  icon: const Icon(
+                    Icons.check,
+                    color: Colors.teal,
+                    size: 40,
+                  )),
+            ],
+          ),
+        );
+      });
 }

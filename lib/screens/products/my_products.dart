@@ -45,13 +45,7 @@ class _MyProductsState extends State<MyProducts> {
                     'My Products',
                     style: TextStyle(fontWeight: FontWeight.bold,fontSize: 25),
                   ),
-                  action: IconButton(
-                    icon: const Icon(
-                      Icons.edit,
-                      color: Colors.black54,
-                    ),
-                    onPressed: () {},
-                  ),
+                  action: Container(),
                   elevation: 20.0),
               body: Container(
                 padding: const EdgeInsets.only(top: 15, right: 5, left: 5),

@@ -676,4 +676,14 @@ class HandCubit extends Cubit<HandMadeState> {
       emit(HandGetAllFavoritesError(err.toString()));
     });
   }
+  deleteProduct({String id}){
+    emit(HandDeleteProductLoading());
+    FirebaseFirestore.instance.collection('products').doc(id).delete().then((value) => (){
+      emit(HandDeleteProductSuccess());
+    }).catchError((err){
+      print(err.toString());
+      emit(HandDeleteProductError(err.toString()));
+    });
+  }
 }
+

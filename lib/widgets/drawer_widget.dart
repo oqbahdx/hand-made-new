@@ -29,6 +29,7 @@ class _DrawerBuildState extends State<DrawerBuild> {
   Future<void> _signOut() async {
     await FirebaseAuth.instance.signOut();
   }
+
   @override
   Widget build(BuildContext context) {
     double h = MediaQuery.of(context).size.height;
@@ -57,18 +58,22 @@ class _DrawerBuildState extends State<DrawerBuild> {
                         height: 120,
                         width: 120,
                         decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topRight:Radius.circular(15),topLeft: Radius.circular(15),
-                              bottomRight: Radius.circular(15),bottomLeft:Radius.circular(15)
-                          )
-                        ),
+                            borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(15),
+                                topLeft: Radius.circular(15),
+                                bottomRight: Radius.circular(15),
+                                bottomLeft: Radius.circular(15))),
                         child: CachedNetworkImage(
                           imageUrl: model.profileImage,
                           fit: BoxFit.fill,
                           height: double.infinity,
-                          width : double.infinity,
-                          placeholder: (context, url) => Image.asset('assets/pleaceholder.png',color: Colors.black87,),
-                          errorWidget: (context, url, error) => const Icon(Icons.error),
+                          width: double.infinity,
+                          placeholder: (context, url) => Image.asset(
+                            'assets/pleaceholder.png',
+                            color: Colors.white,
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
                         ),
                       ),
                       Text(

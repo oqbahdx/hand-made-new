@@ -5,8 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/show_message.dart';
+import 'package:hand_made_new/screens/home/start.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
+import 'package:hand_made_new/widgets/show_dialog.dart';
 
 class ProductDetails extends StatefulWidget {
   final String productId;
@@ -34,14 +36,17 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     return BlocConsumer<HandCubit, HandMadeState>(
       listener: (context, state) {
+        if (state is HandDeleteProductSuccess) {
+          showMessageError('the product has been deleted successfully');
+        }
         if (state is HandAddToFavoriteSuccess) {
           showMessageSuccess('item has been added successfully');
         }
       },
       builder: (context, state) {
-        var list = HandCubit.get(context)
-            .favoritesList;
-        bool exists = list.any((element) => element.productId == widget.productId);
+        var list = HandCubit.get(context).favoritesList;
+        bool exists =
+            list.any((element) => element.productId == widget.productId);
         return Scaffold(
           appBar: appBarWidget(
               elevation: 0.0,
@@ -68,40 +73,69 @@ class _ProductDetailsState extends State<ProductDetails> {
                       borderRadius: BorderRadius.circular(20)),
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20, right: 20),
-                        child: Align(
-                            alignment: Alignment.centerRight,
-                            child: exists
-                                ? IconButton(
-                                    onPressed: () {
-                                      HandCubit.get(context).deleteFavoriteItem(
-                                          productId: widget.productId);
-                                    },
-                                    icon: const Icon(
-                                      Icons.favorite_outlined,
-                                      size: 40,
-                                      color: Colors.red,
-                                    ),
-                                  )
-                                : IconButton(
-                                    onPressed: () {
-                                      HandCubit.get(context).addToFavorite(
-                                        userId: FirebaseAuth
-                                            .instance.currentUser.uid,
-                                        name: widget.productName,
-                                        image: widget.productImage,
-                                        des: widget.productDes,
-                                        price: widget.productPrice,
-                                        productId: widget.productId,
-                                      );
-                                    },
-                                    icon: const Icon(
-                                      Icons.favorite_border_outlined,
-                                      size: 40,
-                                      color: Colors.red,
-                                    ),
-                                  )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20, right: 20),
+                            child: Align(
+                                alignment: Alignment.centerRight,
+                                child: IconButton(
+                                  onPressed: () {
+                                    HandCubit.get(context).addToFavorite(
+                                      userId:
+                                          FirebaseAuth.instance.currentUser.uid,
+                                      name: widget.productName,
+                                      image: widget.productImage,
+                                      des: widget.productDes,
+                                      price: widget.productPrice,
+                                      productId: widget.productId,
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    size: 40,
+                                    color: Colors.white70,
+                                  ),
+                                )),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20, right: 20),
+                            child: Align(
+                                alignment: Alignment.centerRight,
+                                child: exists
+                                    ? IconButton(
+                                        onPressed: () {
+                                          HandCubit.get(context)
+                                              .deleteFavoriteItem(
+                                                  productId: widget.productId);
+                                        },
+                                        icon: const Icon(
+                                          Icons.favorite_outlined,
+                                          size: 40,
+                                          color: Colors.red,
+                                        ),
+                                      )
+                                    : IconButton(
+                                        onPressed: () {
+                                          HandCubit.get(context).addToFavorite(
+                                            userId: FirebaseAuth
+                                                .instance.currentUser.uid,
+                                            name: widget.productName,
+                                            image: widget.productImage,
+                                            des: widget.productDes,
+                                            price: widget.productPrice,
+                                            productId: widget.productId,
+                                          );
+                                        },
+                                        icon: const Icon(
+                                          Icons.favorite_border_outlined,
+                                          size: 40,
+                                          color: Colors.red,
+                                        ),
+                                      )),
+                          ),
+                        ],
                       ),
                       const SizedBox(
                         height: 25,
@@ -125,9 +159,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                             imageUrl: widget.productImage,
                             fit: BoxFit.fill,
                             height: double.infinity,
-                            width : double.infinity,
-                            placeholder: (context, url) => Image.asset('assets/pleaceholder.png',color: Colors.black87),
-                            errorWidget: (context, url, error) => const Icon(Icons.error),
+                            width: double.infinity,
+                            placeholder: (context, url) => Image.asset(
+                                'assets/pleaceholder.png',
+                                color: Colors.black87),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
                           ),
                         ),
                       ),
@@ -187,6 +224,29 @@ class _ProductDetailsState extends State<ProductDetails> {
                   ),
                 ),
               ),
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              // HandCubit.get(context).deleteProduct(id: widget.productId);
+              // Navigator.of(context).pop();
+              showDeleteConfirmation(
+                  context: context,
+                  productName: widget.productName,
+                  cancelFun: () {
+                    Navigator.of(context).pop();
+                  },
+                  confirmFun: () {
+                    HandCubit.get(context).deleteProduct(id: widget.productId);
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const StartPage()));
+                  });
+            },
+            backgroundColor: Colors.black45,
+            child: const Icon(
+              Icons.delete,
+              color: Colors.red,
+              size: 40,
             ),
           ),
         );
