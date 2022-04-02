@@ -57,10 +57,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final HandCubit _handCubit = HandCubit();
-
-  MyApp({Key key, this.startPage}) : super(key: key);
-
+ const MyApp({Key key, this.startPage}) : super(key: key);
   final Widget startPage;
 
   @override

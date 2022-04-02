@@ -33,7 +33,7 @@ class _ChatListState extends State<ChatList> {
                   future: FirebaseFirestore.instance
                       .collection('users')
                       .doc(FirebaseAuth.instance.currentUser.uid)
-                      .collection('messages')
+                      .collection('chat')
                       .get(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -48,6 +48,7 @@ class _ChatListState extends State<ChatList> {
                     return ListView(
                       children: snapshot.data.docs.map((document) {
                         final dynamic data = document.data();
+                        print("data : ${data}");
                         return Padding(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 15, vertical: 10),

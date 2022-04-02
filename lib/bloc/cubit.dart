@@ -338,7 +338,7 @@ class HandCubit extends Cubit<HandMadeState> {
         uId: userId, name: name, description: des, image: image, price: price);
     FirebaseFirestore.instance
         .collection('products')
-        .add(productsModel.addProduct())
+        .add(productsModel.toJson())
         .then((value) {
       emit(HandAddProductSuccessState());
     }).catchError((error) {
@@ -683,6 +683,23 @@ class HandCubit extends Cubit<HandMadeState> {
     }).catchError((err){
       print(err.toString());
       emit(HandDeleteProductError(err.toString()));
+    });
+  }
+
+  updateProduct({String uid, String id,String name,String image,String desc, String price}){
+    emit(HandUpdateProductLoading());
+    ProductsModel model = ProductsModel(
+      name: name,
+      description:desc,
+      image: image,
+      price: price,
+      uId: uid,
+    );
+    FirebaseFirestore.instance.collection('products').doc(id).update(model.toJson()).then((value) {
+      emit(HandUpdateProductSuccess());
+    }).catchError((err){
+      emit(HandUpdateProductError(err.toString()));
+      print(err.toString());
     });
   }
 }

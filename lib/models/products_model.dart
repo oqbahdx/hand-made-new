@@ -15,7 +15,7 @@ class ProductsModel {
     image = json['image'];
   }
 
-  Map<String, dynamic> addProduct() {
+  Map<String, dynamic> toJson() {
     return {
       'uId': uId,
       'name': name,

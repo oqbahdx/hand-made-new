@@ -193,3 +193,11 @@ class HandDeleteProductError extends HandMadeState {
 
   HandDeleteProductError(this.err);
 }
+
+class HandUpdateProductLoading extends HandMadeState{}
+class HandUpdateProductSuccess extends HandMadeState{}
+class HandUpdateProductError extends HandMadeState{
+  final String error;
+
+  HandUpdateProductError(this.error);
+}

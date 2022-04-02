@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
+import 'package:hand_made_new/components/navigator.dart';
 import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/screens/home/start.dart';
+import 'package:hand_made_new/screens/products/edit_product.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 import 'package:hand_made_new/widgets/show_dialog.dart';
@@ -82,15 +84,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 alignment: Alignment.centerRight,
                                 child: IconButton(
                                   onPressed: () {
-                                    HandCubit.get(context).addToFavorite(
-                                      userId:
-                                          FirebaseAuth.instance.currentUser.uid,
+                                    moveToPageWithData(context,namePage: EditProduct(
+                                      uid: widget.productId,
                                       name: widget.productName,
                                       image: widget.productImage,
-                                      des: widget.productDes,
+                                      desc: widget.productDes,
                                       price: widget.productPrice,
-                                      productId: widget.productId,
-                                    );
+                                    ));
                                   },
                                   icon: const Icon(
                                     Icons.edit,
