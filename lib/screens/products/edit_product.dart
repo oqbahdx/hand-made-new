@@ -7,12 +7,13 @@ import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/screens/home/start.dart';
-import 'package:hand_made_new/screens/products/my_products.dart';
 import 'package:hand_made_new/styles/colors.dart';
 
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
+import 'package:hand_made_new/widgets/callback.dart';
 import 'package:hand_made_new/widgets/navigators.dart';
+import 'package:hand_made_new/widgets/show_dialog.dart';
 import 'package:hand_made_new/widgets/text_form_background.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 
@@ -56,7 +57,7 @@ class _EditProductState extends State<EditProduct> {
       listener: (context, state) {
         if (state is HandUpdateProductSuccess) {
           showMessageSuccess('Product Has Been Edit Successfully');
-          moveToPageAndFinish(context,const StartPage());
+          moveToPageAndFinish(context, const StartPage());
         } else if (state is HandUpdateProductError) {
           showMessageError('Field To Edit Product');
         }
@@ -119,21 +120,50 @@ class _EditProductState extends State<EditProduct> {
                     SizedBox(
                       height: _height * 0.06,
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 10),
-                      height: _height * 0.20,
-                      child: CachedNetworkImage(
-                        imageUrl: widget.image,
-                        fit: BoxFit.fill,
-                        height: double.infinity,
-                        width: double.infinity,
-                        placeholder: (context, url) => Image.asset(
-                            'assets/pleaceholder.png',
-                            color: Colors.black87),
-                        errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
-                      ),
+                    Stack(
+                      children: [
+                        Positioned(
+                          child: Hero(
+                            tag: widget.uid,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 40, vertical: 10),
+                              height: _height * 0.20,
+                              child: HandCubit.get(context).image == null
+                                  ? CachedNetworkImage(
+                                      imageUrl: widget.image,
+                                      fit: BoxFit.fill,
+                                      height: double.infinity,
+                                      width: double.infinity,
+                                      placeholder: (context, url) =>
+                                          Image.asset('assets/pleaceholder.png',
+                                              color: Colors.black87),
+                                      errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                    )
+                                  : Image.file(
+                                      HandCubit.get(context).image,
+                                      width: double.infinity,
+                                      height: double.infinity,
+                                      fit: BoxFit.cover,
+                                    ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                            bottom: 0,
+                            right: 20,
+                            child: IconButton(
+                              onPressed: () {
+                                showDialogBuild(context);
+                              },
+                              icon: const Icon(
+                                Icons.edit,
+                                size: 30,
+                                color: Colors.white,
+                              ),
+                            )),
+                      ],
                     ),
                     SizedBox(
                       height: _height * 0.04,
@@ -141,26 +171,33 @@ class _EditProductState extends State<EditProduct> {
                     Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: ConditionalBuilder(
-                          condition: state is! HandUpdateProductLoading,
-                          builder: (context) => buildTapBlack(
-                              h: _height * 0.08,
-                              text: 'Update Product',
-                              onTap: () {
-                                if (formKey.currentState.validate()) {
-                                  HandCubit.get(context).updateProduct(
-                                      uid:
-                                          FirebaseAuth.instance.currentUser.uid,
-                                      id: widget.uid,
-                                      name: _nameController.text,
-                                      price: _priceController.text,
-                                      desc: _descriptionController.text,
-                                      image: widget.image);
-                                }
-                              }),
-                          fallback: (context) => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
-                        )),
+                            condition: state is! HandUpdateProductLoading,
+                            builder: (context) => buildTapBlack(
+                                h: _height * 0.08,
+                                text: 'Update Product',
+                                onTap: () {
+                                  if (formKey.currentState.validate()) {
+                                    HandCubit.get(context).image == null
+                                        ? HandCubit.get(context).updateProduct(
+                                            uid: FirebaseAuth
+                                                .instance.currentUser.uid,
+                                            id: widget.uid,
+                                            name: _nameController.text,
+                                            price: _priceController.text,
+                                            desc: _descriptionController.text,
+                                            image: widget.image)
+                                        : HandCubit.get(context)
+                                            .updateProductWithImage(
+                                                uid: FirebaseAuth
+                                                    .instance.currentUser.uid,
+                                                id: widget.uid,
+                                                name: _nameController.text,
+                                                price: _priceController.text,
+                                                des: _descriptionController
+                                                    .text);
+                                  }
+                                }),
+                            fallback: (context) => const CallBackIndicator())),
                   ],
                 ),
               ),

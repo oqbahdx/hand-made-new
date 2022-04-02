@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +8,7 @@ import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/components/containers.dart';
 import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/styles/colors.dart';
+import 'package:hand_made_new/widgets/callback.dart';
 import 'package:hand_made_new/widgets/show_dialog.dart';
 import 'package:hand_made_new/widgets/text_forms.dart';
 
@@ -160,7 +162,7 @@ class _ProfileState extends State<Profile> {
                           text: 'UPDATE',
                           h: 60,
                           onTap: () {
-                            HandCubit.get(context).image.path != null
+                            HandCubit.get(context).image != null
                                 ? HandCubit.get(context).updateProfileWithImage(
                                 uid: model.uid,
                                 role: model.role,
@@ -176,7 +178,7 @@ class _ProfileState extends State<Profile> {
                                 name: nameController.text,
                                 email: model.email,
                                 isAvailable: model.isAvailable,
-                                location: model.location,
+                                location: GeoPoint(model.location.latitude, model.location.longitude),
                                 password: model.password,
                                 phone: phoneController.text,
                                 role: model.role,
@@ -185,11 +187,7 @@ class _ProfileState extends State<Profile> {
                       fallback: (context) => Container(
                         decoration: BoxDecoration(
                             gradient: LinearGradient(colors: gradientColor)),
-                        child: const Center(
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                          ),
-                        ),
+                        child: const CallBackIndicator()
                       ),
                     )
                   ],
@@ -200,11 +198,7 @@ class _ProfileState extends State<Profile> {
           fallback: (context) => Container(
             decoration:
             BoxDecoration(gradient: LinearGradient(colors: gradientColor)),
-            child: const Center(
-              child: CircularProgressIndicator(
-                color: Colors.white,
-              ),
-            ),
+            child: const CallBackIndicator()
           ),
         );
       }

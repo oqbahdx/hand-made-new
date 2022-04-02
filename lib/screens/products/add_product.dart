@@ -9,6 +9,7 @@ import 'package:hand_made_new/styles/colors.dart';
 
 import 'package:hand_made_new/styles/fonts.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
+import 'package:hand_made_new/widgets/callback.dart';
 import 'package:hand_made_new/widgets/navigators.dart';
 import 'package:hand_made_new/widgets/show_dialog.dart';
 import 'package:hand_made_new/widgets/text_form_background.dart';
@@ -151,9 +152,7 @@ class _AddProductState extends State<AddProduct> {
                                 }
                                 // HandCubit.get(context).image = null;
                               }),
-                          fallback: (context) => const Center(
-                            child: CircularProgressIndicator(),
-                          ),
+                          fallback: (context) => const CallBackIndicator()
                         )),
                   ],
                 ),

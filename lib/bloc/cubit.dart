@@ -216,33 +216,6 @@ class HandCubit extends Cubit<HandMadeState> {
   }
 
   SellerModel sellerModel;
-  Set<Marker> markers = {
-    const Marker(
-      markerId: MarkerId('1'),
-      icon: BitmapDescriptor.defaultMarker,
-      position: LatLng(15.5007, 32.5599),
-    ),
-    Marker(
-      markerId: const MarkerId('2'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueAzure),
-      position: const LatLng(15.5007, 32.5799),
-    ),
-    Marker(
-      markerId: const MarkerId('3'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
-      position: const LatLng(15.5307, 32.5599),
-    ),
-    Marker(
-      markerId: const MarkerId('4'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueOrange),
-      position: const LatLng(15.1007, 32.5599),
-    ),
-    Marker(
-      markerId: const MarkerId('5'),
-      icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueMagenta),
-      position: const LatLng(15.5037, 32.5399),
-    ),
-  };
 
   void addProductWithImage({String name, String des, String price}) {
     emit(HandUploadImageLoadingState());
@@ -265,7 +238,7 @@ class HandCubit extends Cubit<HandMadeState> {
     @required String name,
     @required String email,
     @required bool isAvailable,
-    @required String location,
+    @required GeoPoint location,
     @required String password,
     @required String phone,
     @required String role,
@@ -664,43 +637,82 @@ class HandCubit extends Cubit<HandMadeState> {
         .where('userId', isEqualTo: FirebaseAuth.instance.currentUser.uid)
         .get()
         .then((value) {
-        favoritesList = [];
+      favoritesList = [];
 
       for (var element in value.docs) {
         favoritesList.add(FavoriteModel.fromJson(element.data()));
         print(favoritesList[0].productName);
       }
       emit(HandGetAllFavoritesSuccess());
-    }).catchError((err){
+    }).catchError((err) {
       print(err.toString());
       emit(HandGetAllFavoritesError(err.toString()));
     });
   }
-  deleteProduct({String id}){
+
+  deleteProduct({String id}) {
     emit(HandDeleteProductLoading());
-    FirebaseFirestore.instance.collection('products').doc(id).delete().then((value) => (){
-      emit(HandDeleteProductSuccess());
-    }).catchError((err){
+    FirebaseFirestore.instance
+        .collection('products')
+        .doc(id)
+        .delete()
+        .then((value) => () {
+              emit(HandDeleteProductSuccess());
+            })
+        .catchError((err) {
       print(err.toString());
       emit(HandDeleteProductError(err.toString()));
     });
   }
 
-  updateProduct({String uid, String id,String name,String image,String desc, String price}){
-    emit(HandUpdateProductLoading());
+  updateProduct(
+      {String uid,
+      String id,
+      String name,
+      String image,
+      String desc,
+      String price}) {
+
     ProductsModel model = ProductsModel(
       name: name,
-      description:desc,
+      description: desc,
       image: image,
       price: price,
       uId: uid,
     );
-    FirebaseFirestore.instance.collection('products').doc(id).update(model.toJson()).then((value) {
+    emit(HandUpdateProductLoading());
+    FirebaseFirestore.instance
+        .collection('products')
+        .doc(id)
+        .update(model.toJson())
+        .then((value) {
       emit(HandUpdateProductSuccess());
-    }).catchError((err){
+    }).catchError((err) {
       emit(HandUpdateProductError(err.toString()));
       print(err.toString());
     });
   }
-}
 
+  void updateProductWithImage(
+      {String name, String des, String price, String id, String uid}) {
+    emit(HandUploadImageLoadingState());
+    firebase_storage.FirebaseStorage.instance
+        .ref()
+        .child('products/${Uri.file(image.path).pathSegments.last}')
+        .putFile(image)
+        .then((value) {
+      value.ref.getDownloadURL().then((value) {
+        updateProduct(
+            image: value,
+            desc: des,
+            price: price,
+            name: name,
+            id: id,
+            uid: uid);
+        emit(HandUpdateImageSuccessState());
+      }).catchError((error) {
+        emit(HandUploadImageErrorState(error.toString()));
+      });
+    });
+  }
+}
