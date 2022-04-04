@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_made_new/components/floating_buttons.dart';
@@ -58,79 +59,99 @@ class _OnBoardingState extends State<OnBoarding> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: appBarWidget(elevation: 0.0, action: Container()),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          children: [
-            Expanded(
-              child: PageView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) =>
-                    onBoardingWidget(
-                      images[index],
-                      titles[index],
-                      bodies[index],
-                    ),
-                itemCount: 3,
-                controller: pageController,
-                onPageChanged: (int index) {
-                  if (index == 2) {
-                    setState(() {
-                      isLast = true;
+    return TweenAnimationBuilder<double>(
+      tween: Tween<double>(begin: 1.0,end: 255.0),
+      duration: const Duration(milliseconds: 15000),
+      builder: (context,hue,child){
+        final vhsColor = HSVColor.fromAHSV(1.0, hue,1.0, 1.0);
+        return  Scaffold(
+          body: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
 
-                      if (kDebugMode) {
-                        print('last');
-                      }
-                    });
-                  } else {
-                    setState(() {
-                      isLast = false;
-                    });
-                  }
-                },
+                  vhsColor.toColor(),
+                  Colors.white,
+                  vhsColor.toColor(),
+                ],
+                end: Alignment.topLeft,
+                begin: Alignment.bottomRight
+              )
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: PageView.builder(
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) => onBoardingWidget(
+                        images[index],
+                        titles[index],
+                        bodies[index],
+                      ),
+                      itemCount: 3,
+                      controller: pageController,
+                      onPageChanged: (int index) {
+                        if (index == 2) {
+                          setState(() {
+                            isLast = true;
+
+                            if (kDebugMode) {
+                              print('last');
+                            }
+                          });
+                        } else {
+                          setState(() {
+                            isLast = false;
+                          });
+                        }
+                      },
+                    ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SmoothPageIndicator(
+                        controller: pageController,
+                        count: 3,
+                        effect: const WormEffect(
+                            spacing: 5,
+                            dotHeight: 10,
+                            dotWidth: 25,
+                            activeDotColor: onBoardingColor),
+                      ),
+                      const Spacer(),
+                      isLast == false
+                          ? floatingNextButton(
+                          function: () {
+                            pageController.nextPage(
+                                duration: const Duration(milliseconds: 500),
+                                curve: Curves.easeInCubic);
+                          },
+                          icn: Icons.arrow_forward_ios)
+                          : floatingNextButton(
+                          function: () async {
+                            submit();
+                            if (await Permission.location.isGranted &&
+                                await Permission
+                                    .accessMediaLocation.isGranted &&
+                                await Permission.locationAlways.isGranted &&
+                                await Permission.camera.isGranted &&
+                                await Permission.storage.isGranted) {
+                              moveToPageAndFinish(context, const LoginPage());
+                            }
+                          },
+                          icn: Icons.home),
+                    ],
+                  )
+                ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SmoothPageIndicator(
-                  controller: pageController,
-                  count: 3,
-                  effect: const WormEffect(
-                      spacing: 5,
-                      dotHeight: 10,
-                      dotWidth: 25,
-                      activeDotColor: onBoardingColor),
-                ),
-                const Spacer(),
-                isLast == false
-                    ? floatingNextButton(
-                    function: () {
-                      pageController.nextPage(
-                          duration: const Duration(milliseconds: 500),
-                          curve: Curves.easeInCubic);
-                    },
-                    icn: Icons.arrow_forward_ios)
-                    : floatingNextButton(
-                    function: () async {
-                      submit();
-                      if (await Permission.location.isGranted &&
-                          await Permission.accessMediaLocation.isGranted &&
-                          await Permission.locationAlways.isGranted &&
-                          await Permission.camera.isGranted &&
-                          await Permission.storage.isGranted) {
-                        moveToPageAndFinish(context, const LoginPage());
-                      }
-                    },
-                    icn: Icons.home),
-              ],
-            )
-          ],
-        ),
-      ),
+          ),
+        );
+      },
+
     );
   }
 }
