@@ -12,14 +12,14 @@ import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 import 'package:hand_made_new/widgets/show_dialog.dart';
 
-class ProductDetails extends StatefulWidget {
+class MyProductDetails extends StatefulWidget {
   final String productId;
   final String productName;
   final String productPrice;
   final String productDes;
   final String productImage;
 
-  const ProductDetails({
+  const MyProductDetails({
     Key key,
     this.productId,
     this.productPrice,
@@ -27,13 +27,13 @@ class ProductDetails extends StatefulWidget {
     this.productImage,
     this.productName,
   }) : super(key: key);
-  static String id = "ProductDetails";
+  static String id = "MyProductDetails";
 
   @override
-  _ProductDetailsState createState() => _ProductDetailsState();
+  _MyProductDetailsState createState() => _MyProductDetailsState();
 }
 
-class _ProductDetailsState extends State<ProductDetails> {
+class _MyProductDetailsState extends State<MyProductDetails> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<HandCubit, HandMadeState>(
@@ -48,7 +48,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       builder: (context, state) {
         var list = HandCubit.get(context).favoritesList;
         bool exists =
-            list.any((element) => element.productId == widget.productId);
+        list.any((element) => element.productId == widget.productId);
         return Scaffold(
           appBar: appBarWidget(
               elevation: 0.0,
@@ -56,13 +56,13 @@ class _ProductDetailsState extends State<ProductDetails> {
               title: Text(
                 widget.productName,
                 style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                const TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
               )),
           body: Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-              colors: gradientColor,
-            )),
+                  colors: gradientColor,
+                )),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Card(
@@ -82,37 +82,58 @@ class _ProductDetailsState extends State<ProductDetails> {
                             padding: const EdgeInsets.only(top: 20, right: 20),
                             child: Align(
                                 alignment: Alignment.centerRight,
+                                child: IconButton(
+                                  onPressed: () {
+                                    moveToPageWithData(context,namePage: EditProduct(
+                                      uid: widget.productId,
+                                      name: widget.productName,
+                                      image: widget.productImage,
+                                      desc: widget.productDes,
+                                      price: widget.productPrice,
+                                    ));
+                                  },
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    size: 40,
+                                    color: Colors.white70,
+                                  ),
+                                )),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20, right: 20),
+                            child: Align(
+                                alignment: Alignment.centerRight,
                                 child: exists
                                     ? IconButton(
-                                        onPressed: () {
-                                          HandCubit.get(context)
-                                              .deleteFavoriteItem(
-                                                  productId: widget.productId);
-                                        },
-                                        icon: const Icon(
-                                          Icons.favorite_outlined,
-                                          size: 40,
-                                          color: Colors.red,
-                                        ),
-                                      )
+                                  onPressed: () {
+                                    HandCubit.get(context)
+                                        .deleteFavoriteItem(
+                                        productId: widget.productId);
+                                  },
+                                  icon: const Icon(
+                                    Icons.favorite_outlined,
+                                    size: 40,
+                                    color: Colors.red,
+                                  ),
+                                )
                                     : IconButton(
-                                        onPressed: () {
-                                          HandCubit.get(context).addToFavorite(
-                                            userId: FirebaseAuth
-                                                .instance.currentUser.uid,
-                                            name: widget.productName,
-                                            image: widget.productImage,
-                                            des: widget.productDes,
-                                            price: widget.productPrice,
-                                            productId: widget.productId,
-                                          );
-                                        },
-                                        icon: const Icon(
-                                          Icons.favorite_border_outlined,
-                                          size: 40,
-                                          color: Colors.red,
-                                        ),
-                                      )),
+                                  onPressed: () {
+                                    HandCubit.get(context).addToFavorite(
+                                      userId: FirebaseAuth
+                                          .instance.currentUser.uid,
+                                      name: widget.productName,
+                                      image: widget.productImage,
+                                      des: widget.productDes,
+                                      price: widget.productPrice,
+                                      productId: widget.productId,
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.favorite_border_outlined,
+                                    size: 40,
+                                    color: Colors.red,
+                                  ),
+                                )),
                           ),
                         ],
                       ),
@@ -122,7 +143,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                       Text(
                         widget.productName,
                         style:
-                            const TextStyle(fontSize: 40, color: Colors.white),
+                        const TextStyle(fontSize: 40, color: Colors.white),
                       ),
                       const SizedBox(
                         height: 25,
@@ -143,7 +164,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 'assets/pleaceholder.png',
                                 color: Colors.black87),
                             errorWidget: (context, url, error) =>
-                                const Icon(Icons.error),
+                            const Icon(Icons.error),
                           ),
                         ),
                       ),
@@ -185,24 +206,47 @@ class _ProductDetailsState extends State<ProductDetails> {
                         height: 172,
                         child: Center(
                             child: ListView(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Text(
-                                widget.productDes,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 30,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    widget.productDes,
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 30,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ],
-                        )),
+                              ],
+                            )),
                       ),
                     ],
                   ),
                 ),
               ),
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              // HandCubit.get(context).deleteProduct(id: widget.productId);
+              // Navigator.of(context).pop();
+              showDeleteConfirmation(
+                  context: context,
+                  productName: widget.productName,
+                  cancelFun: () {
+                    Navigator.of(context).pop();
+                  },
+                  confirmFun: () {
+                    HandCubit.get(context).deleteProduct(id: widget.productId);
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const StartPage()));
+                  });
+            },
+            backgroundColor: Colors.black45,
+            child: const Icon(
+              Icons.delete,
+              color: Colors.red,
+              size: 40,
             ),
           ),
         );

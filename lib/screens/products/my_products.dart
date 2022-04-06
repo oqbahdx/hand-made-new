@@ -10,6 +10,8 @@ import 'package:hand_made_new/screens/products/products_detalis.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
 
+import 'my_product_details.dart';
+
 class MyProducts extends StatefulWidget {
   static String id = "MyProducts";
 
@@ -82,7 +84,7 @@ class _MyProductsState extends State<MyProducts> {
                           return InkWell(
                             onTap: () {
                               moveToPageWithData(context,
-                                  namePage: ProductDetails(
+                                  namePage: MyProductDetails(
                                     productPrice: data['price'].toString(),
                                     productImage: data['image'].toString(),
                                     productDes: data['description'].toString(),

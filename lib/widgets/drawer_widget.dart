@@ -81,19 +81,19 @@ class _DrawerBuildState extends State<DrawerBuild> {
                 const Divider(),
                 SizedBox(
                   height: h * 0.42,
-                  child: model.role == "seller"
-                      ? GridView(
+                  child:
+                    GridView(
                           children: [
-                            buildTapBlack(
+                            model.role == "seller"?buildTapBlack(
                                 text: 'Add Product',
                                 onTap: () {
                                   moveToPage(context, AddProduct.id);
-                                }),
-                            buildTapBlack(
+                                }):Container(),
+                            model.role == "seller"?buildTapBlack(
                                 text: 'My Products',
                                 onTap: () {
                                   moveToPage(context, MyProducts.id);
-                                }),
+                                }):Container(),
                             buildTapBlack(
                                 text: 'Favorite',
                                 onTap: () {
@@ -113,23 +113,7 @@ class _DrawerBuildState extends State<DrawerBuild> {
                             crossAxisSpacing: 5.0,
                           ),
                         )
-                      : GridView(
-                          children: [
-                            buildTapBlack(text: 'Favorite', onTap: () {}),
-                            buildTapBlack(
-                                text: 'Contact Us',
-                                onTap: () {
-                                  moveToPage(context, ContactUs.id);
-                                }),
-                          ],
-                          shrinkWrap: true,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            childAspectRatio: 3 / 2,
-                            crossAxisSpacing: 5.0,
-                          ),
-                        ),
+
                 ),
                 SizedBox(
                   height: h * 0.15,

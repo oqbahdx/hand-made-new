@@ -80,7 +80,7 @@ class _MapPageState extends State<MapPage> {
           moveToPageWithData(context, namePage: SellerDetails(
             uId: specify['uid'],
             name: specify['name'],
-            image: specify['image'],
+            image: specify['profileImage'],
           ));
         },
         infoWindow:

@@ -30,7 +30,7 @@ class _FamiliesListState extends State<FamiliesList> {
     return BlocConsumer<HandCubit, HandMadeState>(
       listener: (context, state) {},
       builder: (context, state) {
-        var user = HandCubit.get(context).userModel;
+        var model = HandCubit.get(context).userModel;
         return Scaffold(
           body: ConditionalBuilder(
             condition: state is !HandGetUserSuccessState,

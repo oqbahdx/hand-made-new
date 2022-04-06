@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:hand_made_new/models/products_model.dart';
-
 import 'package:hand_made_new/models/user_model.dart';
 import '/styles/colors.dart';
 import '/styles/fonts.dart';
@@ -226,6 +224,41 @@ Widget favoriteBuild({String name, String image, String tag}) {
           Icons.favorite_outlined,
           size: 40,
           color: Colors.red,
+        ),
+      ),
+    ),
+  );
+}
+
+Widget registerCard({BuildContext context ,String text,Function onTap}){
+  return  InkWell(
+    onTap: onTap,
+    child: Card(
+      elevation: 20.0,
+
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25),
+      ),
+      color: Colors.transparent,
+      child: Container(
+        alignment: Alignment.center,
+        height: 300,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(color: Colors.white,width: 5),
+            gradient: LinearGradient(
+              colors: gradientColor,
+              begin: Alignment.centerRight,
+              end: Alignment.centerLeft,
+
+            )),
+        child: Text(
+          text,
+          style: const TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 45),
         ),
       ),
     ),

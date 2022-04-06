@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hand_made_new/components/floating_buttons.dart';
 import 'package:hand_made_new/screens/account/login.dart';
 import 'package:hand_made_new/storage/shared.dart';
-import 'package:hand_made_new/widgets/app_bar.dart';
 import 'package:hand_made_new/widgets/navigators.dart';
 import 'package:hand_made_new/widgets/on_boarding_widgets.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -61,23 +60,12 @@ class _OnBoardingState extends State<OnBoarding> {
   Widget build(BuildContext context) {
     return TweenAnimationBuilder<double>(
       tween: Tween<double>(begin: 1.0,end: 255.0),
-      duration: const Duration(milliseconds: 15000),
+      duration: const Duration(milliseconds: 20000),
       builder: (context,hue,child){
         final vhsColor = HSVColor.fromAHSV(1.0, hue,1.0, 1.0);
         return  Scaffold(
           body: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-
-                  vhsColor.toColor(),
-                  Colors.white,
-                  vhsColor.toColor(),
-                ],
-                end: Alignment.topLeft,
-                begin: Alignment.bottomRight
-              )
-            ),
+              color: vhsColor.toColor(),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(

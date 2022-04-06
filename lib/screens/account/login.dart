@@ -1,6 +1,7 @@
 import 'package:conditional_builder/conditional_builder.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/storage/shared.dart';
 import '/components/containers.dart';
@@ -34,145 +35,145 @@ class _LoginPageState extends State<LoginPage> {
       create: (BuildContext context) => HandCubit(),
       child: BlocConsumer<HandCubit, HandMadeState>(
         listener: (context, state) {
-          if(state is HandBuyerLoginSuccessState){
-
-              SharedPref.saveData(key: 'uid', value: true).then((value) {
-                if (value) {
-                  moveToPageAndFinish(context, const StartPage());
-                }
-              });
-
-
+          if (state is HandBuyerLoginSuccessState) {
+            SharedPref.saveData(key: 'uid', value: true).then((value) {
+              if (value) {
+                moveToPageAndFinish(context, const StartPage());
+              }
+            });
           }
         },
         builder: (context, state) {
-          return Scaffold(
-              appBar: appBarWidget(
-                title: Text(
-                  'Login',
-                  style: normalText,
+          return AnnotatedRegion<SystemUiOverlayStyle>(
+            value: const SystemUiOverlayStyle(
+              statusBarBrightness: Brightness.dark,
+              statusBarIconBrightness: Brightness.dark
+            ),
+            child: Scaffold(
+                appBar: appBarWidget(
+                  title: Text(
+                    'Login',
+                    style: normalText,
+                  ),
+                  elevation: 0.0,
+                  action: Container(),
                 ),
-                elevation: 0.0,
-                action: Container(),
-              ),
-              body: Form(
-                key: formKey,
-                child: ListView(
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  children: [
-                    SizedBox(
-                      height: h * 0.005,
-                    ),
-                    SizedBox(
-                      height: 250,
-                      width: 350,
-                      child: Image.asset('assets/applogo.png'),
-                    ),
-                    SizedBox(
-                      height: h * 0.035,
-                    ),
-                    defaultTextFormField(
-                        text: 'email',
-                        showPass: null,
-                        sec: false,
-                        function: (value) {
-                          if (value.isEmpty) {
-                            return 'email must not be empty';
-                          }
-                        },
-                        controller: emailController,
-                        icn: Icons.email,
-                        type: TextInputType.emailAddress,
-                        saveFunction: null),
-                    SizedBox(
-                      height: h * 0.035,
-                    ),
-                    defaultTextFormField(
-                        text: 'password',
-                        showPass: IconButton(
-                            onPressed: () {
-                              HandCubit.get(context)
-                                  .changePasswordVisibility();
-                            },
-                            icon: Icon(HandCubit.get(context).icon)),
-                        sec: HandCubit.get(context).isShow,
-                        function: (value) {
-                          if (value.isEmpty) {
-                            return 'password is empty';
-                          }
-                        },
-                        controller: passwordController,
-                        icn: Icons.enhanced_encryption,
-                        type: TextInputType.text),
-                    SizedBox(
-                      height: h * 0.025,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10),
-                          child: Text(
-                            'Forget password  ?',
-                            style: smallText,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10.0),
-                          child: gradientText(
-                              text: 'Click Here',
-                              onTap: () {
-                                moveToPage(context, OTPPage.id);
-                              }),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: h * 0.015,
-                    ),
-                    ConditionalBuilder(
-                      condition: state is! HandBuyerLoginLoadingState,
-                      builder: (context) => containerBuildTap(
-                          h: h * 0.075,
-                          text: 'Login',
-                          onTap: () async {
-                            if (formKey.currentState.validate()) {
-                              HandCubit.get(context).login(
-                                  email: emailController.text,
-                                  password: passwordController.text);
-
-                            }
-
-
-                          }),
-                      fallback: (context) =>
-                          const Center(child: CircularProgressIndicator()),
-                    ),
-                    SizedBox(
-                      height: h * 0.025,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            'You have already account ? ',
-                            style: normalText,
-                          ),
-                          gradientText(
-                              text: 'REGISTER',
-                              onTap: () {
-                                moveToPageAndFinish(
-                                    context, const RegisterMainPage());
-                              })
-                        ],
+                body: Form(
+                  key: formKey,
+                  child: ListView(
+                    shrinkWrap: true,
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      SizedBox(
+                        height: h * 0.005,
                       ),
-                    )
-                  ],
-                ),
-              ));
+                      SizedBox(
+                        height: 250,
+                        width: 350,
+                        child: Image.asset('assets/applogo.png'),
+                      ),
+                      SizedBox(
+                        height: h * 0.035,
+                      ),
+                      defaultTextFormField(
+                          text: 'email',
+                          showPass: null,
+                          sec: false,
+                          function: (value) {
+                            if (value.isEmpty) {
+                              return 'email must not be empty';
+                            }
+                          },
+                          controller: emailController,
+                          icn: Icons.email,
+                          type: TextInputType.emailAddress,
+                          saveFunction: null),
+                      SizedBox(
+                        height: h * 0.035,
+                      ),
+                      defaultTextFormField(
+                          text: 'password',
+                          showPass: IconButton(
+                              onPressed: () {
+                                HandCubit.get(context)
+                                    .changePasswordVisibility();
+                              },
+                              icon: Icon(HandCubit.get(context).icon)),
+                          sec: HandCubit.get(context).isShow,
+                          function: (value) {
+                            if (value.isEmpty) {
+                              return 'password is empty';
+                            }
+                          },
+                          controller: passwordController,
+                          icn: Icons.enhanced_encryption,
+                          type: TextInputType.text),
+                      SizedBox(
+                        height: h * 0.139,
+                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.start,
+                      //   children: [
+                      //     Padding(
+                      //       padding: const EdgeInsets.only(left: 10),
+                      //       child: Text(
+                      //         'Forget password  ?',
+                      //         style: smallText,
+                      //       ),
+                      //     ),
+                      //     Padding(
+                      //       padding: const EdgeInsets.only(left: 10.0),
+                      //       child: gradientText(
+                      //           text: 'Click Here',
+                      //           onTap: () {
+                      //             moveToPage(context, OTPPage.id);
+                      //           }),
+                      //     )
+                      //   ],
+                      // ),
+                      SizedBox(
+                        height: h * 0.015,
+                      ),
+                      ConditionalBuilder(
+                        condition: state is! HandBuyerLoginLoadingState,
+                        builder: (context) => containerBuildTap(
+                            h: h * 0.075,
+                            text: 'Login',
+                            onTap: () async {
+                              if (formKey.currentState.validate()) {
+                                HandCubit.get(context).login(
+                                    email: emailController.text,
+                                    password: passwordController.text);
+                              }
+                            }),
+                        fallback: (context) =>
+                            const Center(child: CircularProgressIndicator()),
+                      ),
+                      SizedBox(
+                        height: h * 0.025,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Text(
+                              'You have already account ? ',
+                              style: normalText,
+                            ),
+                            gradientText(
+                                text: 'REGISTER',
+                                onTap: () {
+                                  moveToPageAndFinish(
+                                      context, const RegisterMainPage());
+                                })
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                )),
+          );
         },
       ),
     );

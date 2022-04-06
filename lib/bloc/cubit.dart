@@ -261,7 +261,7 @@ class HandCubit extends Cubit<HandMadeState> {
         .doc(FirebaseAuth.instance.currentUser.uid)
         .update(currentUserModel.toJson())
         .then((value) {
-      emit(HandUpdateCurrentUserProfileLoading());
+      emit(HandUpdateCurrentUserProfileSuccess());
     }).catchError((err) {
       print(err.toString());
       emit(HandUpdateCurrentUserProfileError(err.toString()));
@@ -334,7 +334,8 @@ class HandCubit extends Cubit<HandMadeState> {
             role: 'buyer',
             name: name,
             uid: value.user.uid,
-            profileImage: '');
+            profileImage:
+                'https://firebasestorage.googleapis.com/v0/b/hand-made-adbb4.appspot.com/o/applogo.png?alt=media&token=9d581d89-bf1c-40e5-af93-e65bbaf75e4d');
         showMessageSuccess('Registered successfully');
         emit(HandUserRegisterSuccessState());
       });
@@ -672,7 +673,6 @@ class HandCubit extends Cubit<HandMadeState> {
       String image,
       String desc,
       String price}) {
-
     ProductsModel model = ProductsModel(
       name: name,
       description: desc,

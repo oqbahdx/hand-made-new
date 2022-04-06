@@ -6,7 +6,7 @@ import 'colors.dart';
 
 TextStyle containerStyle = const TextStyle(
   fontWeight: FontWeight.bold,
-  fontSize: 22,
+  fontSize: 26,
   color: Colors.white
 );
 

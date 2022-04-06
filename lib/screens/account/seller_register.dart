@@ -22,7 +22,8 @@ class SellerRegisterPage extends StatefulWidget {
   _SellerRegisterPageState createState() => _SellerRegisterPageState();
 }
 
-class _SellerRegisterPageState extends State<SellerRegisterPage> {
+class _SellerRegisterPageState extends State<SellerRegisterPage>
+    with SingleTickerProviderStateMixin {
   Permission permission;
   GlobalKey<FormState> formKey = GlobalKey();
   TextEditingController nameController = TextEditingController();
@@ -114,31 +115,31 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                       h: h * 0.075,
                       text: 'REGISTER',
                       onTap: () async {
-                        if(formKey.currentState.validate()){
-                          if (await Permission.locationAlways.request().isGranted&&
-                              await Permission.location.request().isGranted&&
-                              await Permission.locationWhenInUse.request().isGranted) {
+                        if (formKey.currentState.validate()) {
+                          if (await Permission.locationAlways
+                                  .request()
+                                  .isGranted &&
+                              await Permission.location.request().isGranted &&
+                              await Permission.locationWhenInUse
+                                  .request()
+                                  .isGranted) {
                             HandCubit.get(context).userSellerRegister(
                               name: nameController.text,
                               email: emailController.text,
                               phone: phoneController.text,
                               password: passwordController.text,
                             );
-
-                          }
-                          else {
-                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                                content:  Text(
-                                    'Please Give The App location Permission')));
-                            Timer(const Duration(seconds: 3),(){
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                        'Please Give The App location Permission')));
+                            Timer(const Duration(seconds: 3), () {
                               openAppSettings();
                             });
                           }
                         }
-
-                      }
-
-                      ),
+                      }),
                   fallback: (context) =>
                       const Center(child: CircularProgressIndicator()),
                 ),

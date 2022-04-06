@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -124,6 +123,9 @@ class _SellerChatState extends State<SellerChat> {
                                                 date: DateTime.now().toString(),
                                               );
                                               messageController.text = '';
+                                              Timer(const Duration(milliseconds: 0), () =>
+                                                  listScrollController.jumpTo(
+                                                      listScrollController.position.maxScrollExtent));
                                             }
                                           },
                                           icon: const Icon(Icons.send),

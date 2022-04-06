@@ -127,11 +127,11 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: height * .05,
                     ),
-                    buildTextFormFieldWithBackground(controller: phoneController),
+                  model.role =='seller'? buildTextFormFieldWithBackground(controller: phoneController):Container(),
                     SizedBox(
                       height: height * .03,
                     ),
-                    Row(
+                    model.role =='seller'? Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Text(
@@ -152,12 +152,12 @@ class _ProfileState extends State<Profile> {
                               fontWeight: FontWeight.bold, fontSize: 16),
                         ),
                       ],
-                    ),
+                    ):Container(),
                     SizedBox(
                       height: height * .02,
                     ),
                     ConditionalBuilder(
-                      condition: state is! HandUpdateProfileWithImageLoading,
+                      condition: state is! HandUpdateCurrentUserProfileLoading,
                       builder: (context) => buildTapBlack(
                           text: 'UPDATE',
                           h: 60,
