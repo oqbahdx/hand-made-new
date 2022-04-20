@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hand_made_new/components/show_message.dart';
 import 'package:hand_made_new/screens/home/start.dart';
 import '/components/containers.dart';
 import '/bloc/states.dart';
@@ -36,7 +37,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage>
     double h = MediaQuery.of(context).size.height;
     return BlocConsumer<HandCubit, HandMadeState>(
       listener: (context, state) {
-        if (state is HandSellerRegisterSuccessState) {
+        if (state is HandUserRegisterSuccessState) {
           moveToPageAndFinish(context, const LoginPage());
         }
       },
@@ -75,7 +76,9 @@ class _SellerRegisterPageState extends State<SellerRegisterPage>
                     icn: Icons.email,
                     controller: emailController,
                     function: (value) {
+                      // bool email = RegExp(r'^.+@[a-zA-Z]+\.{1}[a-zA-Z]+(\.{0,1}[a-zA-Z]+)$').hasMatch(emailController.text);
                       if (value.isEmpty) return 'please enter your email';
+                      // if(email) return showMessageError('$email \u{1F605}');
                     }),
                 SizedBox(
                   height: h * 0.05,
@@ -115,11 +118,9 @@ class _SellerRegisterPageState extends State<SellerRegisterPage>
                       h: h * 0.075,
                       text: 'REGISTER',
                       onTap: () async {
-                        if (formKey.currentState.validate()) {
-                          if (await Permission.locationAlways
-                                  .request()
-                                  .isGranted &&
-                              await Permission.location.request().isGranted &&
+
+                        if (formKey.currentState.validate() ) {
+                          if (
                               await Permission.locationWhenInUse
                                   .request()
                                   .isGranted) {
@@ -134,9 +135,9 @@ class _SellerRegisterPageState extends State<SellerRegisterPage>
                                 const SnackBar(
                                     content: Text(
                                         'Please Give The App location Permission')));
-                            Timer(const Duration(seconds: 3), () {
-                              openAppSettings();
-                            });
+                            // Timer(const Duration(seconds: 3), () {
+                            //   openAppSettings();
+                            // });
                           }
                         }
                       }),

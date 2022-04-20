@@ -1,7 +1,9 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder/conditional_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:hand_made_new/bloc/cubit.dart';
@@ -29,6 +31,7 @@ class _MapPageState extends State<MapPage> {
 
   @override
   void initState() {
+    HandCubit.get(context).getCurrentLocation();
     checkPermissions();
     getSellersMarkers();
     rootBundle.loadString('assets/map_style.txt').then((value) {
@@ -58,11 +61,15 @@ class _MapPageState extends State<MapPage> {
 
   getSellersMarkers() {
     seller = [];
-    FirebaseFirestore.instance.collection('users').get().then((duc) {
+    FirebaseFirestore.instance
+        .collection('users')
+        .where('isAvailable', isEqualTo: true)
+        .get()
+        .then((duc) {
       if (duc.docs.isNotEmpty) {
         for (int i = 0; i <= duc.docs.length; i++) {
           seller.add(duc.docs[i].data());
-         initMarker(duc.docs[i].data(), duc.docs[i].id);
+          initMarker(duc.docs[i].data(), duc.docs[i].id);
         }
       }
     });
@@ -73,15 +80,18 @@ class _MapPageState extends State<MapPage> {
     final MarkerId markerId = MarkerId(markerIdVal);
     final Marker marker = Marker(
         markerId: markerId,
-        position: LatLng(specify['location'].latitude , specify['location'].longitude,),
+        position: LatLng(
+          specify['location'].latitude,
+          specify['location'].longitude,
+        ),
         icon: myIcon,
-
-        onTap: (){
-          moveToPageWithData(context, namePage: SellerDetails(
-            uId: specify['uid'],
-            name: specify['name'],
-            image: specify['profileImage'],
-          ));
+        onTap: () {
+          moveToPageWithData(context,
+              namePage: SellerDetails(
+                uId: specify['uid'],
+                name: specify['name'],
+                image: specify['profileImage'],
+              ));
         },
         infoWindow:
             InfoWindow(title: specify['name'], snippet: specify['email']));
@@ -91,9 +101,7 @@ class _MapPageState extends State<MapPage> {
   }
 
   checkPermissions() async {
-    await Permission.locationAlways.request().isGranted &&
-        await Permission.location.request().isGranted &&
-        await Permission.locationWhenInUse.request().isGranted;
+    await Permission.locationWhenInUse.request().isGranted;
   }
 
   @override
@@ -101,7 +109,6 @@ class _MapPageState extends State<MapPage> {
     return BlocConsumer<HandCubit, HandMadeState>(
       listener: (context, state) {},
       builder: (context, state) {
-        var seller = HandCubit.get(context).userModel;
         return ConditionalBuilder(
           condition: state is! HandGetSellersLoadingState,
           builder: (context) => Scaffold(
@@ -112,12 +119,12 @@ class _MapPageState extends State<MapPage> {
               markers: Set<Marker>.of(markers.values),
               myLocationEnabled: true,
               myLocationButtonEnabled: true,
-              initialCameraPosition: const CameraPosition(
+              initialCameraPosition:  CameraPosition(
                 target: LatLng(
-                  15.734730,
-                  32.577591,
+                  HandCubit.get(context).location.latitude,
+                  HandCubit.get(context).location.longitude,
                 ),
-                zoom: 12,
+                zoom: 18,
               ),
               onMapCreated: (GoogleMapController controller) {
                 setState(() {

@@ -12,6 +12,7 @@ import 'package:hand_made_new/models/seller_model.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/models/user_model.dart';
 import 'package:hand_made_new/storage/shared.dart';
+import 'package:hand_made_new/widgets/navigators.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:geolocator/geolocator.dart';
@@ -385,7 +386,7 @@ class HandCubit extends Cubit<HandMadeState> {
       if (kDebugMode) {
         print(e.toString());
       }
-      showMessageError(e.message.toString());
+      showMessageError(e.message.toString() + '\u{1F605}');
       emit(HandUserRegisterErrorState(e.toString()));
     }
     await auth
@@ -714,5 +715,9 @@ class HandCubit extends Cubit<HandMadeState> {
         emit(HandUploadImageErrorState(error.toString()));
       });
     });
+  }
+  Position location;
+  getCurrentLocation() async {
+    location = await Geolocator.getCurrentPosition();
   }
 }
