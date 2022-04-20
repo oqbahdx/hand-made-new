@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder/conditional_builder.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
@@ -46,7 +45,7 @@ class _FamiliesListState extends State<FamiliesList> {
                     .where('isAvailable', isEqualTo: true)
                     .where('role', isEqualTo: 'seller')
                     .limit(10)
-                    .get(),
+                    .get(const GetOptions(source: Source.cache)),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {

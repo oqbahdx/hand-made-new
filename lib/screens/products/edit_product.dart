@@ -172,7 +172,7 @@ class _EditProductState extends State<EditProduct> {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: ConditionalBuilder(
                             condition: state is! HandUpdateProductLoading,
-                            builder: (context) => buildTapBlack(
+                            builder: (context) => BuildTapBlack(
                                 h: _height * 0.08,
                                 text: 'Update Product',
                                 onTap: () {

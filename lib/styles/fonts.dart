@@ -1,12 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 import 'colors.dart';
 
+// class ContainerStyle extends StatelessWidget {
+//   const ContainerStyle({Key key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return zz;
+//   }
+// }
 
-TextStyle containerStyle = const TextStyle(
+TextStyle containerStyle =  const TextStyle(
   fontWeight: FontWeight.bold,
-  fontSize: 26,
+  fontSize: 40,
   color: Colors.white
 );
 

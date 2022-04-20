@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hand_made_new/models/user_model.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 import '/styles/colors.dart';
 import '/styles/fonts.dart';
 
@@ -162,35 +163,88 @@ Widget buildProductsItem(model, Object tag) {
   );
 }
 
-Widget buildTapBlack(
-    {String text, Function onTap, double h = 50, double w = 600}) {
-  return GestureDetector(
-    onTap: onTap,
-    child: Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Card(
-        elevation: 20.0,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-        color: Colors.transparent,
-        child: Container(
-          child: Center(
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-              style: containerStyle,
-            ),
+class BuildTapBlack extends StatelessWidget {
+   BuildTapBlack({Key key,this.text,this.onTap,this.h,this.w}) : super(key: key);
+final String text;
+final Function onTap;
+ double h = 50.0;
+ double w = 600.0;
+  @override
+  Widget build(BuildContext context) {
+
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.all(5.0),
+        child: Card(
+          elevation: 20.0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
           ),
-          height: h,
-          width: w,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10), color: Colors.black54),
+          color: Colors.transparent,
+          child: Container(
+            child: Center(
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: ResponsiveValue(context,
+                        defaultValue: 25.0,
+                        valueWhen: [
+                          const Condition.smallerThan(name: MOBILE, value: 20.0),
+                          const Condition.smallerThan(name: TABLET, value: 40.0),
+                        ]).value,
+                    color: Colors.white),
+              ),
+            ),
+            height: h,
+            width: w,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10), color: Colors.black54),
+          ),
         ),
       ),
-    ),
-  );
+    );
+  }
 }
+
+// Widget buildTapBlack(
+//     {String text, Function onTap, double h = 50, double w = 600}) {
+//   return GestureDetector(
+//     onTap: onTap,
+//     child: Padding(
+//       padding: const EdgeInsets.all(5.0),
+//       child: Card(
+//         elevation: 20.0,
+//         shape: RoundedRectangleBorder(
+//           borderRadius: BorderRadius.circular(10),
+//         ),
+//         color: Colors.transparent,
+//         child: Container(
+//           child: Center(
+//             child: Text(
+//               text,
+//               textAlign: TextAlign.center,
+//               style:  TextStyle(
+//                 fontWeight: FontWeight.bold,
+//                 fontSize: ResponsiveValue( context,defaultValue: 25.0,valueWhen: [
+//                   Condition.smallerThan(name: MOBILE,value: 20),
+//                   Condition.smallerThan(name: TABLET,value: 40),
+//                 ]).value,
+//                 color: Colors.white
+//               ),
+//             ),
+//           ),
+//           height: h,
+//           width: w,
+//           decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(10), color: Colors.black54),
+//         ),
+//       ),
+//     ),
+//   );
+// }
 
 Widget favoriteBuild({String name, String image, String tag}) {
   return Card(
@@ -230,12 +284,11 @@ Widget favoriteBuild({String name, String image, String tag}) {
   );
 }
 
-Widget registerCard({BuildContext context ,String text,Function onTap}){
-  return  InkWell(
+Widget registerCard({BuildContext context, String text, Function onTap}) {
+  return InkWell(
     onTap: onTap,
     child: Card(
       elevation: 20.0,
-
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(25),
       ),
@@ -246,19 +299,16 @@ Widget registerCard({BuildContext context ,String text,Function onTap}){
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(25),
-            border: Border.all(color: Colors.white,width: 5),
+            border: Border.all(color: Colors.white, width: 5),
             gradient: LinearGradient(
               colors: gradientColor,
               begin: Alignment.centerRight,
               end: Alignment.centerLeft,
-
             )),
         child: Text(
           text,
           style: const TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 45),
+              color: Colors.black, fontWeight: FontWeight.bold, fontSize: 45),
         ),
       ),
     ),

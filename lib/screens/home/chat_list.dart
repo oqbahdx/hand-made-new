@@ -1,15 +1,13 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
 import 'package:hand_made_new/chat/seller_chat.dart';
 import 'package:hand_made_new/styles/colors.dart';
-import 'package:hand_made_new/styles/fonts.dart';
-
 import '../../components/navigator.dart';
-import '../account/sellers_details.dart';
+
 
 class ChatList extends StatefulWidget {
   const ChatList({Key key}) : super(key: key);
@@ -32,7 +30,7 @@ class _ChatListState extends State<ChatList> {
             decoration:
                 BoxDecoration(gradient: LinearGradient(colors: gradientColor)),
             child: FutureBuilder(
-                future: FirebaseFirestore.instance.collection('users').get(),
+                future: FirebaseFirestore.instance.collection('users').get(const GetOptions(source: Source.cache)),
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
@@ -45,8 +43,8 @@ class _ChatListState extends State<ChatList> {
 
                   return ListView(
                     children: snapshot.data.docs.map((document) {
-                      final dynamic data = document.data();
-                      print("data : ${data}");
+                      // final dynamic data = document.data();
+                      // print("data : ${data}");
                       return Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 15, vertical: 10),
@@ -88,7 +86,17 @@ class _ChatListState extends State<ChatList> {
                                       ),
                                         height: 80,
                                         width: 80,
-                                        child: Image.network(document['profileImage'])),
+                                        child: CachedNetworkImage(
+                                          imageUrl: document['profileImage'],
+                                          fit: BoxFit.fill,
+                                          height: double.infinity,
+                                          width: double.infinity,
+                                          placeholder: (context, url) =>
+                                              Image.asset('assets/pleaceholder.png',
+                                                  color: Colors.black87),
+                                          errorWidget: (context, url, error) =>
+                                          const Icon(Icons.error),
+                                        )),
                                     Text(
                                       document['name'],
                                       style: const TextStyle(

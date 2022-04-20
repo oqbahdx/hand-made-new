@@ -57,7 +57,7 @@ class _FavoritePageState extends State<FavoritePage> {
                 child:FutureBuilder(
                   future: FirebaseFirestore.instance
                       .collection('favorites').where('userId',isEqualTo: FirebaseAuth.instance.currentUser.uid)
-                      .get(),
+                      .get(const GetOptions(source: Source.cache)),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {

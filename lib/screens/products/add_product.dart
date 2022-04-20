@@ -115,7 +115,7 @@ class _AddProductState extends State<AddProduct> {
                       child: ClipRRect(
                           borderRadius: BorderRadius.circular(5),
                           child: HandCubit.get(context).image == null
-                              ? buildTapBlack(
+                              ? BuildTapBlack(
                                   text: 'Select image',
                                   onTap: () {
                                     showDialogBuild(context);
@@ -136,7 +136,7 @@ class _AddProductState extends State<AddProduct> {
                         padding: const EdgeInsets.symmetric(horizontal: 10),
                         child: ConditionalBuilder(
                           condition: state is! HandUploadImageLoadingState,
-                          builder: (context) => buildTapBlack(
+                          builder: (context) => BuildTapBlack(
                               h: _height * 0.08,
                               text: 'Add Product',
                               onTap: () {

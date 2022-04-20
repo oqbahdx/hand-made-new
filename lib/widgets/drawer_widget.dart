@@ -84,22 +84,22 @@ class _DrawerBuildState extends State<DrawerBuild> {
                   child:
                     GridView(
                           children: [
-                            model.role == "seller"?buildTapBlack(
+                            model.role == "seller"?BuildTapBlack(
                                 text: 'Add Product',
                                 onTap: () {
                                   moveToPage(context, AddProduct.id);
                                 }):Container(),
-                            model.role == "seller"?buildTapBlack(
+                            model.role == "seller"?BuildTapBlack(
                                 text: 'My Products',
                                 onTap: () {
                                   moveToPage(context, MyProducts.id);
                                 }):Container(),
-                            buildTapBlack(
+                            BuildTapBlack(
                                 text: 'Favorite',
                                 onTap: () {
                                   moveToPage(context, FavoritePage.id);
                                 }),
-                            buildTapBlack(
+                            BuildTapBlack(
                                 text: 'Contact Us',
                                 onTap: () {
                                   moveToPage(context, ContactUs.id);
@@ -120,7 +120,7 @@ class _DrawerBuildState extends State<DrawerBuild> {
                 ),
                 SizedBox(
                   height: h * 0.08,
-                  child: buildTapBlack(
+                  child: BuildTapBlack(
                       text: 'LOGOUT',
                       onTap: () async {
                         SharedPref.removeData(key: 'uid');

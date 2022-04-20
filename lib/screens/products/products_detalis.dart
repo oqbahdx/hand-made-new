@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
-import 'package:hand_made_new/components/navigator.dart';
 import 'package:hand_made_new/components/show_message.dart';
-import 'package:hand_made_new/screens/home/start.dart';
-import 'package:hand_made_new/screens/products/edit_product.dart';
 import 'package:hand_made_new/styles/colors.dart';
 import 'package:hand_made_new/widgets/app_bar.dart';
-import 'package:hand_made_new/widgets/show_dialog.dart';
+
 
 class ProductDetails extends StatefulWidget {
   final String productId;
@@ -116,20 +113,20 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 25,
+                       SizedBox(
+                        height: MediaQuery.of(context).size.height * .04,
                       ),
                       Text(
                         widget.productName,
                         style:
                             const TextStyle(fontSize: 40, color: Colors.white),
                       ),
-                      const SizedBox(
-                        height: 25,
+                       SizedBox(
+                        height: MediaQuery.of(context).size.height * .04,
                       ),
                       Container(
-                        height: 250,
-                        width: 250,
+                        height: MediaQuery.of(context).size.height * .28,
+                        width: MediaQuery.of(context).size.height * .28,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100)),
                         child: Hero(
@@ -147,11 +144,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
+                       SizedBox(
+                        height: MediaQuery.of(context).size.height * .04,
                       ),
                       Container(
-                        height: 50,
+                        height: MediaQuery.of(context).size.height * .055,
                         color: Colors.white70,
                         child: Center(
                           child: Row(
@@ -163,7 +160,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     fontSize: 30, fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                widget.productPrice.toString() + " GSD",
+                                widget.productPrice.toString() + " AED",
                                 style: const TextStyle(
                                     fontSize: 30, fontWeight: FontWeight.bold),
                               )
@@ -171,8 +168,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
+                       SizedBox(
+                        height: MediaQuery.of(context).size.height * .04,
                       ),
                       const Spacer(),
                       Container(
@@ -182,7 +179,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               bottomLeft: Radius.circular(15)),
                           color: Colors.white70,
                         ),
-                        height: 172,
+                        height: MediaQuery.of(context).size.height * .25,
                         child: Center(
                             child: ListView(
                           children: [

@@ -158,9 +158,9 @@ class _ProfileState extends State<Profile> {
                     ),
                     ConditionalBuilder(
                       condition: state is! HandUpdateCurrentUserProfileLoading,
-                      builder: (context) => buildTapBlack(
+                      builder: (context) => BuildTapBlack(
                           text: 'UPDATE',
-                          h: 60,
+                          h: 60.0,
                           onTap: () {
                             HandCubit.get(context).image != null
                                 ? HandCubit.get(context).updateProfileWithImage(

@@ -99,58 +99,21 @@ class _MyProductDetailsState extends State<MyProductDetails> {
                                   ),
                                 )),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 20, right: 20),
-                            child: Align(
-                                alignment: Alignment.centerRight,
-                                child: exists
-                                    ? IconButton(
-                                  onPressed: () {
-                                    HandCubit.get(context)
-                                        .deleteFavoriteItem(
-                                        productId: widget.productId);
-                                  },
-                                  icon: const Icon(
-                                    Icons.favorite_outlined,
-                                    size: 40,
-                                    color: Colors.red,
-                                  ),
-                                )
-                                    : IconButton(
-                                  onPressed: () {
-                                    HandCubit.get(context).addToFavorite(
-                                      userId: FirebaseAuth
-                                          .instance.currentUser.uid,
-                                      name: widget.productName,
-                                      image: widget.productImage,
-                                      des: widget.productDes,
-                                      price: widget.productPrice,
-                                      productId: widget.productId,
-                                    );
-                                  },
-                                  icon: const Icon(
-                                    Icons.favorite_border_outlined,
-                                    size: 40,
-                                    color: Colors.red,
-                                  ),
-                                )),
-                          ),
+
                         ],
                       ),
-                      const SizedBox(
-                        height: 25,
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * .015,
                       ),
                       Text(
                         widget.productName,
                         style:
                         const TextStyle(fontSize: 40, color: Colors.white),
                       ),
-                      const SizedBox(
-                        height: 25,
-                      ),
+
                       Container(
-                        height: 250,
-                        width: 250,
+                        height: MediaQuery.of(context).size.height * .28,
+                        width: MediaQuery.of(context).size.height * .28,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100)),
                         child: Hero(
@@ -168,11 +131,11 @@ class _MyProductDetailsState extends State<MyProductDetails> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * .038,
                       ),
                       Container(
-                        height: 50,
+                        height: MediaQuery.of(context).size.height * .055,
                         color: Colors.white70,
                         child: Center(
                           child: Row(
@@ -184,7 +147,7 @@ class _MyProductDetailsState extends State<MyProductDetails> {
                                     fontSize: 30, fontWeight: FontWeight.bold),
                               ),
                               Text(
-                                widget.productPrice.toString() + " GSD",
+                                widget.productPrice.toString() + " AED",
                                 style: const TextStyle(
                                     fontSize: 30, fontWeight: FontWeight.bold),
                               )
@@ -192,8 +155,8 @@ class _MyProductDetailsState extends State<MyProductDetails> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        height: 30,
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height * .04,
                       ),
                       const Spacer(),
                       Container(
@@ -203,7 +166,7 @@ class _MyProductDetailsState extends State<MyProductDetails> {
                               bottomLeft: Radius.circular(15)),
                           color: Colors.white70,
                         ),
-                        height: 172,
+                        height: MediaQuery.of(context).size.height * .25,
                         child: Center(
                             child: ListView(
                               children: [
