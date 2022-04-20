@@ -33,22 +33,25 @@ class RegisterMainPage extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            const SizedBox(
-              height: 150,
+             SizedBox(
+              height: MediaQuery.of(context).size.height * .01,
             ),
-
-
-
-            registerCard(context:context ,text: 'Buyer',onTap:(){
-              moveToPage(context, BuyerRegisterPage.id);
-            } ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20),
+              child: registerCard(context:context ,text: 'Buyer',onTap:(){
+                moveToPage(context, BuyerRegisterPage.id);
+              } ),
+            ),
             const Divider(
               color: Colors.black,
               thickness: 5,
             ),
-            registerCard(context:context ,text: 'Seller',onTap: (){
-              moveToPage(context, SellerRegisterPage.id);
-            })
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: registerCard(context:context ,text: 'Seller',onTap: (){
+                moveToPage(context, SellerRegisterPage.id);
+              }),
+            )
           ],
         ),
       ),

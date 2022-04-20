@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
 import 'package:hand_made_new/bloc/states.dart';
+import 'package:hand_made_new/chat/seller_chat.dart';
 import 'package:hand_made_new/styles/colors.dart';
+import 'package:hand_made_new/styles/fonts.dart';
 
 import '../../components/navigator.dart';
 import '../account/sellers_details.dart';
@@ -24,96 +26,88 @@ class _ChatListState extends State<ChatList> {
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
-            body: Container(
-              width: double.infinity,
-              height: double.infinity,
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: gradientColor)),
-              child: FutureBuilder(
-                  future: FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(FirebaseAuth.instance.currentUser.uid)
-                      .collection('chat')
-                      .get(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
-                        ),
-                      );
-                    }
+          body: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration:
+                BoxDecoration(gradient: LinearGradient(colors: gradientColor)),
+            child: FutureBuilder(
+                future: FirebaseFirestore.instance.collection('users').get(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) {
+                    return const Center(
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    );
+                  }
 
-                    return ListView(
-                      children: snapshot.data.docs.map((document) {
-                        final dynamic data = document.data();
-                        print("data : ${data}");
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: InkWell(
-                            onTap: () {
-                              moveToPageWithData(context,
-                                  namePage: SellerDetails(
-                                    uId: data['uid'].toString(),
-                                    name: data['name'].toString(),
-                                    image: data['profileImage'].toString(),
-                                  ));
-                            },
-                            child: Card(
-                              elevation: 20.0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25),
+                  return ListView(
+                    children: snapshot.data.docs.map((document) {
+                      final dynamic data = document.data();
+                      print("data : ${data}");
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        child: InkWell(
+                          onTap: () {
+                            moveToPageWithData(
+                              context,
+                              namePage: SellerChat(
+                                image: document['profileImage'],
+                                name: document['name'],
+                                uid: document['uid'],
                               ),
-                              color: Colors.transparent,
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: 150,
-                                width: 350,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: Colors.black54),
-                                child: Text(
-                                  document['name'],
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 30),
+                            );
+                          },
+                          child: Card(
+                            elevation: 20.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25),
+                            ),
+                            color: Colors.transparent,
+                            child: Container(
+                              alignment: Alignment.center,
+                              height: 100,
+                              width: 350,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  color: Colors.black54),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Container(
+                                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(150),
+
+                                      ),
+                                        height: 80,
+                                        width: 80,
+                                        child: Image.network(document['profileImage'])),
+                                    Text(
+                                      document['name'],
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 24,
+                                          color: Colors.white),
+                                    )
+                                  ],
                                 ),
                               ),
                             ),
                           ),
-                        );
-                      }).toList(),
-                    );
-                  }),
-            ),
-            floatingActionButton: Card(
-              elevation: 20.0,
-              color: Colors.transparent,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(100)),
-              child: InkWell(
-                onTap: () {
-                  print("*****");
-                },
-                child: Container(
-                  height: 60,
-                  width: 100,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.black54),
-                  child: const Center(
-                    child: Icon(
-                      Icons.message,
-                      size: 30,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-            ));
+                        ),
+                      );
+                    }).toList(),
+                  );
+                }),
+          ),
+        );
       },
     );
   }
