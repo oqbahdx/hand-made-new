@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hand_made_new/models/user_model.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -262,11 +263,17 @@ Widget favoriteBuild({String name, String image, String tag}) {
               color: Colors.black54, borderRadius: BorderRadius.circular(15)),
           child: Hero(
             tag: tag,
-            child: Image.network(
-              image,
-              height: double.infinity,
+            child:  CachedNetworkImage(
+              imageUrl: image,
               fit: BoxFit.fill,
-            ),
+              height: double.infinity,
+              placeholder: (context, url) =>
+                  Image.asset('assets/pleaceholder.png',
+                      color: Colors.black87),
+              errorWidget: (context, url, error) =>
+              const Icon(Icons.error),
+            )
+
           ),
         ),
         title: Text(

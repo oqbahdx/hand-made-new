@@ -51,111 +51,109 @@ class _AddProductState extends State<AddProduct> {
         } else {}
       },
       builder: (context, state) {
-        return SafeArea(
-          child: Scaffold(
-            appBar: appBarWidget(
-                title: Text(
-                  'Add Product',
-                  style: normalText,
-                ),
-                action: Container(),
-                elevation: 0.0),
-            body: Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(colors: gradientColor)),
-              child: Form(
-                key: formKey,
-                child: ListView(
-                  physics: const BouncingScrollPhysics(),
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: _height * 0.03,
-                    ),
-                    buildTextFormFieldWithBackground(
+        return Scaffold(
+          appBar: appBarWidget(
+              title: Text(
+                'Add Product',
+                style: normalText,
+              ),
+              action: Container(),
+              elevation: 0.0),
+          body: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(colors: gradientColor)),
+            child: Form(
+              key: formKey,
+              child: ListView(
+                physics: const BouncingScrollPhysics(),
+                // mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: _height * 0.03,
+                  ),
+                  buildTextFormFieldWithBackground(
+                    inputType: TextInputType.text,
+                      controller: _nameController,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please Enter Product Name';
+                        }
+                      },
+                      txt: 'Name Of The Product'),
+                  SizedBox(
+                    height: _height * 0.03,
+                  ),
+                  buildTextFormFieldWithBackground(
                       inputType: TextInputType.text,
-                        controller: _nameController,
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return 'Please Enter Product Name';
-                          }
-                        },
-                        txt: 'Name Of The Product'),
-                    SizedBox(
-                      height: _height * 0.03,
-                    ),
-                    buildTextFormFieldWithBackground(
-                        inputType: TextInputType.text,
-                        controller: _descriptionController,
-                        txt: 'Description',
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return "Please Enter The Description";
-                          }
-                        }),
-                    SizedBox(
-                      height: _height * 0.03,
-                    ),
-                    buildTextFormFieldWithBackground(
-                        inputType: TextInputType.number,
-                        controller: _priceController,
-                        txt: 'Price',
-                        validator: (value) {
-                          if (value.isEmpty) {
-                            return "Please Enter The Price";
-                          }
-                        }),
-                    SizedBox(
-                      height: _height * 0.06,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40, vertical: 10),
-                      height: _height * 0.20,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(5),
-                          child: HandCubit.get(context).image == null
-                              ? BuildTapBlack(
-                                  text: 'Select image',
-                                  onTap: () {
-                                    showDialogBuild(context);
-                                  })
-                              : SizedBox(
-                                  height: double.infinity,
-                                  width: double.infinity,
-                                  child: Image.file(
-                                    HandCubit.get(context).image,
-                                    fit: BoxFit.fill,
-                                  ),
-                                )),
-                    ),
-                    SizedBox(
-                      height: _height * 0.04,
-                    ),
-                    Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: ConditionalBuilder(
-                          condition: state is! HandUploadImageLoadingState,
-                          builder: (context) => BuildTapBlack(
-                              h: _height * 0.08,
-                              text: 'Add Product',
-                              onTap: () {
-                                if (formKey.currentState.validate() &&
-                                    HandCubit.get(context).image != null) {
-                                      HandCubit.get(context).addProductWithImage(
-                                      name: _nameController.text,
-                                      des: _descriptionController.text,
-                                      price: _priceController.text);
-                                } else if (formKey.currentState.validate() &&
-                                    HandCubit.get(context).image == null) {
-                                  showMessageError('Please Add Image ');
-                                }
-                                // HandCubit.get(context).image = null;
-                              }),
-                          fallback: (context) => const CallBackIndicator()
-                        )),
-                  ],
-                ),
+                      controller: _descriptionController,
+                      txt: 'Description',
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Please Enter The Description";
+                        }
+                      }),
+                  SizedBox(
+                    height: _height * 0.03,
+                  ),
+                  buildTextFormFieldWithBackground(
+                      inputType: TextInputType.number,
+                      controller: _priceController,
+                      txt: 'Price',
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return "Please Enter The Price";
+                        }
+                      }),
+                  SizedBox(
+                    height: _height * 0.06,
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40, vertical: 10),
+                    height: _height * 0.20,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(5),
+                        child: HandCubit.get(context).image == null
+                            ? BuildTapBlack(
+                                text: 'Select image',
+                                onTap: () {
+                                  showDialogBuild(context);
+                                })
+                            : SizedBox(
+                                height: double.infinity,
+                                width: double.infinity,
+                                child: Image.file(
+                                  HandCubit.get(context).image,
+                                  fit: BoxFit.fill,
+                                ),
+                              )),
+                  ),
+                  SizedBox(
+                    height: _height * 0.04,
+                  ),
+                  Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: ConditionalBuilder(
+                        condition: state is! HandUploadImageLoadingState,
+                        builder: (context) => BuildTapBlack(
+                            h: _height * 0.08,
+                            text: 'Add Product',
+                            onTap: () {
+                              if (formKey.currentState.validate() &&
+                                  HandCubit.get(context).image != null) {
+                                    HandCubit.get(context).addProductWithImage(
+                                    name: _nameController.text,
+                                    des: _descriptionController.text,
+                                    price: _priceController.text);
+                              } else if (formKey.currentState.validate() &&
+                                  HandCubit.get(context).image == null) {
+                                showMessageError('Please Add Image ');
+                              }
+                              // HandCubit.get(context).image = null;
+                            }),
+                        fallback: (context) => const CallBackIndicator()
+                      )),
+                ],
               ),
             ),
           ),

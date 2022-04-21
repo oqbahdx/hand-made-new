@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:conditional_builder/conditional_builder.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hand_made_new/bloc/cubit.dart';
@@ -47,7 +49,29 @@ class _SellerChatState extends State<SellerChat> {
                       fontWeight: FontWeight.bold, fontSize: 25),
                 ),
                 elevation: 20.0,
-                action: Image.network(widget.image)),
+                action: Hero(
+                  tag: widget.uid,
+                  transitionOnUserGestures: true,
+                  child: Container(
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(150),
+
+                      ),
+                      height: 80,
+                      width: 80,
+                      child: CachedNetworkImage(
+                        imageUrl: widget.image,
+                        fit: BoxFit.fill,
+                        height: double.infinity,
+                        width: double.infinity,
+                        placeholder: (context, url) =>
+                            Image.asset('assets/pleaceholder.png',
+                                color: Colors.black87),
+                        errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                      )),
+                ),),
             body: ConditionalBuilder(
               condition: state is !HandGetMessagesLoading,
               builder: (context)=>ConditionalBuilder(
@@ -72,7 +96,7 @@ class _SellerChatState extends State<SellerChat> {
                                     var message = HandCubit
                                         .get(context)
                                         .messages[index];
-                                    if (widget.uid == message.receiverId) {
+                                    if (FirebaseAuth.instance.currentUser.uid != message.receiverId) {
                                       return receiveMessage(message);
                                     }
                                     return sendMessage(message);

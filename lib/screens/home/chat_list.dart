@@ -78,25 +78,29 @@ class _ChatListState extends State<ChatList> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Container(
-                                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(150),
+                                    Hero(
+                                      tag: document['uid'],
+                                      transitionOnUserGestures: true,
+                                      child: Container(
+                                        clipBehavior: Clip.antiAliasWithSaveLayer,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(150),
 
-                                      ),
-                                        height: 80,
-                                        width: 80,
-                                        child: CachedNetworkImage(
-                                          imageUrl: document['profileImage'],
-                                          fit: BoxFit.fill,
-                                          height: double.infinity,
-                                          width: double.infinity,
-                                          placeholder: (context, url) =>
-                                              Image.asset('assets/pleaceholder.png',
-                                                  color: Colors.black87),
-                                          errorWidget: (context, url, error) =>
-                                          const Icon(Icons.error),
-                                        )),
+                                        ),
+                                          height: 80,
+                                          width: 80,
+                                          child: CachedNetworkImage(
+                                            imageUrl: document['profileImage'],
+                                            fit: BoxFit.fill,
+                                            height: double.infinity,
+                                            width: double.infinity,
+                                            placeholder: (context, url) =>
+                                                Image.asset('assets/pleaceholder.png',
+                                                    color: Colors.black87),
+                                            errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                          )),
+                                    ),
                                     Text(
                                       document['name'],
                                       style: const TextStyle(

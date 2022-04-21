@@ -114,7 +114,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         ],
                       ),
                        SizedBox(
-                        height: MediaQuery.of(context).size.height * .04,
+                        height: MediaQuery.of(context).size.height * .005,
                       ),
                       Text(
                         widget.productName,
@@ -122,7 +122,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             const TextStyle(fontSize: 40, color: Colors.white),
                       ),
                        SizedBox(
-                        height: MediaQuery.of(context).size.height * .04,
+                        height: MediaQuery.of(context).size.height * .015,
                       ),
                       Container(
                         height: MediaQuery.of(context).size.height * .28,

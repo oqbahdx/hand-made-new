@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hand_made_new/components/floating_buttons.dart';
 import 'package:hand_made_new/screens/account/login.dart';
 import 'package:hand_made_new/storage/shared.dart';
@@ -35,12 +36,12 @@ class _OnBoardingState extends State<OnBoarding> {
   List<String> titles = [
     'Hand Made App',
     'Around You',
-    'Clean Food',
+    'Healthy Food',
   ];
   List<String> bodies = [
-    'application for families who is made their food in house ',
-    'find a families are near by you and see their location in the map',
-    'Your health is important and you will eat a clean food',
+    'An application for families who prepare food at home',
+    'Find families around you and see their locations on the map',
+    'Your health is important and you will eat healthy food',
   ];
 
   PageController pageController = PageController();
@@ -64,6 +65,14 @@ class _OnBoardingState extends State<OnBoarding> {
       builder: (context,hue,child){
         final vhsColor = HSVColor.fromAHSV(1.0, hue,1.0, 1.0);
         return  Scaffold(
+          appBar: AppBar(
+            backgroundColor: vhsColor.toColor(),
+            elevation: 0.0,
+            systemOverlayStyle:   SystemUiOverlayStyle(
+                statusBarColor: vhsColor.toColor(),
+                statusBarIconBrightness: Brightness.dark
+            ),
+          ),
           body: Container(
               color: vhsColor.toColor(),
             child: Padding(

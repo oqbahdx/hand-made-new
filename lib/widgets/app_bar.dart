@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 
 PreferredSizeWidget appBarWidget({Widget title,
@@ -24,6 +25,10 @@ PreferredSizeWidget appBarWidget({Widget title,
           end: Alignment.bottomRight
         )
       ),
+    ),
+    systemOverlayStyle: const SystemUiOverlayStyle(
+      statusBarColor: Colors.black54,
+      statusBarIconBrightness: Brightness.light
     ),
   );
 }

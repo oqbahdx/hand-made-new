@@ -42,40 +42,38 @@ class _StartPageState extends State<StartPage> {
       return BlocConsumer<HandCubit, HandMadeState>(
         listener: (context, state) {},
         builder: (context, state) {
-          return SafeArea(
-            child: Scaffold(
-              appBar: appBarWidget(
-                  title: Text(titles[HandCubit.get(context).pageIndex],
-                      style: appBarStyle),
-                  elevation: 0.0,
-                  action: Container()),
-              body: Center(
-                child: homePages.elementAt(HandCubit.get(context).pageIndex),
-              ),
-              bottomNavigationBar: Container(
-                height: 70,
-                  decoration:  BoxDecoration(
-                    gradient: LinearGradient(colors: gradientColor)
-
-                  ),
-                  child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 15.0, vertical: 12),
-                      child: startBottomNav(
-                          index: HandCubit.get(context).pageIndex,
-                          function: (index) {
-                            HandCubit.get(context).changeIndex(index);
-                          },
-                          gButton: [
-                            gButtonNav(icon: Icons.person, text: 'PROFILE'),
-                            gButtonNav(icon: Icons.map, text: 'MAP'),
-                            gButtonNav(
-                                icon: Icons.message,
-                                text: 'CHATS'),
-                            gButtonNav(icon: Icons.group, text: 'FAMILIES'),
-                          ]))),
-              drawer: const DrawerBuild(),
+          return Scaffold(
+            appBar: appBarWidget(
+                title: Text(titles[HandCubit.get(context).pageIndex],
+                    style: appBarStyle),
+                elevation: 0.0,
+                action: Container()),
+            body: Center(
+              child: homePages.elementAt(HandCubit.get(context).pageIndex),
             ),
+            bottomNavigationBar: Container(
+              height: 70,
+                decoration:  BoxDecoration(
+                  gradient: LinearGradient(colors: gradientColor)
+
+                ),
+                child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0, vertical: 12),
+                    child: startBottomNav(
+                        index: HandCubit.get(context).pageIndex,
+                        function: (index) {
+                          HandCubit.get(context).changeIndex(index);
+                        },
+                        gButton: [
+                          gButtonNav(icon: Icons.person, text: 'PROFILE'),
+                          gButtonNav(icon: Icons.map, text: 'MAP'),
+                          gButtonNav(
+                              icon: Icons.message,
+                              text: 'CHATS'),
+                          gButtonNav(icon: Icons.group, text: 'FAMILIES'),
+                        ]))),
+            drawer: const DrawerBuild(),
           );
         },
     );
