@@ -42,6 +42,7 @@ class _StartPageState extends State<StartPage> {
       return BlocConsumer<HandCubit, HandMadeState>(
         listener: (context, state) {},
         builder: (context, state) {
+
           return Scaffold(
             appBar: appBarWidget(
                 title: Text(titles[HandCubit.get(context).pageIndex],

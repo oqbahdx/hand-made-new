@@ -435,7 +435,7 @@ class HandCubit extends Cubit<HandMadeState> {
     FirebaseFirestore.instance
         .collection('/users')
         .doc(currentUser)
-        .get(const GetOptions(source: Source.cache))
+        .get()
         .then((value) {
       if (kDebugMode) {
         print(value.data());

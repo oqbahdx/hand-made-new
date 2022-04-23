@@ -29,10 +29,12 @@ import '/screens/intro/onBoarding.dart';
 import '/screens/products/add_product.dart';
 import '/bloc/cubit.dart';
 import 'bloc/bloc_observer.dart';
-
+import 'package:firebase_messaging/firebase_messaging.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  var token = await FirebaseMessaging.instance.getToken();
+  print("token : ${token.toString()}");
   Widget startPage;
   var onBoarding = await SharedPref.getData(key: 'onBoarding');
   uId = await SharedPref.getData(key: 'uid');
@@ -63,7 +65,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<HandCubit>(
-      create: (context) => HandCubit()..getCurrentLocation(),
+      create: (context) => HandCubit()..getCurrentLocation()..getCurrentUser(),
       lazy: true,
       child: MaterialApp(
         useInheritedMediaQuery: true,

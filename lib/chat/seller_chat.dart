@@ -29,6 +29,11 @@ class _SellerChatState extends State<SellerChat> {
   TextEditingController messageController = TextEditingController();
   final ScrollController listScrollController = ScrollController();
   @override
+  void initState() {
+    super.initState();
+    HandCubit.get(context).getMessages(receiverId: widget.uid);
+  }
+  @override
   Widget build(BuildContext context) {
     if(HandCubit.get(context).messages.isNotEmpty){
       Timer(const Duration(milliseconds: 0), () =>

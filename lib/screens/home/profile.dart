@@ -34,7 +34,6 @@ class _ProfileState extends State<Profile> {
     TextEditingController phoneController = TextEditingController();
     var height = MediaQuery.of(context).size.height;
     return BlocConsumer<HandCubit, HandMadeState>(
-
         listener: (context,state){
           if(state is HandUpdateProfileWithImageSuccess){
             showMessageSuccess('The Profile Has been Updated Successfully');

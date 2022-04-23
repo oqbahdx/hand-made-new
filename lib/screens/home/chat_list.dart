@@ -50,6 +50,7 @@ class _ChatListState extends State<ChatList> {
                             horizontal: 15, vertical: 10),
                         child: InkWell(
                           onTap: () {
+                            HandCubit.get(context).getMessages(receiverId: document['uid']);
                             moveToPageWithData(
                               context,
                               namePage: SellerChat(
