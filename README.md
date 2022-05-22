@@ -1,6 +1,6 @@
 # hand_made_new
 
-applicaton for foods
+ An application that mainly depends on Google's map that can find people close to you and you can see their products and communicate with them through the chat and you    can create an account and add your products, etc (under development)
 
 ## Getting Started
 
