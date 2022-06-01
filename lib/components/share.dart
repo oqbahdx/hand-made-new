@@ -19,9 +19,9 @@ void launchFacebook(String url, String fallbackUrl) async {
 launchWhatsapp(BuildContext context) async {
   var whatsapp = "+249929990093";
   var whatsappURlAndroid =
-      "whatsapp://send?phone=" + whatsapp + "&text=hello oqbah from dx player app";
+      "whatsapp://send?phone=" + whatsapp + "&text=hello oqbah from Hand Made app";
   var whatsappURLIos =
-      "https://wa.me/$whatsapp?text=${Uri.parse("hello oqbah form dx player app")}";
+      "https://wa.me/$whatsapp?text=${Uri.parse("hello oqbah form Hand Made app")}";
   if (Platform.isIOS) {
     // for iOS phone only
     if (await canLaunch(whatsappURLIos)) {

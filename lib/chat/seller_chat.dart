@@ -29,9 +29,9 @@ class _SellerChatState extends State<SellerChat> {
   TextEditingController messageController = TextEditingController();
   final ScrollController listScrollController = ScrollController();
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
     HandCubit.get(context).getMessages(receiverId: widget.uid);
+    super.didChangeDependencies();
   }
   @override
   Widget build(BuildContext context) {

@@ -38,6 +38,7 @@ class _LoginPageState extends State<LoginPage> {
           if (state is HandBuyerLoginSuccessState) {
             SharedPref.saveData(key: 'uid', value: true).then((value) {
               if (value) {
+                HandCubit.get(context).getCurrentUser();
                 moveToPageAndFinish(context, const StartPage());
               }
             });
