@@ -6,7 +6,11 @@
 
 
 ![hand made](https://user-images.githubusercontent.com/70256509/160486532-c755cb6c-7ff4-4c92-88c8-741f998a0979.png)
-<a href="doc:introduction" target="https://drive.google.com/file/d/1xqxmqZ3_zSne81wCmTqzO76CXo9PEwMx/view?usp=share_link">Download App</a>
+
+Follow the below format
+[Downlod App](https://drive.google.com/file/d/1xqxmqZ3_zSne81wCmTqzO76CXo9PEwMx/view?usp=share_link)
+
+
 
 This project is a starting point for a Flutter application.
 
